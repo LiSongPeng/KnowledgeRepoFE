@@ -74,7 +74,12 @@
     background-color: #222a2d
 }
 
-.myAceSkin .nav-list > li.active > a, .myAceSkin .nav-list > li.active > a:hover, .myAceSkin .menu-min .nav-list > li.active > a, .myAceSkin .menu-min .nav-list > li.active > a:hover {
+.myAceSkin .nav-list > li.active > a,
+.myAceSkin .nav-list > li.active > a:hover,
+.myAceSkin .nav-list > li.active li.active>a,
+.myAceSkin .menu-min .nav-list > li.active > a,
+.myAceSkin .menu-min .nav-list > li.active li.active>a,
+.myAceSkin .menu-min .nav-list > li.active > a:hover {
     background-color: #141a1b;
     color: #ea7204
 }
@@ -85,7 +90,6 @@
 }
 
 .myAceSkin .nav-list > li.active > ul.submenu {
-    background-color: #141a1b;
     border-top-color: #2f3e44
 }
 
@@ -107,6 +111,9 @@
     border-bottom-color: #2f3e44
 }
 
+.myAceSkin .nav-list > li.active > .submenu > li.active > a > [class*="icon-"]:first-child{
+    background-color: #141a1b;
+}
 .myAceSkin .nav-list > li > .submenu > li > a > [class*="icon-"]:first-child {
     background-color: #3a4344;
 }
@@ -142,7 +149,7 @@
 }
 
 .myAceSkin .nav-list > li.active > .submenu > li:before, .myAceSkin .nav-list > li.active > .submenu:before {
-    border-color: #3f4e54
+    border-color: #929ba3
 }
 
 .myAceSkin .menu-min .nav-list > li > a.dropdown-toggle > .menu-text {
@@ -180,9 +187,11 @@
     top: 0
 }
 
-.myAceSkin .breadcrumbs {
+.myAceSkin .breadcrumb {
     border: 0;
-    background-color: #f0f0f0
+}
+.myAceSkin .breadcrumb>li.active{
+    color: #9a9a9a;
 }
 
 @media only screen and (max-width: 991px) {
