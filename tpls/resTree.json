@@ -1,0 +1,56 @@
+{
+  "resList":[{
+    "id": "s01",
+    "sName": "系统管理",
+    "sType": 0,
+    "sUrl": "hello.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 1
+  },{
+    "id": "s02",
+    "sParentId": "s01",
+    "sName": "角色管理",
+    "sType": 1,
+    "sUrl": "hello.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 1
+  },{
+    "id": "s03",
+    "sParentId": "s01",
+    "sName": "权限管理",
+    "sType": 0,
+    "sUrl": "hello.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 2
+  },{
+    "id": "s04",
+    "sParentId": "s03",
+    "sName": "新建权限",
+    "sType": 1,
+    "sUrl": "hello.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 2
+  },{
+    "id": "s05",
+    "sParentId": "s03",
+    "sName": "删除权限",
+    "sType": 1,
+    "sUrl": "hello2.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 1
+  },{
+    "id": "s06",
+    "sName": "知识库",
+    "sType": 1,
+    "sUrl": "hello.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 3
+  },{
+    "id": "s07",
+    "sName": "用户管理",
+    "sType": 1,
+    "sUrl": "user/userList.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 2
+  }]
+}

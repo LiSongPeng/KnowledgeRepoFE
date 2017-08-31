@@ -1,6 +1,7 @@
-<a class="{{resnode.sType==0?'dropdown-toggle':''}}" ui-sref="{{resnode.sType==0?'':resnode.sName}}" href="">
-    <i class="{{resnode.sIcon}}"></i>
+<a class="{{resnode.sType==0?'dropdown-toggle':''}}" ui-sref="{{resnode.sType==0?'':resnode.sName}}" href="#" ng-click="navClick(resnode,$event)">
+    <i class="{{resnode.sParentId?'icon-double-angle-right':resnode.sIcon}}"></i>
     <span class="menu-text">{{resnode.sName}}</span>
+    <b ng-if="resnode.sType==0" class="arrow icon-angle-down"></b>
 </a>
 <ul class="submenu" ng-if="!isLeaf(resnode)" >
     <li id="{{'nav-'+resnode.id}}" ng-repeat="resnode in resnode.child | orderBy:'sIndex'" ng-include="'navTreeItem.html'">
