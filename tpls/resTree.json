@@ -1,7 +1,7 @@
 {
   "resList":[{
     "id": "s01",
-    "sName": "资源222管理",
+    "sName": "系统管理",
     "sType": 0,
     "sUrl": "hello.html",
     "sIcon": "icon-dashboard",
@@ -49,7 +49,7 @@
     "id": "s07",
     "sName": "用户管理",
     "sType": 1,
-    "sUrl": "hello.html",
+    "sUrl": "user/userList.html",
     "sIcon": "icon-dashboard",
     "sIndex": 2
   }]

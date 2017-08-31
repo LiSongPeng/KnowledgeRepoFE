@@ -266,3 +266,21 @@
 .myAceSkin .nav-list > li > .submenu > li.open > a > .arrow, .myAceSkin .nav-list > li > .submenu > li > a:hover > .arrow, .myAceSkin .nav-list > li > .submenu > li > .submenu > li.open > a > .arrow, .myAceSkin .nav-list > li > .submenu > li > .submenu > li > a:hover > .arrow {
     color: inherit
 }
+.myAceSkin .ui-jqgrid-view>.ui-jqgrid-titlebar{
+    background-color: #efefef;
+    color: #b5b5b5;
+    font-weight: bold;
+}
+.myAceSkin .ui-jqgrid.ui-widget.ui-widget-content{
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+}
+.myAceSkin .ui-jqgrid .ui-jqgrid-pager .ui-pager-control{
+    height: 100%;
+}
+.myAceSkin .ui-jqgrid .ui-jqgrid-pager{
+    height: 45px;
+}
+.myAceSkin .fm-button{
+    height: auto;
+}
