@@ -1,19 +1,8 @@
 function mainController($scope,$http,baseURL) {
-    $scope.currentPageURL="";
-    $scope.homePage='';
     $scope.resList=[];
 //				从服务器获取json权限数据
     $http.get(baseURL+'resTree.json').then(function (response) {
         $scope.resList=response.data.resList;
-//					配置路由
-        for (var i=0;i<$scope.resList.length;i++) {
-            if($scope.resList[i].sType===1){
-                stateProvider.state($scope.resList[i].id,{
-                    url: '/'+$scope.resList[i].id,
-                    templateUrl: baseURL+$scope.resList[i].sUrl
-                });
-            }
-        }
         $scope.$broadcast('refreshResTree',$scope.resList);
     });
 
@@ -53,6 +42,18 @@ function navController($scope) {
     $scope.$on('refreshResTree',function (event,resList) {
         $scope.resTree=$scope.transData(eval(resList),'id','sParentId','child');
     });
+
+    $scope.sliceUrl=function (url){
+       var suburl = url.slice(0,url.lastIndexOf('.'));
+       if (suburl.lastIndexOf('/')!=-1){
+        suburl = suburl.slice(suburl.lastIndexOf('/'),suburl.length);
+       }
+       if(suburl.lastIndexOf('\\')!=-1){
+        suburl = suburl.slice(suburl.lastIndexOf('\\'),suburl.length);
+       }
+       console.log(suburl);
+        return suburl;
+    };
 
     $scope.isLeaf = function(item){
         return !item.child || !item.child.length;
