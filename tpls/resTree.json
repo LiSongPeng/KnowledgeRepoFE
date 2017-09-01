@@ -52,5 +52,21 @@
     "sUrl": "user/userList.html",
     "sIcon": "icon-dashboard",
     "sIndex": 2
+  },{
+    "id": "s08",
+    "sName": "知识管理",
+    "sParentId": "s06",
+    "sType": 1,
+    "sUrl": "knowledgeRepo/knowledgeList.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 1
+  },{
+    "id": "s09",
+    "sName": "知识审批",
+    "sParentId": "s06",
+    "sType": 1,
+    "sUrl": "user/userList.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 2
   }]
 }
