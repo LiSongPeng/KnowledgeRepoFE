@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>知识库</title>
-    <link rel="stylesheet" href="../../components/stylesheets/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../../components/plugins/toastr/toastr.css">
+    <link rel="stylesheet" href="../components/stylesheets/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../components/plugins/toastr/toastr.css">
     <style>
         .resultItem {
             list-style-type: none;
@@ -63,21 +63,27 @@
                     <div class="input-group">
                         <select ng-model="orderBy" class="form-control" ng-change="search(response.data.page)"
                                 style="width: auto;float: right">
-                            <option id="relevance" value="1">相关度</option>
-                            <option id="useCount" value="2">使用次数</option>
-                            <option id="relevanceAndUseCount" value="3">相关度和使用次数</option>
+                            <option value="1">相关度</option>
+                            <option value="2">使用次数</option>
+                            <option value="3">相关度和使用次数</option>
+                        </select>
+                        <select ng-model="order" class="form-control" ng-change="search(response.data.page)"
+                                style="width: auto;float: right">
+                            <option value="1">升序</option>
+                            <option value="2">降序</option>
                         </select>
                         <span class="input-group-addon">排序规则</span>
                     </div>
                 </li>
                 <li ng-repeat="result in response.data.list" class="resultItem">
                     <div class="result-header">
-                        <h3><a href="{{result.id}}" ng-bind-html="result.kTitle"></a></h3>
+                        <h3><a href="knowledgeDetail.html?detailId={{result.id}}" ng-bind-html="result.kTitle"></a></h3>
                     </div>
                     <div class="result-body" ng-bind-html="result.kAnswer">
                     </div>
                     <div class="result-footer">
-                        使用次数:{{result.kUseCount}}
+                        使用次数:{{result.kUseCount}}&nbsp;&nbsp;
+                        相关程度:{{result.score}}
                     </div>
                 </li>
             </ul>
@@ -102,45 +108,23 @@
     </div>
 </div>
 </div>
-<script type="text/javascript" src="../../components/javascripts/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="../../components/javascripts/bootstrap/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../components/javascripts/bootstrap/bootstrap-typeahead.js"></script>
-<script type="text/javascript" src="../../components/plugins/toastr/toastr.min.js"></script>
-<script type="text/javascript" src="../../components/javascripts/angular.min.js"></script>
-<script type="text/javascript" src="../../components/javascripts/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="../components/javascripts/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="../components/javascripts/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="../components/javascripts/bootstrap/bootstrap-typeahead.js"></script>
+<script type="text/javascript" src="../components/plugins/toastr/toastr.min.js"></script>
+<script type="text/javascript" src="../components/javascripts/angular.min.js"></script>
+<script type="text/javascript" src="../components/javascripts/angular-sanitize.min.js"></script>
 <script>
     var search = angular.module("search", ['ngSanitize']);
     search.controller("searchController", ["$scope", "$http", function ($scope, $http) {
         $scope.displayResult = false;
-        /* $scope.results = [
-             {
-                 id: "sdf",
-                 kTitle: "hello<em>world</em>",
-                 kAnswer: "hs<em>fds</em>fsdfdsfds",
-                 kUseCount: 20,
-                 createTime: new Date().toLocaleString()
-             },
-             {
-                 id: "sdfdsf",
-                 kTitle: "vdsfdsfsdadf",
-                 kAnswer: "avvvsdfds",
-                 kUseCount: 20,
-                 createTime: new Date().toLocaleString()
-             },
-             {
-                 id: "sdf",
-                 kTitle: "<em>hello</em>",
-                 kAnswer: "hsfdsfsdfdsfds",
-                 kUseCount: 20,
-                 createTime: new Date().toLocaleString()
-             },
-         ];*/
         $scope.response = {
             data: {
                 pageNum: 1
             },
         };
-        $scope.orderBy = 1;
+        $scope.orderBy = "1";
+        $scope.order = "1";
         $scope.search = function (page) {
             if (!page && page != 0)
                 page = 1;
@@ -148,12 +132,16 @@
                 toastr.error("页码错误");
                 return;
             }
+            if (!$scope.keyWord) {
+                toastr.error("关键字不能为空");
+                return;
+            }
             $http({
                 method: "GET",
                 url: "http://localhost:8080/knowledgeRepo/repo/searchIndex.form?keyWord=" + $scope.keyWord
-                + "&page=" + page + "&orderBy=" + $scope.orderBy,
+                + "&page=" + page + "&orderBy=" + $scope.orderBy + "&order=" + $scope.order,
             }).then(function successCallback(response) {
-                if (response.data.data.pages > 0) {
+                if (response.data.flag == 200 && response.data.data.pages > 0) {
                     $scope.response = response.data;
                     $scope.displayResult = true;
                 } else {
@@ -173,9 +161,6 @@
             updater: function (item) {
                 return item.replace(/<a(.+?)<\/a>/, ""); //这里一定要return，否则选中不显示
             },
-            /*            afterSelect: function (item) {
-                            alert(item);
-                        },*/
             items: 6, //显示6条
             delay: 500 //延迟时间
         });

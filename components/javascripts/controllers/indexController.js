@@ -8,7 +8,7 @@ function mainController($scope,$http,baseURL) {
 //					配置路由
         for (var i=0;i<$scope.resList.length;i++) {
             if($scope.resList[i].sType===1){
-                stateProvider.state($scope.resList[i].sName,{
+                stateProvider.state($scope.resList[i].id,{
                     url: '/'+$scope.resList[i].id,
                     templateUrl: baseURL+$scope.resList[i].sUrl
                 });
