@@ -6,32 +6,17 @@
     <link rel="stylesheet" href="../components/stylesheets/bootstrap.min.css"/>
     <link rel="stylesheet" href="../components/plugins/toastr/toastr.css">
     <style>
-        .resultItem {
-            list-style-type: none;
-            margin-top: 5px;
-            margin-bottom: 5px;
+        .myRow {
             width: 100%;
         }
 
-        .result-header a {
-            color: blue;
+        .myContainer {
+            width: 98%;
+            margin: 10px auto;
         }
 
-        .result-body {
-        }
-
-        .result-footer {
-            margin-top: 5px;
-            height: 30px;
-        }
-
-        .order-container {
-            width: 100%;
-            display: block;
-            line-height: 100%;
-            height: 34px;
-            margin-bottom: 5px;
-            margin-top: 5px;
+        .column {
+            padding: 0px;
         }
 
         b {
@@ -39,74 +24,76 @@
         }
     </style>
 </head>
-<body ng-app="search">
-<div class="container" ng-controller="searchController" style="margin-top:10px">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1">
-            <div class="input-group">
-                <input id="keyWord" type="text" class="form-control" placeholder="输入关键字进行搜索" ng-model="keyWord">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" style="margin-right: 2px" ng-click="search()">
-                            搜索
-                    </button>
-                    <button class="btn btn-default" type="button" ng-click="keyWord=''">
-                        清空
-                    </button>
-                </span>
+<body>
+<div ng-app="search">
+    <div class="myContainer" ng-controller="searchController">
+        <div class="myRow">
+            <div class="col-lg-8 col-lg-offset-1 column">
+                <div class="form-group">
+                    <input id="keyWord" type="text" ng-model="keyWord" class="form-control" placeholder="请输入关键字"
+                           style="height: 38px"/>
+                </div>
+            </div>
+            <div class="col-lg-2 column">
+                <div class="btn-group">
+                    <button class="btn btn-primary" ng-click="search()">搜索</button>
+                    <button class="btn btn-primary" ng-click="keyWord=''">清空</button>
+                </div>
+            </div>
+        </div>
+        <div class="myRow" ng-show="displayResult">
+            <div class="col-lg-2 col-lg-offset-9 column">
+                <select style="width: 50%" ng-model="orderBy" ng-change="search(response.data.page)">
+                    <option value="1">相关度</option>
+                    <option value="2">查看次数</option>
+                    <option value="3">相关度和查看次数</option>
+                </select>
+                <select style="width: 50%" ng-model="order" ng-change="search(response.data.page)">
+                    <option value="1">升序</option>
+                    <option value="2">降序</option>
+                </select>
+            </div>
+        </div>
+        <div class="myRow" ng-show="displayResult">
+            <div class="col-lg-10 col-lg-offset-1">
+                <ul>
+                    <li ng-repeat="result in response.data.list" class="resultItem">
+                        <div class="result-header">
+                            <h3><a href="knowledgeDetail.html?detailId={{result.id}}" ng-bind-html="result.kTitle"></a>
+                            </h3>
+                        </div>
+                        <div class="result-body" ng-bind-html="result.kAnswer">
+                        </div>
+                        <div class="result-footer">
+                            查看次数:{{result.kUseCount}}&nbsp;&nbsp;
+                            相关程度:{{result.score}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="myRow" ng-show="displayResult">
+            <div class="col-lg-12" style="text-align: center">
+                <ul class="pagination">
+                    <li><a href="#" style="width:42px;height: 42px;padding:0px;line-height:42px"
+                           ng-click="search(response.data.pageNum-1)"
+                    >&laquo;</a></li>
+                    <li ng-repeat="pager in pagers"><a href="#" ng-class="isActive(pager)" ng-click="search(pager)"
+                                                       style="width:42px;height: 42px;padding:0px;line-height:42px">{{pager}}</a>
+                    </li>
+                    <li><a href="#" style="width:42px;height: 42px;padding:0px;line-height:42px"
+                           ng-click="search(response.data.pageNum+1)"
+                    >&raquo;</a></li>
+                    <li style="width:42px;height: 42px;padding:0px;line-height:42px">{{response.data.pages}}页</li>
+                    <li><input type="number" style="height: 32px;width: 60px;padding:0px" ng-model="jumpToPage"
+                               value="1"></li>
+                    <li>
+                        <button class="btn btn-primary" ng-click="search(jumpToPage)">跳转</button>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="row" ng-show="displayResult">
-        <div class="col-lg-8 col-lg-offset-1">
-            <ul style="width: 100%;padding:0px">
-                <li class="order-container">
-                    <div class="input-group">
-                        <select ng-model="orderBy" class="form-control" ng-change="search(response.data.page)"
-                                style="width: auto;float: right">
-                            <option value="1">相关度</option>
-                            <option value="2">使用次数</option>
-                            <option value="3">相关度和使用次数</option>
-                        </select>
-                        <select ng-model="order" class="form-control" ng-change="search(response.data.page)"
-                                style="width: auto;float: right">
-                            <option value="1">升序</option>
-                            <option value="2">降序</option>
-                        </select>
-                        <span class="input-group-addon">排序规则</span>
-                    </div>
-                </li>
-                <li ng-repeat="result in response.data.list" class="resultItem">
-                    <div class="result-header">
-                        <h3><a href="knowledgeDetail.html?detailId={{result.id}}" ng-bind-html="result.kTitle"></a></h3>
-                    </div>
-                    <div class="result-body" ng-bind-html="result.kAnswer">
-                    </div>
-                    <div class="result-footer">
-                        使用次数:{{result.kUseCount}}&nbsp;&nbsp;
-                        相关程度:{{result.score}}
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="row" ng-show="displayResult">
-        <div class="col-lg-8 col-lg-offset-1" style="text-align: center">
-            <ul class="pagination">
-                <li><a href="#" ng-click="search(response.data.pageNum-1)">&laquo;</a></li>
-                <li class="active">
-                    <a href="#">{{response.data.pageNum}}</a>
-                </li>
-                <li><a href="#" ng-click="search(response.data.pageNum+1)">&raquo;</a></li>
-                <li>
-                    <input type="number" ng-model="jumpToPage" style="width: 60px;height:34px"
-                           placeholder="{{response.data.pageNum}}">
-                    共{{response.data.pages}}页
-                    <button class="btn btn-default" ng-click="search(jumpToPage)">跳转</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
 </div>
 <script type="text/javascript" src="../components/javascripts/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../components/javascripts/bootstrap/bootstrap.min.js"></script>
@@ -117,7 +104,7 @@
 <script>
     var search = angular.module("search", ['ngSanitize']);
     search.controller("searchController", ["$scope", "$http", function ($scope, $http) {
-        $scope.displayResult = false;
+        $scope.displayResult = true;
         $scope.response = {
             data: {
                 pageNum: 1
@@ -125,6 +112,11 @@
         };
         $scope.orderBy = "1";
         $scope.order = "1";
+        $scope.isActive = function (page) {
+            if (page == $scope.response.data.pageNum)
+                return "active";
+            return "";
+        }
         $scope.search = function (page) {
             if (!page && page != 0)
                 page = 1;
@@ -141,9 +133,17 @@
                 url: "http://localhost:8080/knowledgeRepo/repo/searchIndex.form?keyWord=" + $scope.keyWord
                 + "&page=" + page + "&orderBy=" + $scope.orderBy + "&order=" + $scope.order,
             }).then(function successCallback(response) {
-                if (response.data.flag == 200 && response.data.data.pages > 0) {
+                if (response.data.data.pages > 0) {
                     $scope.response = response.data;
                     $scope.displayResult = true;
+                    var pagers = [];
+                    var pageNum = $scope.response.data.pageNum;
+                    var totalPages = $scope.response.data.pages;
+                    for (var i = -4; i < 5; i++) {
+                        if (pageNum + i > 0 && pageNum + i <= totalPages)
+                            pagers.push(pageNum);
+                    }
+                    $scope.pagers = pagers;
                 } else {
                     toastr.info("未查找到结果");
                 }
@@ -161,6 +161,9 @@
             updater: function (item) {
                 return item.replace(/<a(.+?)<\/a>/, ""); //这里一定要return，否则选中不显示
             },
+            /*            afterSelect: function (item) {
+                            alert(item);
+                        },*/
             items: 6, //显示6条
             delay: 500 //延迟时间
         });
