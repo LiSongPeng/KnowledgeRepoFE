@@ -46,12 +46,11 @@ function navController($scope) {
     $scope.sliceUrl=function (url){
        var suburl = url.slice(0,url.lastIndexOf('.'));
        if (suburl.lastIndexOf('/')!=-1){
-        suburl = suburl.slice(suburl.lastIndexOf('/'),suburl.length);
+        suburl = suburl.slice(suburl.lastIndexOf('/')+1,suburl.length);
        }
        if(suburl.lastIndexOf('\\')!=-1){
-        suburl = suburl.slice(suburl.lastIndexOf('\\'),suburl.length);
+        suburl = suburl.slice(suburl.lastIndexOf('\\')+1,suburl.length);
        }
-       console.log(suburl);
         return suburl;
     };
 

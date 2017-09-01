@@ -2,13 +2,12 @@ var app=angular.module('lazyloadConfig',['oc.lazyLoad']);
 app.constant('Modules_Config', [
     {
         name: 'jqGrid',
-        serie: true,
+        serie:true,
         files: [
-            "../components/plugins/jqGrid/css/ui.jqgrid.css",
-            "../components/plugins/jqGrid/js/grid.addons.js",
+            // "../components/plugins/jqGrid/css/ui.jqgrid.css",
             "../components/plugins/jqGrid/js/jquery.jqGrid.min.js",
-            "../components/plugins/jqGrid/js/grid.jqueryui.js",
-            "../components/plugins/jqGrid/js/grid.locale-cn.js"
+            "../components/plugins/jqGrid/js/grid.locale-cn.js",
+            "../components/plugins/jqGrid/js/grid.addons.js"
         ]
     }, {
         name:'select2',

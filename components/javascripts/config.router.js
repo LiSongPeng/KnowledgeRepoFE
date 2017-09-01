@@ -22,9 +22,9 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             url: '/home',
             templateUrl: 'home.html'
         })
-        .state("search",{
+        .state("knowledgeList",{
             url:"/search.html",
-            templateUrl:"search.html",
+            templateUrl:"knowledgeRepo/knowledgeList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
                     return $ocLazyLoad.load("jqGrid");
@@ -33,7 +33,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
         })
         .state("userList",{
             url:"/userList.html",
-            templateUrl:"userList.html",
+            templateUrl:"user/userList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
                     return $ocLazyLoad.load(["jqGrid"]);
