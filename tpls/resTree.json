@@ -41,7 +41,7 @@
   },{
     "id": "s06",
     "sName": "知识库",
-    "sType": 1,
+    "sType": 0,
     "sUrl": "hello.html",
     "sIcon": "icon-dashboard",
     "sIndex": 3
@@ -66,6 +66,22 @@
     "sParentId": "s06",
     "sType": 1,
     "sUrl": "user/userList.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 2
+  },{
+    "id": "s10",
+    "sName": "知识搜索",
+    "sParentId": "s06",
+    "sType": 1,
+    "sUrl": "search.html",
+    "sIcon": "icon-dashboard",
+    "sIndex": 1
+  },{
+    "id": "s11",
+    "sName": "知识详细",
+    "sParentId": "s06",
+    "sType": 1,
+    "sUrl": "knowledgeDetail.html",
     "sIcon": "icon-dashboard",
     "sIndex": 2
   }]
