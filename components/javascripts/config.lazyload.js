@@ -43,5 +43,19 @@ app.constant('Modules_Config', [
         files:[
             "../components/plugins/bootstrap-validator/validator.min.js"
         ]
+    },{
+        name:'res_search',
+        serie:true,
+        files:[
+            "../components/javascripts/bootstrap/bootstrap-typeahead.js",
+            "../components/javascripts/angular-sanitize.min.js",
+            "../components/javascripts/res_js/search.js"
+        ]
+    },{
+        name:'res_knowledgeDetail',
+        serie:true,
+        files:[
+            "../components/javascripts/res_js/detail.js"
+        ]
     }
 ]);

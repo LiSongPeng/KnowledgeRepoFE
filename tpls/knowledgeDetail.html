@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>解答详细</title>
-    <link rel="stylesheet" href="../components/stylesheets/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../components/plugins/toastr/toastr.css">
+    <!--<link rel="stylesheet" href="../components/stylesheets/bootstrap.min.css"/>-->
+    <!--<link rel="stylesheet" href="../components/plugins/toastr/toastr.css">-->
     <style>
         .item {
             margin: 15px 0;
@@ -78,44 +78,10 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="../components/javascripts/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="../components/javascripts/bootstrap/bootstrap.min.js"></script>
-<script type="text/javascript" src="../components/plugins/toastr/toastr.min.js"></script>
-<script type="text/javascript" src="../components/javascripts/angular.min.js"></script>
-<script>
-    var detail = angular.module("detail", []);
+<!--<script type="text/javascript" src="../components/javascripts/jquery-2.0.3.min.js"></script>-->
+<!--<script type="text/javascript" src="../components/javascripts/bootstrap/bootstrap.min.js"></script>-->
+<!--<script type="text/javascript" src="../components/plugins/toastr/toastr.min.js"></script>-->
+<!--<script type="text/javascript" src="../components/javascripts/angular.min.js"></script>-->
 
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
-
-    var detailController = detail.controller("detailController", ["$scope", "$http", function ($scope, $http) {
-        var detailId = getQueryString("detailId");
-        if (!detailId) {
-            toastr.error("没有输入查询的知识ID");
-            return;
-        }
-
-        $http({
-            method: "GET",
-            url: "http://localhost:8080/knowledgeRepo/repo/getKnowledgeDetail.form?id=" + detailId,
-        }).then(function successCallback(response) {
-            console.log(response.data.data);
-            if (response.data.flag == 200) {
-                $scope.response = response.data.data;
-                $scope.response.createTime = new Date($scope.response.createTime).toLocaleString();
-                $scope.response.kApprTime = new Date($scope.response.kApprTime).toLocaleString();
-            } else {
-                toastr.info("未查找到结果");
-            }
-
-        }, function errorCallback(response) {
-            toastr.error("数据加载失败");
-        });
-    }]);
-</script>
 </body>
 </html>

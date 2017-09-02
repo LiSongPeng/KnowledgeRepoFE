@@ -1,14 +1,5 @@
 var app=angular.module('mainRouter',['ui.router','lazyloadConfig']);
-// app.provider('routerConfig',['$stateProvider','$urlRouterProvider','$ocLazyLoaderProvider','Module_config',function ($stateProvider,$urlRouterProvider,$ocLazyLoaderProvider,Modules_Config) {
-//     console(123);
-//     this.$get=function () {
-//         return {
-//             setRouteState: function () {
-//
-//             }
-//         }
-//     };
-// }]);
+
 
 app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modules_Config) {
     $ocLazyLoadProvider.config({
@@ -23,7 +14,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl: 'home.html'
         })
         .state("knowledgeList",{
-            url:"/search.html",
+            url:"/knowledgeRepo/knowledgeList.html",
             templateUrl:"knowledgeRepo/knowledgeList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
@@ -32,7 +23,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             }
         })
         .state("userList",{
-            url:"/userList.html",
+            url:"/user/userList.html",
             templateUrl:"user/userList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
@@ -40,4 +31,23 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
+        .state("search",{
+            url:"/search.html",
+            templateUrl:"search.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","res_search"]);
+                }
+            }
+        })
+        .state("knowledgeDetail",{
+            url:"/knowledgeDetail.html",
+            templateUrl:"knowledgeDetail.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","res_knowledgeDetail"])
+                }
+            }
+        })
+
 });
