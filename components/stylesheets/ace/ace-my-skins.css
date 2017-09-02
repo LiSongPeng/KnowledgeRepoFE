@@ -3,7 +3,14 @@
 }
 
 .myAceSkin .navbar {
-    background: #222a2d
+    background-color: #222a2d
+}
+
+.myAceSkin .ace-nav>li>a{
+    background-color: transparent;
+}
+.myAceSkin .ace-nav>li.open>a{
+    background-color: rgba(128, 128, 128, 0.4) !important;
 }
 
 .myAceSkin .sidebar, .myAceSkin .sidebar:before {
