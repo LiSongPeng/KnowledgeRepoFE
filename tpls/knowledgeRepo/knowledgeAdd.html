@@ -54,7 +54,7 @@
             margin-top: 10px;
             color: #888;
         }
-        .basic-grey input[type="text"], .basic-grey input[type="email"], .basic-grey textarea, .basic-grey select {
+        .basic-grey input[type="text"], .basic-grey input[type="createUserId"], .basic-grey textarea, .basic-grey select {
             border: 1px solid #DADADA;
             color: #888;
             height: 30px;
@@ -104,10 +104,11 @@
     </style>
 
     <script src="../../components/javascripts/wangEditor.min.js"></script>
+    <script src="../../components/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 <div class="basic-grey">
-    <form action="" method="post" class="STYLE-NAME">
+    <form action="#" method="post" class="STYLE-NAME" id="knowledge">
         <h1>知识录入
             <!--<span>Please fill all the texts in the fields.</span>-->
         </h1>
@@ -117,7 +118,7 @@
         </label>
         <label>
             <span>创建人 :</span>
-            <input id="createUserId" type="email" name="createUserId" placeholder="填写创建人" />
+            <input id="createUserId" type="createUserId" name="createUserId" placeholder="填写创建人" />
         </label>
 
         <label>
@@ -127,36 +128,60 @@
         <label>
             <span>知识解答 :</span>
             <!--<textarea id="kAnswer" name="kAnswer" placeholder="填写知识解答"></textarea>-->
-
+            <input id="kAnswer"  name="kAnswer" style="display:none"/>
             <div id="div1" class="text">
             </div>
 
 
-            <script type="text/javascript" src="/wangEditor.min.js"></script>
-            <script type="text/javascript">
-                var E = window.wangEditor
-                var editor1 = new E('#div1')  // 两个参数也可以传入 elem 对象，class 选择器
 
-                editor1.customConfig.menus = [
-                    'head',
-                    'bold',
-                    'italic',
-                    'underline'
-                ]
-
-                editor1.create()
-            </script>
         </label>
 
         <label>
-            <span>&nbsp;</span>
-            <input type="reset" class="button" value="重置" />
-            <input type="button" class="button" value="提交" />
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+            <input type="reset" class="button" id="reset" value="重置" />
+            <input type="submit" class="button" id="submit"  value="提交" />
 
         </label>
     </form>
 </div>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor1 = new E('#div1')  // 两个参数也可以传入 elem 对象，class 选择器
 
+    editor1.customConfig.menus = [
+        'head',
+        'bold',
+        'italic',
+        'underline'
+    ]
+
+    editor1.create()
+
+    document.getElementById('submit').addEventListener('click', function () {
+        document.getElementById("kAnswer").value=editor1.txt.text();
+        alert("知识解答"+document.getElementById("kAnswer").value)
+    }, false)
+
+
+    $(function(){
+        $("#knowledge").submit(function(){
+            var data = $(this).serialize(); //序列化表单数据
+            $.getJSON("http://localhost:8080/knowledgeRepo/selectPage.form",data,function(json){
+                var msg = '';
+
+                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+
+
+//                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+            });
+            return false;
+        });
+    });
+
+
+
+</script>
 
 </body>
 </html>
