@@ -78,12 +78,12 @@
                            ng-click="search(response.data.pageNum-1)"
                     >&laquo;</a></li>
                     <li ng-repeat="pager in pagers" ng-class="isActive(pager)"><a ng-click="search(pager)"
-                                                       style="width:42px;height: 42px;padding:0px;line-height:42px">{{pager}}</a>
+                                                                                  style="width:42px;height: 42px;padding:0px;line-height:42px">{{pager}}</a>
                     </li>
                     <li><a style="width:42px;height: 42px;padding:0px;line-height:42px"
                            ng-click="search(response.data.pageNum+1)"
                     >&raquo;</a></li>
-                    <li style="width:42px;height: 42px;padding:0px;line-height:42px">{{response.data.pages}}页</li>
+                    <li style="width:42px;height: 42px;padding:0px;line-height:42px">共{{response.data.pages}}页</li>
                     <li><input type="number" style="height: 32px;width: 60px;padding:0px" ng-model="jumpToPage"
                     ></li>
                     <li>

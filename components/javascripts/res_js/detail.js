@@ -5,13 +5,15 @@ function getParameter(name) {
     return str.substr(str.indexOf(name) + name.length + 1, str.length);
 }
 
-var detailController = detail.controller("detailController", ["$scope", "$http", function ($scope, $http) {
+var detailController = detail.controller("detailController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
     var detailId = getParameter("detailId");
     if (!detailId) {
         toastr.error("没有输入查询的知识ID");
         return;
     }
-
+    $scope.getTrustedHtml = function (html) {
+        return $sce.trustAsHtml(html);
+    };
     $http({
         method: "GET",
         url: "http://localhost:8080/knowledgeRepo/repo/getKnowledgeDetail.form?id=" + detailId,
