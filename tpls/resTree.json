@@ -74,7 +74,7 @@
       "sName": "知识审批",
       "sParentId": "s06",
       "sType": 1,
-      "sUrl": "user/userList.html",
+      "sUrl": "knowledgeAdd.html",
       "sIcon": "icon-dashboard",
       "sIndex": 2
     },
@@ -85,7 +85,7 @@
       "sType": 1,
       "sUrl": "search.html",
       "sIcon": "icon-dashboard",
-      "sIndex": 1
+      "sIndex": 3
     }
   ]
 }
