@@ -56,5 +56,12 @@ app.constant('Modules_Config', [
         files: [
             "../components/javascripts/res_js/detail.js"
         ]
+    }, {
+        name: 'res_knowledgeAdd',
+        serie: true,
+        files: [
+            "../components/javascripts/wangEditor.min.js",
+            "../components/javascripts/jquery-2.0.3.min.js"
+        ]
     }
 ]);

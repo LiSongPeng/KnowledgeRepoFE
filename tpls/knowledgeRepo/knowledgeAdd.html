@@ -167,7 +167,7 @@
     $(function(){
         $("#knowledge").submit(function(){
             var data = $(this).serialize(); //序列化表单数据
-            $.getJSON("http://localhost:8080/knowledgeRepo/selectPage.form",data,function(json){
+            $.getJSON("http://localhost:8080/knowledgeRepo/addKnowledge.form",data,function(json){
                 var msg = '';
 
                     msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
