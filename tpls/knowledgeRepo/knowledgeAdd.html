@@ -9,7 +9,7 @@
         .basic-grey {
             margin-left:auto;
             margin-right:auto;
-            max-width: 500px;
+            max-width: 800px;
             background: #F7F7F7;
             padding: 25px 15px 25px 10px;
             font: 12px Georgia, "Times New Roman", Times, serif;
@@ -17,6 +17,19 @@
             text-shadow: 1px 1px 1px #FFF;
             border:1px solid #E4E4E4;
         }
+
+        .text {
+            margin-left:auto;
+            margin-right:auto;
+            max-width: 450px;
+            background: #F7F7F7;
+            padding: 25px 15px 25px 10px;
+            font: 12px Georgia, "Times New Roman", Times, serif;
+            color: #888;
+            text-shadow: 1px 1px 1px #FFF;
+
+        }
+
         .basic-grey h1 {
             font-size: 25px;
             padding: 0px 0px 10px 40px;
@@ -90,41 +103,64 @@
         }
     </style>
 
-
+    <script src="../../components/javascripts/wangEditor.min.js"></script>
 </head>
 <body>
 <div class="basic-grey">
-<form action="" method="post" class="STYLE-NAME">
-    <h1>知识录入
-        <!--<span>Please fill all the texts in the fields.</span>-->
-    </h1>
-    <label>
-        <span>知识标题 :</span>
-        <input id="kTitle" type="text" name="kTitle" placeholder="填写知识标题" />
-    </label>
-    <label>
-        <span>创建人 :</span>
-        <input id="createUserId" type="email" name="createUserId" placeholder="填写创建人" />
-    </label>
+    <form action="" method="post" class="STYLE-NAME">
+        <h1>知识录入
+            <!--<span>Please fill all the texts in the fields.</span>-->
+        </h1>
+        <label>
+            <span>知识标题 :</span>
+            <input id="kTitle" type="text" name="kTitle" placeholder="填写知识标题" />
+        </label>
+        <label>
+            <span>创建人 :</span>
+            <input id="createUserId" type="email" name="createUserId" placeholder="填写创建人" />
+        </label>
 
-    <label>
-        <span>创建时间 :</span>
-        <input id="createTime" type="datetime" name="createTime" placeholder="填写创建时间" />
-        Date and time: <input type="datetime" name="user_date" />
+        <label>
+            <span>创建时间 :</span>
+            <input id="createTime" type="datetime-local" name="createTime" placeholder="2015/03/27 10:41" />
+        </label>
+        <label>
+            <span>知识解答 :</span>
+            <!--<textarea id="kAnswer" name="kAnswer" placeholder="填写知识解答"></textarea>-->
 
-    </label>
-    <label>
-        <span>知识解答 :</span>
-        <textarea id="kAnswer" name="kAnswer" placeholder="填写知识解答"></textarea>
-    </label>
+            <div id="div1" class="text">
+            </div>
 
-    <label>
-        <span>&nbsp;</span>
-        <input type="reset" class="button" value="重置" />
-        <input type="button" class="button" value="提交" />
 
-    </label>
-</form>
+            <script type="text/javascript" src="/wangEditor.min.js"></script>
+            <script type="text/javascript">
+                var E = window.wangEditor
+                var editor1 = new E('#div1')  // 两个参数也可以传入 elem 对象，class 选择器
+
+                editor1.customConfig.menus = [
+                    'head',
+                    'bold',
+                    'italic',
+                    'underline'
+                ]
+
+                editor1.create()
+            </script>
+        </label>
+
+        <label>
+            <span>&nbsp;</span>
+            <input type="reset" class="button" value="重置" />
+            <input type="button" class="button" value="提交" />
+
+        </label>
+    </form>
 </div>
+
+
 </body>
 </html>
+
+
+
+
