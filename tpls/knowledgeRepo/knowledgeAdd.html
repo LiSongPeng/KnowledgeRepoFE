@@ -160,7 +160,7 @@
 
     document.getElementById('submit').addEventListener('click', function () {
         document.getElementById("kAnswer").value=editor1.txt.text();
-        alert("知识解答"+document.getElementById("kAnswer").value)
+
     }, false)
 
 
@@ -175,7 +175,8 @@
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
             });
-            alert("aaaaaaa");
+            alert("添加成功！")
+            location.href="index.html#!/knowledgeRepo/knowledgeList.html"
 
             return false;
         });
