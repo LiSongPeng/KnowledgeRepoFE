@@ -3,11 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>用户列表</title>
-    <!--<link href="../components/stylesheets/jquery-ui-1.10.3.full.min.css" rel="stylesheet">-->
-    <!--<link href="../components/stylesheets/jqGrid-skin.css" rel="stylesheet">-->
-    <!--<link href="../components/plugins/jqGrid/css/ui.jqgrid.css" rel="stylesheet">-->
-    <!--<link href="../components/plugins/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet">-->
-    <!--<link href="../components/plugins/jqGrid/css/ui.jqgrid-bootstrap-ui.css" rel="stylesheet">-->
 </head>
 <body>
     <div class="row">
@@ -17,13 +12,9 @@
             <div id="grid-pager"></div>
         </div>
     </div>
-    <!--<script src="../../components/javascripts/jquery-2.0.3.min.js"></script>-->
-    <!--<script src="../../components/plugins/jqGrid/js/jquery.jqGrid.min.js"></script>-->
-    <!--<script src="../../components/plugins/jqGrid/js/grid.addons.js"></script>-->
-    <!--<script src="../../components/plugins/jqGrid/js/grid.locale-cn.js"></script>-->
     <script type="text/javascript">
         jQuery(function ($) {
-            var table_url='userList.json';
+            var table_url='http://localhost:8080/knowledgeRepo/user/query.form';
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
             var grid_searcher ="#grid-search";
@@ -36,6 +27,32 @@
                 {name:'createTime',index:'createTime',width:110,editable:false,sorttype:"date"},
                 {name:'uLastOnline',index:'uLastOnline',width:110,editable:false,sorttype:"date"}
             ];
+            var prmNames={
+                page:"currentPage",    // 表示请求页码的参数名称
+                rows:"pageSize",    // 表示请求行数的参数名称
+                sort: "sidx", // 表示用于排序的列名的参数名称
+                order: "sord", // 表示采用的排序方式的参数名称
+                search:"search", // 表示是否是搜索请求的参数名称
+                nd:"nd", // 表示已经发送请求的次数的参数名称
+                id:"id", // 表示当在编辑数据模块中发送数据时，使用的id的名称
+                oper:"oper",    // operation参数名称（我暂时还没用到）
+                editoper:"edit", // 当在edit模式中提交数据时，操作的名称
+                addoper:"add", // 当在add模式中提交数据时，操作的名称
+                deloper:"del", // 当在delete模式中提交数据时，操作的名称
+                subgridid:"id", // 当点击以载入数据到子表时，传递的数据名称
+                npage: null,
+                totalrows:"totalCounts" // 表示需从Server得到总共多少行数据的参数名称，参见jqGrid选项中的rowTotal
+            };
+            var jsonReaderConfig={
+                root: "content",   // json中代表实际模型数据的入口
+                page: "currentPage",   // json中代表当前页码的数据
+                total: "totalPage", // json中代表页码总数的数据
+                records: "totalCounts", // json中代表数据行总数的数据
+                cell: "cell",
+                id: "id",
+                userdata: "userdata",
+                repeatitems: false
+            };
             jQuery(grid_selector).jqGrid({
                 url: table_url,
                 datatype: "json",
@@ -50,9 +67,8 @@
                 multiboxonly: true,
                 caption: "用户列表",
                 autowidth: true,
-                jsonReader: {
-                    repeatitems: false
-                },
+                prmNames: prmNames,
+                jsonReader: jsonReaderConfig,
                 loadComplete : function() {
                     var table = this;
                     setTimeout(function(){
@@ -65,80 +81,30 @@
                 }
             });
             jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
-                edit: true,
+                edit: false,
                 editicon : 'icon-pencil gray',
-                add: true,
+                add: false,
                 addicon : 'icon-plus-sign purple',
-                del: false,
+                del: true,
                 delicon : 'icon-trash red',
-                search: true,
+                search: false,
                 searchicon : 'icon-search orange',
-                refresh: true,
+                refresh: false,
                 refreshicon : 'icon-refresh green',
-                view: true,
+                view: false,
                 viewicon : 'icon-zoom-in grey'
-            },{
-                //edit record form
-                //closeAfterEdit: true,
-                recreateForm: true,
-                beforeShowForm : function(e) {
-                    var form = $(e[0]);
-                    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
-                    style_edit_form(form);
-                }
-            },
-            {
-                //new record form
-                closeAfterAdd: true,
-                recreateForm: true,
-                viewPagerButtons: false,
-                beforeShowForm : function(e) {
-                    var form = $(e[0]);
-                    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                    style_edit_form(form);
-                }
-            },
-            {
-                //delete record form
-                recreateForm: true,
-                beforeShowForm : function(e) {
-                    var form = $(e[0]);
-                    if(form.data('styled')) return false;
+            })
+                .navButtonAdd(pager_selector,{
+                    caption:"",
+                    buttonicon:"icon-plus-sign purple",
+                    onClickButton:function () {
+                        alert("addButton");
+                    },
+                    title:"新建用户",
+                    position:"first"
+                },{
 
-                    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                    style_delete_form(form);
-
-                    form.data('styled', true);
-                },
-                onClick : function(e) {
-                    alert(1);
-                }
-            },
-            {
-                //search form
-                recreateForm: true,
-                afterShowSearch: function(e){
-                var form = $(e[0]);
-                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
-                style_search_form(form);
-                },
-                afterRedraw: function(){
-                    style_search_filters($(this));
-                },
-                multipleSearch: true,
-                /**
-                 multipleGroup:true,
-                 showQuery: true
-                 */
-            },
-            {
-                //view record form
-                recreateForm: true,
-                beforeShowForm: function(e){
-                    var form = $(e[0]);
-                    form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-                }
-            });
+                });
 
             jQuery(grid_searcher).filterGrid(grid_selector,{
 //                gridModel: true,
