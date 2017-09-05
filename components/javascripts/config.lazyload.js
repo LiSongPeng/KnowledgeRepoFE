@@ -4,7 +4,10 @@ app.constant('Modules_Config', [
         name: 'jqGrid',
         serie: true,
         files: [
-            // "../components/plugins/jqGrid/css/ui.jqgrid.css",
+            "../components/plugins/jqGrid/css/ui.jqgrid.css",
+            "../components/stylesheets/ace/ace.min.css",
+            "../components/stylesheets/ace/ace-my-skins.css",
+            "../components/javascripts/jquery-ui-1.10.3.full.min.js",
             "../components/plugins/jqGrid/js/jquery.jqGrid.min.js",
             "../components/plugins/jqGrid/js/grid.locale-cn.js",
             "../components/plugins/jqGrid/js/grid.addons.js"
