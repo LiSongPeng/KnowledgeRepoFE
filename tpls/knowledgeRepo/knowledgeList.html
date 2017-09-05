@@ -49,7 +49,7 @@
         $("#grid-table").jqGrid({
 
             url: "http://localhost:8080/knowledgeRepo/selectPage.form",
-           // url:'header("Access-Control-Allow-Origin：http://www.test2.com")',
+
 
             mtype: "GET",
             //data: grid_data, //当 datatype 为"local" 时需填写
@@ -59,17 +59,6 @@
 
             colNames: ['知识id', '知识标题', '知识解答', '使用次数', '最后一次使用时间', '审批状态', '审批人', '审批时间', '审批意见', '创建人', '创建时间'],
             colModel: [
-//                {name: "id", index: "id", width: 100, editable: false, editoptions: {size: "20", maxlength: "30"}},
-//                {name: 'kTitle', index: 'kTitle', width: 100,editable: true, edittype: "select", editoptions: {value: "1:采购入库;2:退用入库"}},
-//                {name: 'kAnswer', index: 'kAnswer', width: 170, sorttype: "double", editable: true},
-//                {name: 'kUseCount', index: 'kUseCount', width: 100, editable: true, editoptions: {size: "20", maxlength: "30"}},
-//                {name: 'kUseTimeLast', index: 'kUseTimeLast', width: 250, sortable: false, editable: true, edittype: "textarea", editoptions: {rows: "2", cols: "10"}},
-//                {name: 'kApprStatus', index: 'kApprStatus', width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-//                {name: 'kApprUserId', index: 'kApprUserId', width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-//                {name: 'kApprTime', index: 'kApprTime', width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-//                {name: 'kApprMemo', index: 'kApprMemo', width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-//                {name: 'createUserId', index: 'createUserId', width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-//                {name: 'createTime', index: 'createTime', width: 150, editable: true, editoptions: {size: "20", maxlength: "30"},
 
                 {name: "id", index: "id", width: 100, editable: false, editoptions: {size: "20", maxlength: "30"}},
                 {name: "kTitle", index: "kTitle", width: 100,editable: true, edittype: "select", editoptions: {value: "1:采购入库;2:退用入库"}},
@@ -81,33 +70,18 @@
                 {name: "kApprTime", index: "kApprTime", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
                 {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
                 {name: "createUserId", index: "createUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "createTime", index: "createTime", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"},
-
-                    loadComplete : function() {
-                    var table = this;
-                    setTimeout(function(){
-                        styleCheckbox(table);
-
-                        updateActionIcons(table);
-                        updatePagerIcons(table);
-                        enableTooltips(table);
-                    }, 0);
-                }
-
-            },],
+                {name: "createTime", index: "createTime", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}
+            }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
-            scroll: 1,
+            //scroll: 1,
             rowNum: 8, //每页显示记录数
             rowList: [10, 20, 30], //用于改变显示行数的下拉列表框的元素数组。
             pager: pager_selector, //分页、按钮所在的浏览导航栏
             altRows: true, //设置为交替行表格,默认为false
-//toppager: true,//是否在上面显示浏览导航栏
             multiselect: true, //是否多选
-//multikey: "ctrlKey",//是否只能用Ctrl按键多选
             multiboxonly: true, //是否只能点击复选框多选
-// subGrid : true,
-//sortname:'id',//默认的排序列名
-//sortorder:'asc',//默认的排序方式（asc升序，desc降序）
+        //sortname:'id',//默认的排序列名
+        //sortorder:'asc',//默认的排序方式（asc升序，desc降序）
             caption: "知识管理", //表名
             autowidth: true, //自动宽
 //
@@ -118,104 +92,94 @@
                 page: "currentPage",
                 total: "totalPages",
                 records: "totalCounts"
+            },
+            loadComplete : function() {
+                var table = this;
+                setTimeout(function(){
+                    styleCheckbox(table);
+
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
             }
         });
 //浏览导航栏添加功能部分代码
 
-//        jQuery(grid_selector)
-//
-//            .navGrid(pager_selector,{edit:false,add:false,del:false,search:false})
-//
-//            .navButtonAdd(pager_selector,{
-//
-//                caption:"Add",
-//
-//                buttonicon:"ui-icon-add",
-//
-//                onClickButton: function(){
-//
-//                    alert("Adding Row");
-//                    location.href="index.html?_ijt=66mhc10j5084fqriliqmikc2jh#!/aa.html"
-//                },
-//
-//                position:"last"
-//
-//            })
-//
-//            .navButtonAdd(pager_selector,{
-//
-//                caption:"Del",
-//
-//                buttonicon:"ui-icon-del",
-//
-//                onClickButton: function(){
-//
-//                    alert("Deleting Row");
-//
-//                },
-//
-//                position:"last"
-//
-//            });
+        jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
+            edit: false,
+            editicon : 'icon-pencil gray',
+            add: false,
+            addicon : 'icon-plus-sign purple',
+            del: true,
+            delicon : 'icon-trash red',
+            search: false,
+            searchicon : 'icon-search orange',
+            refresh: false,
+            refreshicon : 'icon-refresh green',
+            view: false,
+            viewicon : 'icon-zoom-in grey'
+        })
+            .navButtonAdd(pager_selector,{
+                caption:"",
+                buttonicon:"icon-plus-sign purple",
+                onClickButton:function () {
 
+                    location.href="index.html#!/knowledgeRepo/knowledgeAdd.html"
+                },
+                title:"知识添加",
+                position:"first"
+            },{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        $(grid_selector).navGrid(pager_selector, {
-                search: true, // 检索
-                editicon: 'icon-pencil blue',
-                add: true, //添加 （只有editable为true时才能显示属性）
-                addicon : 'icon-plus-sign purple',
-                edit: true, //修改（只有editable为true时才能显示属性）
-                searchicon : 'icon-search orange',
-                del: true, //删除
-                delicon : 'icon-trash red',
-                refresh: true, //刷新
-                refreshicon : 'icon-refresh green'
-            }, {
-                onClickButton: function(){
-                    alert("Deleting Row");
-                }
-
-//                //afterShowForm:afterShowEdit,
-//                 afterSubmit:processAddEdit ,
-//                 beforeSubmit:validateData,
-//                 //closeAfterAdd:true,
-//                 closeAfterEdit:true,
-//                 reloadAfterSubmit:true
-
-            }, // edit options
-            {}, // add options
-            {
-                url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form",
-            }, // delete options
-            {
-                multipleSearch: true
             });
 
-        $(grid_selector).navButtonAdd(pager_selector,{
-            caption:"add",
-            buttonicon:"ui-icon-add",
-            onClickButton: function(){
-                alert("Deleting Row");
-                location.href="index.html#!/knowledgeRepo/knowledgeAdd.html"
-            },
-            position:"fist"
-        });
+
+
+
+
+
+
+//        $(grid_selector).navGrid(pager_selector, {
+//                search: true, // 检索
+//                editicon: 'icon-pencil blue',
+//                add: true, //添加 （只有editable为true时才能显示属性）
+//                addicon : 'icon-plus-sign purple',
+//                edit: true, //修改（只有editable为true时才能显示属性）
+//                searchicon : 'icon-search orange',
+//                del: true, //删除
+//                delicon : 'icon-trash red',
+//                refresh: true, //刷新
+//                refreshicon : 'icon-refresh green'
+//            }, {
+//                onClickButton: function(){
+//                    alert("Deleting Row");
+//                }
+//
+////                //afterShowForm:afterShowEdit,
+////                 afterSubmit:processAddEdit ,
+////                 beforeSubmit:validateData,
+////                 //closeAfterAdd:true,
+////                 closeAfterEdit:true,
+////                 reloadAfterSubmit:true
+//
+//            }, // edit options
+//            {}, // add options
+//            {
+//                url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form",
+//            }, // delete options
+//            {
+//                multipleSearch: true
+//            });
+//
+//        $(grid_selector).navButtonAdd(pager_selector,{
+//            caption:"add",
+//            buttonicon:"ace-icon fa fa-globe blue",
+//            onClickButton: function(){
+//                alert("knowledgeAdd");
+//                location.href="index.html#!/knowledgeRepo/knowledgeAdd.html"
+//            },
+//            position:"first"
+//        });
 
 //        ).jqGrid('navButtonAdd',"#UsersGridPager",{
 //            caption:"NewButton",
