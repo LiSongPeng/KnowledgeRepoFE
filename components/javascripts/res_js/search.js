@@ -1,8 +1,5 @@
-/**
- * Created by Letg4 on 2017/9/2.
- */
-var search = angular.module("search", ['ngSanitize']);
-search.controller("searchController", ["$scope", "$http", function ($scope, $http) {
+var search = angular.module("search",[]);
+search.controller("searchController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
     $scope.displayResult = false;
     $scope.response = {
         data: {
@@ -16,6 +13,9 @@ search.controller("searchController", ["$scope", "$http", function ($scope, $htt
             return "active";
         return "";
     }
+    $scope.getTrustedHtml = function (html) {
+        return $sce.trustAsHtml(html);
+    };
     $scope.search = function (page) {
         if (!page && page != 0)
             page = 1;
@@ -43,6 +43,7 @@ search.controller("searchController", ["$scope", "$http", function ($scope, $htt
                         pagers.push(pageNum);
                 }
                 $scope.pagers = pagers;
+                $scope.jumpToPage = pageNum;
             } else {
                 toastr.info("未查找到结果");
             }
