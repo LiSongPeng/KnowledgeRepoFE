@@ -49,5 +49,13 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
+        .state("userAdd",{
+            url:"/user/userAdd.html",
+            templateUrl:"user/userAdd.html",
+            resolve:{
+                }
+            }
+
+        )
 
 });

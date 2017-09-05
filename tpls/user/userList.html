@@ -55,6 +55,7 @@
             };
             jQuery(grid_selector).jqGrid({
                 url: table_url,
+                mtype:"POST",
                 datatype: "json",
                 height: 500,
                 colNames: colNames,
@@ -89,16 +90,28 @@
                 delicon : 'icon-trash red',
                 search: false,
                 searchicon : 'icon-search orange',
-                refresh: false,
+                refresh: true,
                 refreshicon : 'icon-refresh green',
                 view: false,
                 viewicon : 'icon-zoom-in grey'
-            })
+            },{},{},{recreateForm: true,
+                beforeShowForm : function(e) {
+                    var form = $(e[0]);
+                    if(form.data('styled')) return false;
+
+                    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+                    style_delete_form(form);
+
+                    form.data('styled', true);
+                },
+                onClick : function(e) {
+                    alert(1);
+                }})
                 .navButtonAdd(pager_selector,{
                     caption:"",
                     buttonicon:"icon-plus-sign purple",
                     onClickButton:function () {
-                        alert("addButton");
+                        window.location.href="#!/user/userAdd.html";
                     },
                     title:"新建用户",
                     position:"first"

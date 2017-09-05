@@ -86,6 +86,14 @@
       "sUrl": "search.html",
       "sIcon": "icon-dashboard",
       "sIndex": 1
+    },{
+      "id": "s11",
+      "sParentId": "s07",
+      "sName": "新建用户",
+      "sType": 1,
+      "sUrl": "user/userAdd.html",
+      "sIcon": "icon-dashboard",
+      "sIndex": 1
     }
   ]
 }
