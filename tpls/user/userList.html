@@ -14,6 +14,7 @@
     </div>
     <script type="text/javascript">
         jQuery(function ($) {
+            var base_url='http://localhost:8080/knowledgeRepo/';
             var table_url='http://localhost:8080/knowledgeRepo/user/query.form';
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
@@ -79,7 +80,8 @@
                         updatePagerIcons(table);
                         enableTooltips(table);
                     }, 0);
-                }
+                },
+                editurl:base_url+"user/edit.form"
             });
             jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
                 edit: false,

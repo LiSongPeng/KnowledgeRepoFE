@@ -64,6 +64,9 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             url:"/user/userAdd.html",
             templateUrl:"user/userAdd.html",
             resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","res_userAdd"])
+                }
                 }
             }
 

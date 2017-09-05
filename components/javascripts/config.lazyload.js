@@ -46,7 +46,8 @@ app.constant('Modules_Config', [
         name: 'bootstrap-validator',
         serie: true,
         files: [
-            "../components/plugins/bootstrap-validator/validator.min.js"
+            "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js"
         ]
     }, {
         name: 'res_search',
@@ -67,6 +68,14 @@ app.constant('Modules_Config', [
         files: [
             "../components/javascripts/wangEditor.min.js",
             "../components/javascripts/jquery-2.0.3.min.js"
+        ]
+    },{
+        name:'res_userAdd',
+        serie:true,
+        files:[
+            "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
+            "../components/javascripts/controllers/userAddCtrl.js"
         ]
     }
 ]);
