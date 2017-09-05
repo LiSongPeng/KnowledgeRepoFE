@@ -107,7 +107,7 @@
 //浏览导航栏添加功能部分代码
 
         jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
-            edit: false,
+            edit: true,
             editicon : 'icon-pencil gray',
             add: false,
             addicon : 'icon-plus-sign purple',
@@ -115,11 +115,24 @@
             delicon : 'icon-trash red',
             search: false,
             searchicon : 'icon-search orange',
-            refresh: false,
+            refresh: true,
             refreshicon : 'icon-refresh green',
             view: false,
-            viewicon : 'icon-zoom-in grey'
-        })
+            viewicon : 'icon-zoom-in grey'},
+
+              {}, // edit options
+              {}, // add options
+              {
+
+
+
+
+
+                        url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form"
+              }, // delete options
+              {
+                        multipleSearch: true
+              })
             .navButtonAdd(pager_selector,{
                 caption:"",
                 buttonicon:"icon-plus-sign purple",
