@@ -6,4 +6,6 @@
 //     };
 //     return fn;
 // })();
-angular.module('globalconfig',[]).constant('baseURL','');
+var glconfig=angular.module('globalconfig',[]);
+glconfig.constant('baseURL','');
+glconfig.constant('testURL','http://localhost:8080/knowledgeRepo/');

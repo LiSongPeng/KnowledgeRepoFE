@@ -4,8 +4,10 @@ app.constant('Modules_Config', [
         name: 'jqGrid',
         serie: true,
         files: [
+            "../components/stylesheets/jquery-ui-1.10.3.full.min.css",
             "../components/plugins/jqGrid/css/ui.jqgrid.css",
             "../components/stylesheets/ace/ace.min.css",
+            "../components/stylesheets/ace/ace-rtl.min.css",
             "../components/stylesheets/ace/ace-my-skins.css",
             "../components/javascripts/jquery-ui-1.10.3.full.min.js",
             "../components/plugins/jqGrid/js/jquery.jqGrid.min.js",
@@ -44,7 +46,8 @@ app.constant('Modules_Config', [
         name: 'bootstrap-validator',
         serie: true,
         files: [
-            "../components/plugins/bootstrap-validator/validator.min.js"
+            "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js"
         ]
     }, {
         name: 'res_search',
@@ -65,6 +68,14 @@ app.constant('Modules_Config', [
         files: [
             "../components/javascripts/wangEditor.min.js",
             "../components/javascripts/jquery-2.0.3.min.js"
+        ]
+    },{
+        name:'res_userAdd',
+        serie:true,
+        files:[
+            "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
+            "../components/javascripts/controllers/userAddCtrl.js"
         ]
     }
 ]);

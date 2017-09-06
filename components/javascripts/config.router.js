@@ -60,5 +60,16 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
+        .state("userAdd",{
+            url:"/user/userAdd.html",
+            templateUrl:"user/userAdd.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","res_userAdd"])
+                }
+                }
+            }
+
+        )
 
 });
