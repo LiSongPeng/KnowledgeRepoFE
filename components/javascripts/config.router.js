@@ -38,7 +38,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"user/userList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["jqGrid"]);
+                    return $ocLazyLoad.load(["jqGrid","res_userList"]);
                 }
             }
         })

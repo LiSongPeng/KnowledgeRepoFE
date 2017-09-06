@@ -21,7 +21,7 @@ function breadcrumbCtrl($scope) {
         $scope.urlPath=path.reverse();
     });
 }
-function navController($scope) {
+function navController($scope,$rootScope) {
     $scope.resTree=[];
     $scope.transData=function (a, idStr, pidStr, chindrenStr){
         var r = [], hash = {}, id = idStr, pid = pidStr, children = chindrenStr, i = 0, j = 0, len = a.length;
@@ -39,6 +39,13 @@ function navController($scope) {
         }
         return r;
     };
+    $scope.$on('$stateChangeStart',function (evt, toState, toParams, fromState, fromParams) {
+        console.log("123123");
+        alert(123);
+        console.log(evt);
+        console.log(toState);
+        console.log(toParams);
+    });
     $scope.$on('refreshResTree',function (event,resList) {
         $scope.resTree=$scope.transData(eval(resList),'id','sParentId','child');
     });

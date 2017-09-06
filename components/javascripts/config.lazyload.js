@@ -70,6 +70,12 @@ app.constant('Modules_Config', [
             "../components/javascripts/jquery-2.0.3.min.js"
         ]
     },{
+        name:'res_userList',
+        serie:true,
+        files:[
+            "../components/javascripts/controllers/userListCtrl.js"
+        ]
+    },{
         name:'res_userAdd',
         serie:true,
         files:[

@@ -11,5 +11,5 @@ indexapp.config(function ($stateProvider,$urlRouterProvider) {
     // $urlRouterProvider.otherwise('/home');
 });
 indexapp.controller('mainCtrl',mainController);
-indexapp.controller('navListCtrl',['$scope',navController]);
+indexapp.controller('navListCtrl',['$scope','$rootScope',navController]);
 indexapp.controller('breadcrumbCtrl',['$scope',breadcrumbCtrl]);
