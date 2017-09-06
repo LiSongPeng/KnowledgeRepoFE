@@ -52,6 +52,18 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             }
 
         })
+
+        .state("knowledgeApprova",{
+            url:"/knowledgeRepo/knowledgeApprova.html",
+            templateUrl:"knowledgeRepo/knowledgeApprova.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["res_knowledgeAdd"]);
+                }
+            }
+
+        })
+
         .state("userList",{
             url:"/user/userList.html",
             templateUrl:"user/userList.html",
