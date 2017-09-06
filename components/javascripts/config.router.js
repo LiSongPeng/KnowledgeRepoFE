@@ -33,8 +33,18 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
         })
 
         .state("knowledgeAdd",{
-            url:"/knowledgeRepo/knowledgeAdd.html",
-            templateUrl:"knowledgeRepo/knowledgeAdd.html",
+        url:"/knowledgeRepo/knowledgeAdd.html",
+        templateUrl:"knowledgeRepo/knowledgeAdd.html",
+        resolve:{
+            deps:function ($ocLazyLoad) {
+                return $ocLazyLoad.load(["res_knowledgeAdd"]);
+            }
+        }
+
+    })
+        .state("knowledgeEdit",{
+            url:"/knowledgeRepo/knowledgeEdit.html",
+            templateUrl:"knowledgeRepo/knowledgeEdit.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
                     return $ocLazyLoad.load(["res_knowledgeAdd"]);
