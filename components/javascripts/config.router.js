@@ -22,6 +22,15 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
+        .state("knowledgeList2",{
+            url:"/knowledgeRepo/knowledgeList2.html",
+            templateUrl:"knowledgeRepo/knowledgeList2.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load("jqGrid");
+                }
+            }
+        })
 
         .state("knowledgeAdd",{
             url:"/knowledgeRepo/knowledgeAdd.html",
