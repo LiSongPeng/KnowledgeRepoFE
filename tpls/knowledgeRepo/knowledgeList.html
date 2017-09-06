@@ -60,7 +60,7 @@
             colNames: ['知识id', '知识标题', '知识解答', '使用次数', '最后一次使用时间', '审批状态', '审批人', '审批时间', '审批意见', '创建人', '创建时间'],
             colModel: [
 
-                {name: "id", index: "id", width: 100, editable: false, editoptions: {size: "20", maxlength: "30"}},
+                {name: "id", index: "id",hidden:true, width: 100, editable: false, editoptions: {size: "20", maxlength: "30"}},
                 {name: "kTitle", index: "kTitle", width: 100,editable: true, edittype: "select", editoptions: {value: "1:采购入库;2:退用入库"}},
                 {name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
                 {name: "kUseCount", index: "kUseCount", width: 100, editable: true, editoptions: {size: "20", maxlength: "30"}},
@@ -121,17 +121,17 @@
             viewicon : 'icon-zoom-in grey'},
 
               {
-//                caption:"",
-//                buttonicon:"icon-plus-sign purple",
-
-
-
-
-                onClickButton:function () {
-
-                    location.href="index.html#!/knowledgeRepo/knowledgeAdd.html"
-                },
-//                title:"知识添加",
+//
+                addCaption: "Add Record",
+                editCaption: "Edit Record",
+                 bSubmit: "提交",
+                  bCancel: "Cancel",
+                  bClose: "Close",
+               saveData: "Data has been changed! Save changes?",
+                  bYes : "Yes",
+             bNo : "No",
+            bExit : "Cancel",
+            url:"index.html#!/knowledgeRepo/knowledgeEdit.html"
 
 
               }, // edit options
@@ -159,8 +159,6 @@
                 position:"first"
             },{
             });
-
-
 
 
 
