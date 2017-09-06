@@ -64,14 +64,14 @@
                 {name: "kTitle", index: "kTitle", width: 100,editable: true, edittype: "select", editoptions: {value: "1:采购入库;2:退用入库"}},
                 {name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
                 {name: "kUseCount", index: "kUseCount", width: 100, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kUseTimeLast", index: "kUseTimeLast", width: 250, sortable: false, editable: true, edittype: "textarea", editoptions: {rows: "2", cols: "10"}},
+                {name: "kUseTimeLast", index: "kUseTimeLast", width: 220, sortable: false, editable: true, edittype: "textarea", editoptions: {rows: "2", cols: "10"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
                 {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
                 {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kApprTime", index: "kApprTime", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
+                {name: "kApprTime", index: "kApprTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
                 {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
                 {name: "createUserId", index: "createUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "createTime", index: "createTime", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}
-            }],
+                {name: "createTime", index: "createTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}
+                }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
             //scroll: 1,
             rowNum: 8, //每页显示记录数
@@ -121,18 +121,6 @@
             viewicon : 'icon-zoom-in grey'},
 
               {
-//
-//                addCaption: "Add Record",
-//                editCaption: "Edit Record",
-//                 bSubmit: "提交",
-//                  bCancel: "Cancel",
-//                  bClose: "Close",
-//               saveData: "Data has been changed! Save changes?",
-//                  bYes : "Yes",
-//             bNo : "No",
-//            bExit : "Cancel",
-//            burl:"index.html#!/knowledgeRepo/knowledgeEdit.html"
-
 
               }, // edit options
               {}, // add options
@@ -176,55 +164,6 @@
         });
 
 
-
-//        $(grid_selector).navGrid(pager_selector, {
-//                search: true, // 检索
-//                editicon: 'icon-pencil blue',
-//                add: true, //添加 （只有editable为true时才能显示属性）
-//                addicon : 'icon-plus-sign purple',
-//                edit: true, //修改（只有editable为true时才能显示属性）
-//                searchicon : 'icon-search orange',
-//                del: true, //删除
-//                delicon : 'icon-trash red',
-//                refresh: true, //刷新
-//                refreshicon : 'icon-refresh green'
-//            }, {
-//                onClickButton: function(){
-//                    alert("Deleting Row");
-//                }
-//
-////                //afterShowForm:afterShowEdit,
-////                 afterSubmit:processAddEdit ,
-////                 beforeSubmit:validateData,
-////                 //closeAfterAdd:true,
-////                 closeAfterEdit:true,
-////                 reloadAfterSubmit:true
-//
-//            }, // edit options
-//            {}, // add options
-//            {
-//                url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form",
-//            }, // delete options
-//            {
-//                multipleSearch: true
-//            });
-//
-//        $(grid_selector).navButtonAdd(pager_selector,{
-//            caption:"add",
-//            buttonicon:"ace-icon fa fa-globe blue",
-//            onClickButton: function(){
-//                alert("knowledgeAdd");
-//                location.href="index.html#!/knowledgeRepo/knowledgeAdd.html"
-//            },
-//            position:"first"
-//        });
-
-//        ).jqGrid('navButtonAdd',"#UsersGridPager",{
-//            caption:"NewButton",
-//            buttonicon:"ui-icon-newwin",
-//            onClickButton:null,
-//            position: "last", title:"",
-//            cursor: "pointer"});
 
         function style_edit_form(form) {
             //enable datepicker on "sdate" field and switches for "stock" field

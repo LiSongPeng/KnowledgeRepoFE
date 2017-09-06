@@ -48,7 +48,7 @@
     $(document).ready(function () {
         $("#grid-table").jqGrid({
 
-            url: "http://localhost:8080/knowledgeRepo/selectPage.form",
+            url: "http://localhost:8080/knowledgeRepo/selectPage2.form",
 
 
             mtype: "GET",
@@ -61,17 +61,17 @@
             colModel: [
 
                 {name: "id", index: "id",hidden:true, width: 100, editable: false, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kTitle", index: "kTitle", width: 100,editable: true, edittype: "select"},
+                {name: "kTitle", index: "kTitle", width: 100,editable: true, edittype: "select", editoptions: {value: "1:采购入库;2:退用入库"}},
                 {name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
                 {name: "kUseCount", index: "kUseCount", width: 100, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kUseTimeLast", index: "kUseTimeLast", width: 250, sortable: false, editable: true, edittype: "textarea", editoptions: {rows: "2", cols: "10"}},
+                {name: "kUseTimeLast", index: "kUseTimeLast", width: 220, sortable: false, editable: true, edittype: "textarea", editoptions: {rows: "2", cols: "10"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
                 {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
                 {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kApprTime", index: "kApprTime", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
+                {name: "kApprTime", index: "kApprTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
                 {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
                 {name: "createUserId", index: "createUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "createTime", index: "createTime", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}
-            }],
+                {name: "createTime", index: "createTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}
+                }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
             //scroll: 1,
             rowNum: 8, //每页显示记录数
