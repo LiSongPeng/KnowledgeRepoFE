@@ -120,15 +120,30 @@
             view: false,
             viewicon : 'icon-zoom-in grey'},
 
-              {}, // edit options
+              {
+//                caption:"",
+//                buttonicon:"icon-plus-sign purple",
+
+
+
+
+                onClickButton:function () {
+
+                    location.href="index.html#!/knowledgeRepo/knowledgeAdd.html"
+                },
+//                title:"知识添加",
+
+
+              }, // edit options
               {}, // add options
               {
 
 
-
-
-
                         url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form"
+
+
+
+
               }, // delete options
               {
                         multipleSearch: true
@@ -143,7 +158,6 @@
 //                title:"知识添加",
                 position:"first"
             },{
-
             });
 
 
