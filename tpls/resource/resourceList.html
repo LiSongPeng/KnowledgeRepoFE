@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<div class="row" >
-    <div class="col-xs-12"  style="height: 100%">
+<div class="row" ng-app="slistapp">
+    <div class="col-xs-12"  style="height: 100%" ng-controller="sGridCtrl">
         <div id="grid-search"></div>
         <table id="grid-table"></table>
         <div id="grid-pager"></div>
@@ -25,9 +25,9 @@
                     var html="<button class='fm-button' onclick='goEdit(\""+rowObject.id+"\")' ng-click='toEdit($event)'>修改</button>";
                     return html;
                 }},
-            {name:'treeData.id',index:'treeData.id',key:true,width:60,hidden:true,editable:false},
-            {name:'treeData.sName',index:'treeData.sName',width:70,editable:true,editoptions:{size:"40",maxlength:"50"}},
-            {name:'sType',index:'treeData.sType',width:50,hidden:true,editable:true,editoptions:{size:"40",maxlength:"50"}},
+            {name:'id',index:'id',key:true,width:60,hidden:true,editable:false},
+            {name:'sName',index:'sName',width:70,editable:true,editoptions:{size:"40",maxlength:"50"}},
+            {name:'sType',index:'sType',width:50,hidden:true,editable:true,editoptions:{size:"40",maxlength:"50"}},
             {name:'sUrl',index:'treeData.sUrl',width:80,sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
             {name:'sIcon',index:'treeData.sIcon',width:50,editable:false},
             {name:'sIndex',index:'treeData.sIndex',width:40,editable:false},
@@ -93,7 +93,7 @@
             pager: pager_selector,
             multiselect: true,
             multiboxonly: true,
-            caption: "用户列表",
+            caption: "资源列表",
             autowidth: true,
             prmNames: prmNames,
             jsonReader: jsonReaderConfig,
@@ -139,35 +139,13 @@
                 caption:"",
                 buttonicon:"icon-plus-sign purple",
                 onClickButton:function () {
-                    window.location.href="#!/user/userAdd.html";
+                    window.location.href="#!/resource/resourceAdd.html";
                 },
-                title:"新建用户",
+                title:"新建资源",
                 position:"first"
             });
 
 
-        jQuery(grid_searcher).filterGrid(grid_selector,{
-//                gridModel: true,
-            filterModel:[{
-                label:'用户ID',
-                name:'id',
-                stype:'text',
-                placeholder: '用户Id'
-            },{
-                label:'用户名称',
-                name:'uName',
-                stype:'text'
-            },{
-                label:'最后上线时间',
-                name:'uLastOnline',
-                stype:'text'
-            }],
-            formtype: 'horizontal',
-            autosearch: false,
-            buttonclass: 'fm-button btn-purple',
-            enableSearch: true,
-            enableClear: true
-        });
 
 
         function style_edit_form(form) {
@@ -262,6 +240,9 @@
         }
 
     });
+    function goEdit(rowid) {
+        window.location.href="#!/resource/resourceAdd.html?edit=true&editId="+rowid;
+    }
 </script>
 
 </body>

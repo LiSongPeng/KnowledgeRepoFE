@@ -20,9 +20,9 @@
     {
       "id": "s03",
       "sParentId": "s01",
-      "sName": "权限管理",
+      "sName": "角色管理",
       "sType": 0,
-      "sUrl": "hello.html",
+      "sUrl": "role/roleList.html",
       "sIcon": "icon-dashboard",
       "sIndex": 2
     },
