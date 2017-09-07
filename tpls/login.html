@@ -3,8 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>Login Page - Ace Admin</title>
-
+    <title>登录页</title>
     <meta name="description" content="User login page"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <link rel="stylesheet" href="../components/stylesheets/bootstrap.min.css"/>
@@ -21,7 +20,7 @@
     <script src="../components/plugins/toastr/toastr.min.js"></script>
 </head>
 
-<body class="login-layout">
+<body class="login-layout" style="background-color:#F5F6F7">
 <div class="main-container">
     <div class="main-content">
         <div class="row">
@@ -30,7 +29,7 @@
                     <div class="center">
                         <h1>
                             <i class="ace-icon fa fa-leaf green"></i>
-                            <span class="white" id="id-text2">天软知识库管理系统</span>
+                            <span class="blue" id="id-text2">天软知识库管理系统</span>
                         </h1>
                         <h4 class="blue" id="id-company-text">&copy; 中环系统工程有限公司</h4>
                     </div>
@@ -109,9 +108,8 @@
                 "username": username,
                 "password": password
             }, function (response) {
-                alert(response);
                 var id;
-                if (response== "SUCCESS") {
+                if (response == "SUCCESS") {
                     toastr.info("登录成功,正在跳转到首页");
                     id = window.setTimeout(function () {
                         window.clearTimeout(id);
