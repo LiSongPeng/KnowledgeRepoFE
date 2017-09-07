@@ -64,7 +64,8 @@
                 {name: "kTitle", index: "kTitle", width: 100,editable: true, edittype: "select", editoptions: {value: "1:采购入库;2:退用入库"}},
                 {name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
                 {name: "kUseCount", index: "kUseCount", width: 100, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kUseTimeLast", index: "kUseTimeLast", width: 220, sortable: false, editable: true, edittype: "textarea", editoptions: {rows: "2", cols: "10"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
+
+                {name: "kUserTimeLast", index: "kUserTimeLast", width: 220, editable: true,editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
                 {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
                 {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
                 {name: "kApprTime", index: "kApprTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
@@ -102,7 +103,40 @@
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
+            },
+
+
+
+
+
+            gridComplete:function(){
+                //单选处理
+                if(true){
+                    var gridId=grid_selector.substring(1);
+                    $("#cb_"+gridId).hide();//隐藏全选按钮
+                    $(grid_selector).find("td[aria-describedby='"+gridId+"_cb']").find("input[type='checkbox']").prop("type","radio") ;//将checkbox替换为radio
+                    $(grid_selector).find("td[aria-describedby='"+gridId+"_cb']").find("input[type='radio']").prop("name",gridId);//radio设为同一名字
+                }
+
+            },
+
+            beforeSelectRow:function(){
+                //单选处理
+                if(true){
+                    // $(grid_selector).jqGrid('clearSelect'); //执行自定义的函数（下面会讲）
+                    $(grid_selector).find(".ui-state-highlight").removeClass("ui-state-highlight").removeAttr("aria-selected"); //样式控制
+                    return true;
+                }
             }
+
+
+
+
+
+
+
+
+
         });
 //浏览导航栏添加功能部分代码
 
@@ -154,9 +188,14 @@
             onClickButton:function () {
                 var ids = $(grid_selector).jqGrid('getGridParam','selarrrow');
 
-                alert(ids);
+                if(ids==''){
+                    alert("请选择需要编辑的内容");
 
-                location.href="index.html#!/knowledgeRepo/knowledgeEdit.html?id="+ids
+                    location.href="index.html#!/knowledgeRepo/knowledgeList.html"
+
+                }else {
+
+                location.href="index.html#!/knowledgeRepo/knowledgeEdit.html?id="+ids}
             },
 //                title:"知识编辑",
             position:"first"

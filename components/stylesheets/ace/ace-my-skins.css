@@ -291,3 +291,11 @@
 .myAceSkin .fm-button{
     height: auto;
 }
+.myAceSkin #grid-table_cb{
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+.myAceSkin .ui-jqgrid .ui-jqgrid-htable th div{
+    padding-bottom: 3px;
+    padding-top: 7px;
+}

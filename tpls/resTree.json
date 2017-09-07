@@ -11,9 +11,9 @@
     {
       "id": "s02",
       "sParentId": "s01",
-      "sName": "角色管理",
-      "sType": 1,
-      "sUrl": "hello.html",
+      "sName": "用户管理",
+      "sType": 0,
+      "sUrl": "user/userList.html",
       "sIcon": "icon-dashboard",
       "sIndex": 1
     },
@@ -54,7 +54,7 @@
     },
     {
       "id": "s07",
-      "sParentId": "s01",
+      "sParentId": "s02",
       "sName": "用户列表",
       "sType": 1,
       "sUrl": "user/userList.html",
@@ -65,7 +65,7 @@
       "id": "s08",
       "sName": "知识管理",
       "sParentId": "s06",
-      "sType": 1,
+      "sType": 0,
       "sUrl": "knowledgeRepo/knowledgeList.html",
       "sIcon": "icon-dashboard",
       "sIndex": 1
@@ -74,7 +74,7 @@
       "id": "s09",
       "sName": "知识审批",
       "sParentId": "s06",
-      "sType": 1,
+      "sType": 0,
       "sUrl": "knowledgeRepo/knowledgeList2.html",
       "sIcon": "icon-dashboard",
       "sIndex": 2
@@ -83,16 +83,32 @@
       "id": "s10",
       "sName": "知识搜索",
       "sParentId": "s06",
-      "sType": 1,
+      "sType": 0,
       "sUrl": "search.html",
       "sIcon": "icon-dashboard",
       "sIndex": 3
     },{
       "id": "s11",
-      "sParentId": "s01",
+      "sParentId": "s02",
       "sName": "新建用户",
       "sType": 1,
       "sUrl": "user/userAdd.html",
+      "sIcon": "icon-dashboard",
+      "sIndex": 2
+    },{
+      "id":"s12",
+      "sParentId":"s01",
+      "sName": "资源管理",
+      "sType": 0,
+      "sUrl":"resource/resourceList.html",
+      "sIcon": "icon-dashboard",
+      "sIndex": 2
+    },{
+      "id":"s13",
+      "sParentId":"s12",
+      "sName": "资源列表",
+      "sUrl": "resource/resourceList.html",
+      "sType": 1,
       "sIcon": "icon-dashboard",
       "sIndex": 2
     }

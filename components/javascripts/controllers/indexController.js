@@ -23,6 +23,7 @@ function breadcrumbCtrl($scope) {
 }
 function navController($scope,$rootScope) {
     $scope.resTree=[];
+    $scope.resList=[];
     $scope.transData=function (a, idStr, pidStr, chindrenStr){
         var r = [], hash = {}, id = idStr, pid = pidStr, children = chindrenStr, i = 0, j = 0, len = a.length;
         for(; i < len; i++){
@@ -47,10 +48,14 @@ function navController($scope,$rootScope) {
         console.log(toParams);
     });
     $scope.$on('refreshResTree',function (event,resList) {
+        $scope.resList=resList;
         $scope.resTree=$scope.transData(eval(resList),'id','sParentId','child');
     });
 
     $scope.sliceUrl=function (url){
+        if (url===null){
+            return;
+        }
        var suburl = url.slice(0,url.lastIndexOf('.'));
        if (suburl.lastIndexOf('/')!=-1){
         suburl = suburl.slice(suburl.lastIndexOf('/')+1,suburl.length);
@@ -62,17 +67,20 @@ function navController($scope,$rootScope) {
     };
 
     $scope.isLeaf = function(item){
-        return !item.child || !item.child.length;
+        for(var i=0;i<$scope.resList.length;i++){
+            if(item.id===$scope.resList[i].sParentId){
+                return false;
+            }
+        }
+        return true;
     };
     $scope.navClick=function (item,e) {
-        if(item.sType===1){
-            $('.nav-list li').removeClass('active');
-            $(e.target).parents('li').addClass('active');
-            var pathdom=$(e.target).parents('li').children('a').children('span');
-            $scope.$emit('pageChange',{
-                resitem: item,
-                pathdom: pathdom
-            });
-        }
+        $('.nav-list li').removeClass('active');
+        $(e.target).parents('li').addClass('active');
+        var pathdom=$(e.target).parents('li').children('a').children('span');
+        $scope.$emit('pageChange',{
+            resitem: item,
+            pathdom: pathdom
+        });
     };
 }

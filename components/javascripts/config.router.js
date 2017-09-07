@@ -98,9 +98,16 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 deps:function ($ocLazyLoad) {
                     return $ocLazyLoad.load(["toastr","res_userAdd"])
                 }
+            }
+        })
+        .state("resourceList",{
+            url:"/resource/resourceList.html",
+            templateUrl:"resource/resourceList.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["jqGrid"])
                 }
             }
-
-        )
+        })
 
 });
