@@ -48,7 +48,7 @@
     $(document).ready(function () {
         $("#grid-table").jqGrid({
 
-            url: "http://localhost:8080/knowledgeRepo/selectPage.form",
+            url: "http://localhost:8080/knowledgeRepo/selectPage2.form",
 
 
             mtype: "GET",
@@ -111,43 +111,19 @@
             editicon : 'icon-pencil gray',
             add: false,
             addicon : 'icon-plus-sign purple',
-            del: true,
+            del: false,
             delicon : 'icon-trash red',
             search: false,
             searchicon : 'icon-search orange',
-            refresh: true,
+            refresh: false,
             refreshicon : 'icon-refresh green',
             view: false,
             viewicon : 'icon-zoom-in grey'},
 
-              {
-
-              }, // edit options
+              {}, // edit options
               {}, // add options
-              {
-
-
-                        url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form"
-
-
-
-
-              }, // delete options
-              {
-                        multipleSearch: true
-              })
-            .navButtonAdd(pager_selector,{
-                caption:"",
-                buttonicon:"icon-plus-sign purple",
-                onClickButton:function () {
-
-                    location.href="index.html#!/knowledgeRepo/knowledgeAdd.html"
-                },
-//                title:"知识添加",
-                position:"first"
-            }, {
-            })
-
+              {}, // delete options
+              {})
         .navButtonAdd(pager_selector,{
             caption:"",
             buttonicon:"icon-pencil gray",
@@ -156,14 +132,12 @@
 
                 alert(ids);
 
-                location.href="index.html#!/knowledgeRepo/knowledgeEdit.html?id="+ids
+                location.href="index.html#!/knowledgeRepo/knowledgeApprova.html?id="+ids
             },
 //                title:"知识编辑",
             position:"first"
         }, {
         });
-
-
 
         function style_edit_form(form) {
             //enable datepicker on "sdate" field and switches for "stock" field
