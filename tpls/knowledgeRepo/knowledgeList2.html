@@ -60,17 +60,17 @@
             colNames: ['知识id', '知识标题', '知识解答', '使用次数', '最后一次使用时间', '审批状态', '审批人', '审批时间', '审批意见', '创建人', '创建时间'],
             colModel: [
 
-                {name: "id", index: "id",hidden:true, width: 100, editable: false, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kTitle", index: "kTitle", width: 100,editable: true, edittype: "select", editoptions: {value: "1:采购入库;2:退用入库"}},
+                {name: "id", index: "id",hidden:true, width: 100, editable: false},
+                {name: "kTitle", index: "kTitle", width: 100,editable: true},
                 {name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
-                {name: "kUseCount", index: "kUseCount", width: 100, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kUserTimeLast", index: "kUserTimeLast", width: 220, sortable: false, editable: true, edittype: "textarea", editoptions: {rows: "2", cols: "10"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
-                {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kApprTime", index: "kApprTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
-                {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "createUserId", index: "createUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "createTime", index: "createTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}
+                {name: "kUseCount", index: "kUseCount", width: 100, editable: true},
+                {name: "kUserTimeLast", index: "kUserTimeLast", width: 220, sortable: false, editable: true,formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
+                {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true},
+                {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true},
+                {name: "kApprTime", index: "kApprTime", width: 220, editable: true,formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
+                {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true},
+                {name: "createUserId", index: "createUserId", width: 150, editable: true},
+                {name: "createTime", index: "createTime", width: 220, editable: true,formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
             //scroll: 1,
@@ -102,7 +102,38 @@
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
+            },
+
+
+
+
+            gridComplete:function(){
+                //单选处理
+                if(true){
+                    var gridId=grid_selector.substring(1);
+                    $("#cb_"+gridId).hide();//隐藏全选按钮
+                    $(grid_selector).find("td[aria-describedby='"+gridId+"_cb']").find("input[type='checkbox']").prop("type","radio") ;//将checkbox替换为radio
+                    $(grid_selector).find("td[aria-describedby='"+gridId+"_cb']").find("input[type='radio']").prop("name",gridId);//radio设为同一名字
+                }
+
+            },
+
+            beforeSelectRow:function(){
+                //单选处理
+                if(true){
+                   // $(grid_selector).jqGrid('clearSelect'); //执行自定义的函数（下面会讲）
+                    $(grid_selector).find(".ui-state-highlight").removeClass("ui-state-highlight").removeAttr("aria-selected"); //样式控制
+                    return true;
+                }
             }
+
+
+
+
+
+
+
+
         });
 //浏览导航栏添加功能部分代码
 
@@ -115,7 +146,7 @@
             delicon : 'icon-trash red',
             search: false,
             searchicon : 'icon-search orange',
-            refresh: false,
+            refresh: true,
             refreshicon : 'icon-refresh green',
             view: false,
             viewicon : 'icon-zoom-in grey'},
@@ -130,9 +161,14 @@
             onClickButton:function () {
                 var ids = $(grid_selector).jqGrid('getGridParam','selarrrow');
 
+                if(ids==''){
+                    alert("请选择需要编辑的内容");
 
+                    location.href="index.html#!/knowledgeRepo/knowledgeList2.html"
 
-                location.href="index.html#!/knowledgeRepo/knowledgeApprova.html?id="+ids
+                }else {
+
+                location.href="index.html#!/knowledgeRepo/knowledgeApprova.html?id="+ids}
             },
 //                title:"知识编辑",
             position:"first"
