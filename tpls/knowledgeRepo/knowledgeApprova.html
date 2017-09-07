@@ -9,7 +9,7 @@
         .basic-grey {
             margin-left:auto;
             margin-right:auto;
-            max-width: 800px;
+
             background: #F7F7F7;
             padding: 25px 15px 25px 10px;
             font: 12px Georgia, "Times New Roman", Times, serif;
@@ -21,9 +21,9 @@
         .text {
             margin-left:auto;
             margin-right:auto;
-            max-width: 450px;
+
             background: #F7F7F7;
-            padding: 25px 15px 25px 10px;
+            padding: 40px 15px 25px 10px;
             font: 12px Georgia, "Times New Roman", Times, serif;
             color: #888;
             text-shadow: 1px 1px 1px #FFF;
@@ -48,7 +48,7 @@
         }
         .basic-grey label>span {
             float: left;
-            width: 20%;
+            width: 10%;
             text-align: right;
             padding-right: 10px;
             margin-top: 10px;
@@ -60,10 +60,10 @@
             height: 30px;
             margin-bottom: 16px;
             margin-right: 6px;
-            margin-top: 2px;
+            margin-top: 30px;
             outline: 0 none;
             padding: 3px 3px 3px 5px;
-            width: 70%;
+            width: 50%;
             font-size: 12px;
             line-height:15px;
             box-shadow: inset 0px 1px 4px #ECECEC;
@@ -115,7 +115,7 @@
         <input id="id"  name="id" style="display:none"/>
         <label>
             <span>审批人 :</span>
-            <input id="kApprUserId" type="text" name="kApprUserId" placeholder="填写知识标题" />
+            <input id="kApprUserId" type="text" name="kApprUserId"  />
         </label>
 
 
@@ -193,7 +193,7 @@
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
             });
-            alert("添加成功！")
+            alert("审批成功！")
             location.href="index.html#!/knowledgeRepo/knowledgeList.html"
 
             return false;
