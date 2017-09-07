@@ -109,10 +109,12 @@
                 "password": password
             }, function (response) {
                 var id;
-                if (response == "SUCCESS") {
+                if (response) {
+                    response = $.parseJSON(response);
                     toastr.info("登录成功,正在跳转到首页");
                     id = window.setTimeout(function () {
                         window.clearTimeout(id);
+                        window.sessionStorage.setItem("currUser", response);
                         window.location.href = "index.html";
                     }, 1000);
                 } else {
