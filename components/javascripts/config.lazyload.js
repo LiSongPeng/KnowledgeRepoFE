@@ -76,12 +76,40 @@ app.constant('Modules_Config', [
             "../components/javascripts/controllers/userListCtrl.js"
         ]
     },{
+        name:'res_resourceList',
+        serie:true,
+        files:[
+            "../components/javascripts/controllers/resourceListCtrl.js"
+        ]
+    },{
+        name:'res_roleList',
+        serie:true,
+        files:[
+            "../components/javascripts/controllers/roleListCtrl.js"
+        ]
+    },{
         name:'res_userAdd',
         serie:true,
         files:[
             "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
             "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
             "../components/javascripts/controllers/userAddCtrl.js"
+        ]
+    },{
+        name:'res_roleAdd',
+        serie:true,
+        files:[
+            "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
+            "../components/javascripts/controllers/roleAddCtrl.js"
+        ]
+    },{
+        name:'res_resourceAdd',
+        serie:true,
+        files:[
+            "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
+            "../components/javascripts/controllers/resourceAddCtrl.js"
         ]
     }
 ]);

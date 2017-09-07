@@ -20,9 +20,9 @@
     {
       "id": "s03",
       "sParentId": "s01",
-      "sName": "权限管理",
+      "sName": "角色管理",
       "sType": 0,
-      "sUrl": "hello.html",
+      "sUrl": "role/roleList.html",
       "sIcon": "icon-dashboard",
       "sIndex": 2
     },
@@ -65,7 +65,7 @@
       "id": "s08",
       "sName": "知识管理",
       "sParentId": "s06",
-      "sType": 1,
+      "sType": 0,
       "sUrl": "knowledgeRepo/knowledgeList.html",
       "sIcon": "icon-dashboard",
       "sIndex": 1
@@ -74,7 +74,7 @@
       "id": "s09",
       "sName": "知识审批",
       "sParentId": "s06",
-      "sType": 1,
+      "sType": 0,
       "sUrl": "knowledgeRepo/knowledgeList2.html",
       "sIcon": "icon-dashboard",
       "sIndex": 2
@@ -83,7 +83,7 @@
       "id": "s10",
       "sName": "知识搜索",
       "sParentId": "s06",
-      "sType": 1,
+      "sType": 0,
       "sUrl": "search.html",
       "sIcon": "icon-dashboard",
       "sIndex": 3

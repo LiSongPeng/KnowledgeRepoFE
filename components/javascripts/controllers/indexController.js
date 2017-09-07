@@ -1,10 +1,21 @@
-function mainController($scope,$http,baseURL) {
+function mainController($scope,$http,testURL) {
     $scope.resList=[];
 //				从服务器获取json权限数据
-    $http.get(baseURL+'resTree.json').then(function (response) {
-        $scope.resList=response.data.resList;
-        $scope.$broadcast('refreshResTree',$scope.resList);
+
+
+    $scope.$on('getUserRes',function () {
+        $http.get(testURL+'resource/getUserRes.form').then(function (response) {
+            if(response.data==="notlogin"){
+                $scope.$broadcast("loginshow");
+            }else {
+                $scope.resList=response.data;
+                $scope.$broadcast('refreshResTree',$scope.resList);
+            }
+        },function (response) {
+                alert("获取资源失败:"+response.status);
+        });
     });
+    $scope.$emit('getUserRes');
 
     $scope.$on('pageChange',function (event,resource) {
         var path=[];
@@ -14,6 +25,39 @@ function mainController($scope,$http,baseURL) {
         $scope.$broadcast('breadcrumbChange',path);
     });
 
+}
+function loginboxController ($scope,$http,testURL){
+    $scope.hideflag=false;
+    $scope.$on("loginshow",function () {
+        $scope.hideflag=true;
+    });
+    $scope.login=function () {
+        $http({
+            method: "POST",
+            url: testURL + "user/login.form",
+            headers: {
+                'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+            },
+            data: $.param({
+                username: $scope.username,
+                password: $scope.password
+            })
+        }).then(function (response) {
+            console.log(response);
+            if (response.data==="SUCCESS"){
+                $scope.hideflag=false;
+                $scope.$emit('getUserRes');
+            }else if(response.data==="FAILED"){
+                alert("用户不存在或密码不正确")
+            }
+        },function (response) {
+            console.log(response);
+            if (response.data==="SUCCESS"){
+                alert("wrong success")
+            }
+            alert("error! "+response.status);
+        });
+    }
 }
 function breadcrumbCtrl($scope) {
     $scope.urlPath=[];
@@ -77,6 +121,7 @@ function navController($scope,$rootScope) {
     $scope.navClick=function (item,e) {
         $('.nav-list li').removeClass('active');
         $(e.target).parents('li').addClass('active');
+        $(e.target).parents('li').addClass('open');
         var pathdom=$(e.target).parents('li').children('a').children('span');
         $scope.$emit('pageChange',{
             resitem: item,

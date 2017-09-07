@@ -105,7 +105,33 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"resource/resourceList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["jqGrid"])
+                    return $ocLazyLoad.load(["jqGrid","res_resourceList"])
+                }
+            }
+        }).state("roleList",{
+            url:"/role/roleList.html",
+            templateUrl:"role/roleList.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["jqGrid","res_roleList"])
+                }
+            }
+        })
+        .state("resourceAdd",{
+            url:"/resource/resourceAdd.html",
+            templateUrl:"resource/resourceAdd.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","res_resourceAdd"])
+                }
+            }
+        })
+        .state("roleAdd",{
+            url:"/role/roleAdd.html",
+            templateUrl:"role/roleAdd.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","res_roleAdd"])
                 }
             }
         })
