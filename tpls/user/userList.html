@@ -14,8 +14,7 @@
     </div>
     <script type="text/javascript">
         jQuery(function ($) {
-            var base_url='http://localhost:8080/knowledgeRepo/';
-            var table_url='http://localhost:8080/knowledgeRepo/user/query.form';
+            var user_query_url='user/query.form';
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
             var grid_searcher ="#grid-search";
@@ -71,7 +70,7 @@
                 repeatitems: false
             };
             jQuery(grid_selector).jqGrid({
-                url: table_url,
+                url: BASE_URL+user_query_url,
                 mtype:"POST",
                 datatype: "json",
                 height: 500,
@@ -85,6 +84,7 @@
                 multiboxonly: true,
                 caption: "用户列表",
                 autowidth: true,
+                rownumbers:true,
                 prmNames: prmNames,
                 jsonReader: jsonReaderConfig,
                 loadComplete : function() {
@@ -97,7 +97,7 @@
                         enableTooltips(table);
                     }, 0);
                 },
-                editurl:base_url+"user/edit.form"
+                editurl:BASE_URL+"user/edit.form"
             });
             jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
                 edit: false,

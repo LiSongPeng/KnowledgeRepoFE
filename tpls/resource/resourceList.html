@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="row" >
+    <div class="col-xs-12"  style="height: 100%">
+        <div id="grid-search"></div>
+        <table id="grid-table"></table>
+        <div id="grid-pager"></div>
+    </div>
+</div>
+<script>
+    jQuery(function ($) {
+        var resource_query_url='resource/query.form';
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+        var grid_searcher ="#grid-search";
+        var colNames=['修改','资源id','资源名称','资源类型','资源Url','资源图标','资源排序','删除状态','创建人','创建时间'];
+        var colModel=[
+            {name:'edit',index:'',width:80, fixed:true, sortable:false, resize:false,
+                formatter: function (cellvalue,options,rowObject) {
+                    var html="<button class='fm-button' onclick='goEdit(\""+rowObject.id+"\")' ng-click='toEdit($event)'>修改</button>";
+                    return html;
+                }},
+            {name:'treeData.id',index:'treeData.id',key:true,width:60,hidden:true,editable:false},
+            {name:'treeData.sName',index:'treeData.sName',width:70,editable:true,editoptions:{size:"40",maxlength:"50"}},
+            {name:'sType',index:'treeData.sType',width:50,hidden:true,editable:true,editoptions:{size:"40",maxlength:"50"}},
+            {name:'sUrl',index:'treeData.sUrl',width:80,sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
+            {name:'sIcon',index:'treeData.sIcon',width:50,editable:false},
+            {name:'sIndex',index:'treeData.sIndex',width:40,editable:false},
+            {name:'deleteStatus',index:'treeData.deleteStatus',width:50,edittype:"checkbox",
+                formatter:function (cellvalue,options,rowObject) {
+                    var color="",cev="未删除";
+                    if (cellvalue===0){
+                        color="red";
+                        cev="已删除";
+                    }
+                    var total="<span style='color:"+color+"'>"+cev+"</span>"
+                    return total;
+                }},
+            {name:'createUser',index:'treeData.createUser',width:70,editable:false},
+            {name:'createTime',index:'treeData.createTime',width:100,editable:false,sorttype:"date"}
+        ];
+        var prmNames={
+            page:"currentPage",    // 表示请求页码的参数名称
+            rows:"pageSize",    // 表示请求行数的参数名称
+            sort: "sidx", // 表示用于排序的列名的参数名称
+            order: "sord", // 表示采用的排序方式的参数名称
+            search:"search", // 表示是否是搜索请求的参数名称
+            nd:"nd", // 表示已经发送请求的次数的参数名称
+            id:"id", // 表示当在编辑数据模块中发送数据时，使用的id的名称
+            oper:"oper",    // operation参数名称（我暂时还没用到）
+            editoper:"edit", // 当在edit模式中提交数据时，操作的名称
+            addoper:"add", // 当在add模式中提交数据时，操作的名称
+            deloper:"del", // 当在delete模式中提交数据时，操作的名称
+            subgridid:"subid", // 当点击以载入数据到子表时，传递的数据名称
+            npage: null,
+            totalrows:"totalCounts" // 表示需从Server得到总共多少行数据的参数名称，参见jqGrid选项中的rowTotal
+        };
+        var jsonReaderConfig={
+            root: "content",   // json中代表实际模型数据的入口
+            page: "currentPage",   // json中代表当前页码的数据
+            total: "totalPage", // json中代表页码总数的数据
+            records: "totalCounts", // json中代表数据行总数的数据
+            cell: "cell",
+            id: "id",
+            userdata: "userdata",
+            repeatitems: false
+        };
+        jQuery(grid_selector).jqGrid({
+            url: BASE_URL+resource_query_url,
+            mtype:"POST",
+            datatype: "json",
+            height: 500,
+            treeGrid:true,//w为ture则为树形表格
+            treeGridModel:"adjacency",
+            ExpandColumn:"sName",//展开的列
+            ExpandColClick:true,//树形表格是否展开
+            treeReader : {
+                level_field: "level",
+                parent_id_field: "sParentId",
+                leaf_field: "isLeaf",
+                expanded_field: "expanded"
+            },
+            colNames: colNames,
+            colModel: colModel,
+            page:false,
+            viewrecords: true,
+            rowNum: -1,
+            pager: pager_selector,
+            multiselect: true,
+            multiboxonly: true,
+            caption: "用户列表",
+            autowidth: true,
+            prmNames: prmNames,
+            jsonReader: jsonReaderConfig,
+            loadComplete : function() {
+                var table = this;
+                setTimeout(function(){
+                    styleCheckbox(table);
+
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+            },
+            editurl:BASE_URL+"user/edit.form"
+        });
+        jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
+            edit: false,
+            editicon : 'icon-pencil gray',
+            add: false,
+            addicon : 'icon-plus-sign purple',
+            del: true,
+            delicon : 'icon-trash red',
+            search: false,
+            searchicon : 'icon-search orange',
+            refresh: true,
+            refreshicon : 'icon-refresh green',
+            view: false,
+            viewicon : 'icon-zoom-in grey'
+        },{},{},{recreateForm: true,
+            beforeShowForm : function(e) {
+                var form = $(e[0]);
+                if(form.data('styled')) return false;
+
+                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+                style_delete_form(form);
+
+                form.data('styled', true);
+            },
+            onClick : function(e) {
+                alert(1);
+            }})
+            .navButtonAdd(pager_selector,{
+                caption:"",
+                buttonicon:"icon-plus-sign purple",
+                onClickButton:function () {
+                    window.location.href="#!/user/userAdd.html";
+                },
+                title:"新建用户",
+                position:"first"
+            });
+
+
+        jQuery(grid_searcher).filterGrid(grid_selector,{
+//                gridModel: true,
+            filterModel:[{
+                label:'用户ID',
+                name:'id',
+                stype:'text',
+                placeholder: '用户Id'
+            },{
+                label:'用户名称',
+                name:'uName',
+                stype:'text'
+            },{
+                label:'最后上线时间',
+                name:'uLastOnline',
+                stype:'text'
+            }],
+            formtype: 'horizontal',
+            autosearch: false,
+            buttonclass: 'fm-button btn-purple',
+            enableSearch: true,
+            enableClear: true
+        });
+
+
+        function style_edit_form(form) {
+            //enable datepicker on "sdate" field and switches for "stock" field
+//                form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
+//                    .end().find('input[name=stock]')
+//                    .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+
+            //update buttons classes
+            var buttons = form.next().find('.EditButton .fm-button');
+            buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+            buttons.eq(0).addClass('btn-primary').prepend('<i class="icon-ok"></i>');
+            buttons.eq(1).prepend('<i class="icon-remove"></i>')
+
+            buttons = form.next().find('.navButton a');
+            buttons.find('.ui-icon').remove();
+            buttons.eq(0).append('<i class="icon-chevron-left"></i>');
+            buttons.eq(1).append('<i class="icon-chevron-right"></i>');
+        }
+
+        function style_delete_form(form) {
+            var buttons = form.next().find('.EditButton .fm-button');
+            buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+            buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
+            buttons.eq(1).prepend('<i class="icon-remove"></i>')
+        }
+
+        function style_search_filters(form) {
+            form.find('.delete-rule').val('X');
+            form.find('.add-rule').addClass('btn btn-xs btn-primary');
+            form.find('.add-group').addClass('btn btn-xs btn-success');
+            form.find('.delete-group').addClass('btn btn-xs btn-danger');
+        }
+        function style_search_form(form) {
+            var dialog = form.closest('.ui-jqdialog');
+            var buttons = dialog.find('.EditTable')
+            buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'icon-retweet');
+            buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'icon-comment-alt');
+            buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'icon-search');
+        }
+
+
+        function styleCheckbox(table) {
+            /**
+             $(table).find('input:checkbox').addClass('ace')
+             .wrap('<label />')
+             .after('<span class="lbl align-top" />')
+
+
+             $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+             .find('input.cbox[type=checkbox]').addClass('ace')
+             .wrap('<label />').after('<span class="lbl align-top" />');
+             */
+        }
+
+        function updateActionIcons(table) {
+            /**
+             var replacement =
+             {
+                 'ui-icon-pencil' : 'icon-pencil blue',
+                 'ui-icon-trash' : 'icon-trash red',
+                 'ui-icon-disk' : 'icon-ok green',
+                 'ui-icon-cancel' : 'icon-remove red'
+             };
+             $(table).find('.ui-pg-div span.ui-icon').each(function(){
+						var icon = $(this);
+						var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+						if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+					})
+             */
+        }
+
+        function updatePagerIcons(table) {
+            var replacement =
+                {
+                    'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+                    'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+                    'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+                    'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+                };
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+                var icon = $(this);
+                var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+                if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+            })
+        }
+
+        function enableTooltips(table) {
+            $('.navtable .ui-pg-button').tooltip({container:'body'});
+            $(table).find('.ui-pg-div').tooltip({container:'body'});
+        }
+
+    });
+</script>
+
+</body>
+</html>
