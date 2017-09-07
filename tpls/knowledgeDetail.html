@@ -11,8 +11,16 @@
 
         .secondTitle li {
             float: left;
+            color:darkgray;
             list-style: none;
-            margin-right: 10px;
+            margin-right: 20px;
+            margin-left: 70px;
+        }
+        .secondTitle{
+            text-align: center;
+        }
+        b{
+            color:black;
         }
     </style>
 </head>
@@ -20,10 +28,10 @@
 <div class="container" ng-controller="detailController">
     <div class="row item">
         <div class="col-lg-12">
-            <h3><b>{{response.kTitle}}</b></h3>
+            <h3 style="text-align: center"><b>{{response.kTitle}}</b></h3>
         </div>
     </div>
-    <div class="row item" style="border-bottom: solid 1px silver">
+    <div class="row item" style="border-bottom: solid 1px silver;">
         <div class="col-lg-12">
             <ul class="secondTitle">
                 <li>创建人:<b>{{response.createUserId}}</b></li>
@@ -35,8 +43,8 @@
         </div>
     </div>
     <div class="row item">
-        <div class="col-lg-12" ng-bind-html="getTrustedHtml(response.kAnswer)" style="border-bottom: solid 1px silver"
-             >
+        <div class="col-lg-12" ng-bind-html="getTrustedHtml(response.kAnswer)" style="width: 100%"
+        >
         </div>
     </div>
     <div class="row item">
