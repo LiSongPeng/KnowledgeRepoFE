@@ -66,7 +66,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"user/userList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["jqGrid","res_userList"]);
+                    return $ocLazyLoad.load(["toastr","jqGrid","res_userList"]);
                 }
             }
         })
@@ -102,7 +102,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"resource/resourceList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["jqGrid","res_resourceList"])
+                    return $ocLazyLoad.load(["toastr","jqGrid","res_resourceList"])
                 }
             }
         }).state("roleList",{
@@ -110,7 +110,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"role/roleList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["jqGrid","res_roleList"])
+                    return $ocLazyLoad.load(["toastr","jqGrid","res_roleList"])
                 }
             }
         })
