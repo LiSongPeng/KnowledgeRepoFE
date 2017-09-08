@@ -43,6 +43,13 @@ app.constant('Modules_Config', [
             "../components/plugins/treeview/TreeView.min.js"
         ]
     }, {
+        name: 'bootstrap-treeview',
+        serie: true,
+        files: [
+            "../components/plugins/bootstrap-treeview/bootstrap-treeview.min.css",
+            "../components/plugins/bootstrap-treeview/bootstrap-treeview.min.js"
+        ]
+    }, {
         name: 'bootstrap-validator',
         serie: true,
         files: [
@@ -116,6 +123,12 @@ app.constant('Modules_Config', [
         serie:true,
         files:[
             "../components/javascripts/controllers/roleAuthCtrl.js"
+        ]
+    },{
+        name:'res_userRole',
+        serie:true,
+        files:[
+            "../components/javascripts/controllers/userRoleCtrl.js"
         ]
     }
 ]);

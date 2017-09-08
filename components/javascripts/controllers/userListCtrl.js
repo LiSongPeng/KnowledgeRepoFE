@@ -127,20 +127,35 @@ function uGridCtrl($scope,$state) {
                 },
                 title:"新建用户",
                 position:"first"
-            }).navButtonAdd(pager_selector,{
-            caption:"",
-            buttonicon:"icon-pencil gray",
-            onClickButton:function () {
-                var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-                if (selid==null||selid===""){
-                    toastr.warning("未选取用户");
-                    return;
-                }
-                window.location.href="#!/user/userAdd.html?edit=true&editId="+selid;
-            },
-            title:"编辑用户",
-            position:"first"
-        });
+            })
+            .navButtonAdd(pager_selector,{
+                caption:"",
+                buttonicon:"icon-pencil gray",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取用户");
+                        return;
+                    }
+                    window.location.href="#!/user/userAdd.html?edit=true&editId="+selid;
+                },
+                title:"编辑用户",
+                position:"first"
+            })
+            .navButtonAdd(pager_selector,{
+                caption:"",
+                buttonicon:"icon-user brown",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取用户");
+                        return;
+                    }
+                    window.location.href="#!/user/userRole.html?edit=true&editId="+selid;
+                },
+                title:"设置用户角色",
+                position:"first"
+            });
 
 
         jQuery(grid_searcher).filterGrid(grid_selector,{

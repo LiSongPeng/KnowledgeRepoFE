@@ -64,8 +64,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
                 id:$scope.user.id,
                 uName:$scope.user.uName,
                 uPassword:$scope.user.uPassword,
-                uDescription:$scope.user.uDescription,
-                uRole: uRoleList
+                uDescription:$scope.user.uDescription
             })
         }).then(function (data) {
             $scope.user={};

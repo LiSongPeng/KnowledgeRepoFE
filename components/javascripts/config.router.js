@@ -141,5 +141,14 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
+        .state("userRole",{
+            url:"/user/userRole.html",
+            templateUrl:"user/userRole.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","bootstrap-treeview","res_userRole"])
+                }
+            }
+        })
 
 });

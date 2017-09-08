@@ -122,7 +122,7 @@ function uGridCtrl($scope,$state) {
             })
             .navButtonAdd(pager_selector,{
                 caption:"",
-                buttonicon:"glyphicon-briefcase lightBlue",
+                buttonicon:"glyphicon-briefcase brown",
                 onClickButton:function () {
                     var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
                     if (selid==null||selid===""){
