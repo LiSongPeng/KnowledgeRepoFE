@@ -123,6 +123,13 @@
         </div>
         <div class="form-group">
             <label>
+                <span>用户角色 :</span>
+            </label>
+            <select id="role-selector" name="role" multiple>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>
                 <span>用户描述 :</span>
             </label>
             <!--<textarea id="kAnswer" name="kAnswer" placeholder="填写知识解答"></textarea>-->
@@ -166,6 +173,53 @@
     $(function() {
         // validate form
         var tform = $("#userAddForm");
+        $.ajax({
+            url:BASE_URL+"role/getRoleOption.form",
+            method:'GET',
+            type:'JSON',
+            success:function (data) {
+                data=JSON.parse(data);
+                console.log(data);
+                var objSelect = document.getElementById("role-selector")
+                for( var opt in data){
+                    objSelect.options.add(new Option(data[opt].rName,data[opt].id));
+                }
+            },
+            error:function (requet,textStatus,errorthrown) {
+                toastr.warning("获取角色列表出错:"+textStatus);
+            }
+        });
+
+            $('#role-selector').select2({
+                placeholder: "请选择角色",
+                tags: true,
+                method:'GET',
+                delay:250,
+                type:'JSON',
+                closeOnSelect: false,
+//                ajax:{
+//                    url:BASE_URL+"role/getRoleOption.form",
+//                    processResults: function (data) {
+//                        var items=[];
+//                        data=JSON.parse(data);
+//                        console.log(data);
+//                        for(var opt in data){
+//                            items.push({
+//                                "id":data[opt].id,
+//                                "text":data[opt].rName
+//                            });
+//                        }
+//                        console.log(items);
+//                        return {
+//                            results: items
+//                        };
+//                    },
+//                    cache: true
+//                },
+                createTag: function (decorated, params) {
+                    return null;
+                }
+            });
         tform.bootstrapValidator({
             submitButtons: null,
             fields:{

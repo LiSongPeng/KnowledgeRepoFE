@@ -18,13 +18,13 @@
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
             var grid_searcher ="#grid-search";
-            var colNames=['修改','用户ID','用户名称','用户密码','用户描述','创建者','删除状态','创建时间','最后一次登录时间'];
+            var colNames=['用户ID','用户名称','用户密码','用户描述','创建者','删除状态','创建时间','最后一次登录时间'];
             var colModel=[
-                {name:'edit',index:'',width:80, fixed:true, sortable:false, resize:false,
-                    formatter: function (cellvalue,options,rowObject) {
-                        var html="<button class='fm-button' onclick='goEdit(\""+rowObject.id+"\")' ng-click='toEdit($event)'>修改</button>";
-                        return html;
-                    }},
+//                {name:'edit',index:'',width:80, fixed:true, sortable:false, resize:false,
+//                    formatter: function (cellvalue,options,rowObject) {
+//                        var html="<button class='fm-button' onclick='goEdit(\""+rowObject.id+"\")' ng-click='toEdit($event)'>修改</button>";
+//                        return html;
+//                    }},
                 {name:'id',index:'id',key:true,width:60,hidden:true,editable:false},
                 {name:'uName',index:'uName',width:80,editable:true,editoptions:{size:"40",maxlength:"50"}},
                 {name:'uPassword',index:'uPassword',width:80,hidden:true,editable:true,editoptions:{size:"40",maxlength:"50"}},
@@ -80,7 +80,7 @@
                 rowNum: 15,
                 rowList: [10, 15, 20, 25, 30],
                 pager: pager_selector,
-                multiselect: true,
+                multiselect: false,
                 multiboxonly: true,
                 caption: "用户列表",
                 autowidth: true,

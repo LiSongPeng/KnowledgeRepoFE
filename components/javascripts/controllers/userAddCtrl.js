@@ -11,7 +11,6 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
     $scope.user={};
     $scope.editflag=$location.search().edit||false;
     $scope.title="新建用户";
-    alert($scope.editflag);
     if ($scope.editflag==="true"||$scope.editflag===true){
         $scope.title="编辑用户";
         console.log("sendhttp");
@@ -33,9 +32,10 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
             toastr.success("获取用户信息成功");
         },function error(response) {
             toastr.error("获取要编辑的用户信息失败,错误代码:"+response.status);
-        })
+        });
         console.log("sendhttp");
     }
+
     $scope.submitAdd=function () {
        if (!$("#userAddForm").data("bootstrapValidator").isValid()){
             toastr.warning("输入不合法");
@@ -45,6 +45,12 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
        if ($scope.editflag==="true"){
            tourl="user/update.form";
        }
+       var uRole=$('#role-selector').val();
+       var uRoleList= null;
+       if (uRole!=null){
+           uRoleList=uRole.toString();
+       }
+       console.log(uRoleList);
         $http({
             method:"POST",
             url:testURL+tourl,
@@ -55,7 +61,8 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
                 id:$scope.user.id,
                 uName:$scope.user.uName,
                 uPassword:$scope.user.uPassword,
-                uDescription:$scope.user.uDescription
+                uDescription:$scope.user.uDescription,
+                uRole: uRoleList
             })
         }).then(function (data) {
             $scope.user={};

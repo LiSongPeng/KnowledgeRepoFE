@@ -2,11 +2,20 @@ function mainController($scope,$http,testURL) {
     $scope.resList=[];
 //				从服务器获取json权限数据
 
-
+    $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
     $scope.$on('getUserRes',function () {
-        $http.get(testURL+'resource/getUserRes.form').then(function (response) {
+        $http({
+            method: "POST",
+            url: testURL + "resource/getUserRes.form",
+            headers: {
+                'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+            },
+            data: $.param({
+                userid: $scope.currUser.id
+            })
+        }).then(function (response) {
             if(response.data==="notlogin"){
-                $scope.$broadcast("loginshow");
+                alert("用户未登录")
             }else {
                 $scope.resList=response.data;
                 $scope.$broadcast('refreshResTree',$scope.resList);
@@ -25,39 +34,6 @@ function mainController($scope,$http,testURL) {
         $scope.$broadcast('breadcrumbChange',path);
     });
 
-}
-function loginboxController ($scope,$http,testURL){
-    $scope.hideflag=false;
-    $scope.$on("loginshow",function () {
-        $scope.hideflag=true;
-    });
-    $scope.login=function () {
-        $http({
-            method: "POST",
-            url: testURL + "user/login.form",
-            headers: {
-                'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
-            },
-            data: $.param({
-                username: $scope.username,
-                password: $scope.password
-            })
-        }).then(function (response) {
-            console.log(response);
-            if (response.data==="SUCCESS"){
-                $scope.hideflag=false;
-                $scope.$emit('getUserRes');
-            }else if(response.data==="FAILED"){
-                alert("用户不存在或密码不正确")
-            }
-        },function (response) {
-            console.log(response);
-            if (response.data==="SUCCESS"){
-                alert("wrong success")
-            }
-            alert("error! "+response.status);
-        });
-    }
 }
 function breadcrumbCtrl($scope) {
     $scope.urlPath=[];
