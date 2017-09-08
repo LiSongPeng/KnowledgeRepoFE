@@ -1,4 +1,4 @@
-function mainController($scope,$http,testURL) {
+function mainController($scope,$http,testURL,$rootScope) {
     $scope.resList=[];
 //				从服务器获取json权限数据
 
@@ -60,7 +60,7 @@ function navController($scope,$rootScope) {
         }
         return r;
     };
-    $scope.$on('$stateChangeStart',function (evt, toState, toParams, fromState, fromParams) {
+    $rootScope.$on('$stateChangeSuccess',function (evt, toState, toParams, fromState, fromParams) {
         console.log("123123");
         alert(123);
         console.log(evt);
