@@ -49,7 +49,7 @@ function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
             data:$.param({
-                createUserId:$scope.currUser,
+                createUserId:$scope.currUser.id,
                 id:$scope.resource.id,
                 sName:$scope.resource.sName,
                 sUrl:$scope.resource.sUrl,
