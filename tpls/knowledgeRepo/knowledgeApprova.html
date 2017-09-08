@@ -101,6 +101,24 @@
         .basic-grey .button:hover {
             background: #CF7A7A
         }
+        #message{
+             width: 70%;
+
+
+         }
+        span{
+            font-size: 16px;
+
+
+        }
+
+        table,th,td
+        {
+            border:0px solid black;
+            font-size: 16px;
+            width:auto;
+        }
+
     </style>
 
     <script src="../../components/javascripts/wangEditor.min.js"></script>
@@ -113,9 +131,36 @@
             <!--<span>Please fill all the texts in the fields.</span>-->
         </h1>
         <input id="id"  name="id" style="display:none"/>
+
+        <div id="message">
+
+            <table>
+                <tr>
+                    <td>知识标题：</td>
+                    <td>   <span id="kTitle"></span></td>
+                </tr>
+                <tr>
+                    <td>知识解答：</td>
+                    <td><span id="kAnswer"></span></td>
+                </tr>
+                <tr>
+                    <td>使用次数：</td>
+                    <td><span id="kUseCount"></span></td>
+                </tr>
+            </table>
+
+
+        </div>
+
+
+        <!--<label>-->
+            <!--<span>最后一次使用时间:</span>-->
+            <!--<span id="kUseTimeLast"></span>-->
+        <!--</label>-->
+
         <label>
-            <span>审批人 :</span>
-            <input id="kApprUserId" type="text" name="kApprUserId"  />
+            <!--<span>审批人 :</span>-->
+            <input id="kApprUserId" type="text" name="kApprUserId" style="display:none" value="{{currUser.id}}"/>
         </label>
 
 
@@ -137,30 +182,60 @@
 
         <label>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
+            <div class="pull-right" style="margin-right: 50px">
             <input type="submit" class="button" id="agree" value="通过" />
             <input type="submit" class="button" id="disagree"  value="不通过" />
-
+                <input type="button" class="button" id="back"  value="返回" />
+            </div>
         </label>
     </form>
 </div>
 <script type="text/javascript">
-    var E = window.wangEditor
-    var editor1 = new E('#div1')  // 两个参数也可以传入 elem 对象，class 选择器
+    var E = window.wangEditor;
+    var editor1 = new E('#div1');// 两个参数也可以传入 elem 对象，class 选择器
 
     editor1.customConfig.menus = [
-        'head',
-        'bold',
-        'italic',
-        'underline'
-    ]
 
-    editor1.create()
+    ];
 
-//    document.getElementById('submit').addEventListener('click', function () {
-//        document.getElementById("kAnswer").value=editor1.txt.text();
-//
-//    }, false)
+    editor1.create();
+
+
+    $(function(){
+
+
+        var str=location.href; //取得整个地址栏
+        var num=str.indexOf("?");
+        str=str.substr(num+1);
+
+        var url="http://localhost:8080/knowledgeRepo/queryKnowledgeById.form?"+str;
+
+        $.getJSON(url,function(data){
+
+            document.getElementById("kTitle").innerText=data.kTitle;
+            document.getElementById("kAnswer").innerText=data.kAnswer;
+            document.getElementById("kUseCount").innerText=data.kUseCount;
+           // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
+
+
+            var msg = '';
+
+            msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+
+
+//                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+        });
+
+
+
+
+        　
+        });
+
+
+
+
+
 
 
     $(function(){
@@ -182,6 +257,8 @@
             str=str.substr(num+4);
             document.getElementById("id").value=str;
             document.getElementById("button").value=button;
+
+
             document.getElementById("kApprMemo").value=editor1.txt.text();
 
             var data = $(this).serialize(); //序列化表单数据
@@ -194,12 +271,15 @@
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
             });
             alert("审批成功！")
-            location.href="index.html#!/knowledgeRepo/knowledgeList.html"
+            location.href="index.html#!/knowledgeRepo/knowledgeList.html";
 
             return false;
         });
     });
-
+    $("#back").click(function () {
+            location.href="index.html#!/knowledgeRepo/knowledgeList.html";
+        }
+    )
 
 
 </script>

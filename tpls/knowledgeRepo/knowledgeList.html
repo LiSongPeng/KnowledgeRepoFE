@@ -60,18 +60,17 @@
             colNames: ['知识id', '知识标题', '知识解答', '使用次数', '最后一次使用时间', '审批状态', '审批人', '审批时间', '审批意见', '创建人', '创建时间'],
             colModel: [
 
-                {name: "id", index: "id",hidden:true, width: 100, editable: false, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kTitle", index: "kTitle", width: 100,editable: true, edittype: "select", editoptions: {value: "1:采购入库;2:退用入库"}},
+                {name: "id", index: "id",hidden:true, width: 100, editable: false},
+                {name: "kTitle", index: "kTitle", width: 100,editable: true},
                 {name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
-                {name: "kUseCount", index: "kUseCount", width: 100, editable: true, editoptions: {size: "20", maxlength: "30"}},
-
-                {name: "kUserTimeLast", index: "kUserTimeLast", width: 220, editable: true,editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
-                {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "kApprTime", index: "kApprTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
-                {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "createUserId", index: "createUserId", width: 150, editable: true, editoptions: {size: "20", maxlength: "30"}},
-                {name: "createTime", index: "createTime", width: 220, editable: true, editoptions: {size: "20", maxlength: "30"},formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}
+                {name: "kUseCount", index: "kUseCount", width: 100, editable: true},
+                {name: "kUserTimeLast", index: "kUserTimeLast", width: 220, sortable: false, editable: true,formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
+                {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true},
+                {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true},
+                {name: "kApprTime", index: "kApprTime", width: 220, editable: true,formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}},
+                {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true},
+                {name: "createUserId", index: "createUserId", width: 150, editable: true},
+                {name: "createTime", index: "createTime", width: 220, editable: true,formatter:function(cellvalue, options, row){return new Date(cellvalue).toLocaleString()}
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
             //scroll: 1,

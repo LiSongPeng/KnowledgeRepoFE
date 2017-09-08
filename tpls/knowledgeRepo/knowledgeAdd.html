@@ -117,8 +117,8 @@
             <input id="kTitle" type="text" name="kTitle" placeholder="填写知识标题" />
         </label>
         <label>
-            <span>创建人 :</span>
-            <input id="createUserId" type="createUserId" name="createUserId" placeholder="填写创建人" />
+
+            <input id="createUserId" type="createUserId" name="createUserId" placeholder="填写创建人" value="{{currUser.id}}" style="display:none" />
         </label>
 
         <!--<label>-->
@@ -139,7 +139,7 @@
         <label>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <div class="pull-right" style="margin-right: 50px">
-            <input type="reset" class="button" id="reset" value="重置" />
+            <input type="button" class="button" id="back" value="返回" />
             <input type="submit" class="button" id="submit"  value="提交" />
             </div>
         </label>
@@ -157,15 +157,10 @@
         'strikeThrough',  // 删除线
         'foreColor',  // 文字颜色
         'backColor',  // 背景颜色
-        'link',  // 插入链接
-        'list',  // 列表
+
         'justify',  // 对齐方式
         'quote',  // 引用
-        'emoticon',  // 表情
-        'image',  // 插入图片
-        'table',  // 表格
-        'video',  // 插入视频
-        'code',  // 插入代码
+
         'undo',  // 撤销
         'redo'  // 重复
     ]
@@ -173,7 +168,11 @@
     editor1.create()
 
     document.getElementById('submit').addEventListener('click', function () {
-        document.getElementById("kAnswer").value=editor1.txt.text();
+       // document.getElementById("kAnswer").value=editor1.txt.text();  //获取纯文本
+        document.getElementById("kAnswer").value=editor1.txt.html();       //获取带格式的文本
+        var a = editor1.txt.html();
+        alert(a)
+
 
     }, false)
 
@@ -189,14 +188,17 @@
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
             });
-            alert("添加成功！")
-            location.href="index.html#!/knowledgeRepo/knowledgeList.html"
+            alert("添加成功！");
+            location.href="index.html#!/knowledgeRepo/knowledgeList.html";
 
             return false;
         });
     });
 
-
+    $("#back").click(function () {
+        location.href="index.html#!/knowledgeRepo/knowledgeList.html";
+        }
+    )
 
 </script>
 

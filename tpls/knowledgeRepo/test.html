@@ -101,38 +101,70 @@
         .basic-grey .button:hover {
             background: #CF7A7A
         }
+        #message {
+            width: 70%;
+
+
+        }
+
+        #message span{
+            font-size: 14px;
+
+
+        }
+
     </style>
 
-    <!--<script src="../../components/javascripts/wangEditor.min.js"></script>-->
-    <!--<script src="../../components/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>-->
+    <script src="../../components/javascripts/wangEditor.min.js"></script>
+    <script src="../../components/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
-<body onload="UrlSearch();">
+<body>
 <div class="basic-grey">
     <form action="#" method="post" class="STYLE-NAME" id="knowledge">
-        <h1>知识编辑
+        <h1>知识审批
             <!--<span>Please fill all the texts in the fields.</span>-->
         </h1>
         <input id="id"  name="id" style="display:none"/>
-        <label>
-            <span>知识标题 :</span>
-            <input id="kTitle" type="text" name="kTitle" placeholder="填写知识标题" />
-        </label>
-        <label>
 
-            <input id="createUserId" type="createUserId" name="createUserId" placeholder="填写创建人" style="display:none" value="{{currUser.id}}" />
-        </label>
+        <div id="message" class="text">
+
+            <span>知识标题:</span>
+            <span id="kTitle"></span>
+
+
+            <span>知识解答:</span>
+            <span id="kAnswer"></span>
+
+
+
+            <span>使用次数:</span>
+            <span id="kUseCount"></span>
+
+        </div>
+
 
         <!--<label>-->
-            <!--<span>创建时间 :</span>-->
-            <!--<input id="createTime" type="datetime-local" name="createTime" placeholder="2015/03/27 10:41" />-->
+            <!--<span>最后一次使用时间:</span>-->
+            <!--<span id="kUseTimeLast"></span>-->
+        <!--</label>-->
+
+        <label>
+            <!--<span>审批人 :</span>-->
+            <input id="kApprUserId" type="text" name="kApprUserId"  style="display:none" value="123456" />
+        </label>
+
+
+        <!--<label>-->
+        <!--<span>创建时间 :</span>-->
+        <!--<input id="createTime" type="datetime-local" name="createTime" placeholder="2015/03/27 10:41" />-->
         <!--</label>-->
         <label>
-            <span>知识解答 :</span>
-            <!--<textarea id="kAnswer" name="kAnswer" placeholder="填写知识解答"></textarea>-->
-            <input id="kAnswer"  name="kAnswer" style="display:none"/>
-            <div id="div1" class="text">
-                <p id="aa"></p>
-            </div>
+            <span>审批意见 :</span>
+            <textarea id="kApprMemo2" name="kApprMemo2" placeholder="填写审批意见"></textarea>
+            <input id="kApprMemo"  name="kApprMemo" style="display:none"/>
+            <!--<input id="button"  name="button" style="display:none"/>-->
+            <!--<div id="div1" class="text">-->
+            <!--</div>-->
 
 
 
@@ -141,15 +173,30 @@
         <label>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <div class="pull-right" style="margin-right: 50px">
-            <input type="button" class="button" id="back" value="返回" />
-            <input type="submit" class="button" id="submit"  value="提交" />
+            <input type="submit" class="button" id="agree" value="通过" />
+            <input type="submit" class="button" id="disagree"  value="不通过" />
             </div>
         </label>
     </form>
 </div>
 <script type="text/javascript">
+    //`````````````````
+//    var E = window.wangEditor;
+//    var editor1 = new E('#div1');// 两个参数也可以传入 elem 对象，class 选择器
+//
+//    editor1.customConfig.menus = [
+//        'head',
+//        'bold',
+//        'italic',
+//        'underline'
+//    ];
+//
+//    editor1.create();
 
-    $(function() {
+
+    $(function(){
+
+
         var str=location.href; //取得整个地址栏
         var num=str.indexOf("?");
         str=str.substr(num+1);
@@ -158,11 +205,11 @@
 
         $.getJSON(url,function(data){
 
-                document.getElementById("kTitle").value=data.kTitle;
-                document.getElementById("id").value=data.id;
-                document.getElementById("createUserId").value=data.createUserId;
-                //document.getElementsByTagName("p").innerHTML=data.kAnswer;
-                document.getElementById("aa").innerHTML=data.kAnswer;
+            document.getElementById("kTitle").innerText=data.kTitle;
+            document.getElementById("kAnswer").innerText=data.kAnswer;
+            document.getElementById("kUseCount").innerText=data.kUseCount;
+           // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
+
 
             var msg = '';
 
@@ -173,88 +220,55 @@
         });
 
 
-    });
-    function UrlSearch()
-    {
-        var name,value;
-        var str=location.href; //取得整个地址栏
-        alert(str);
 
 
-
-        location.href="http://localhost:8080/knowledgeRepo/queryKnowledgeById.html?id="+str
-//        var num=str.indexOf("?")
-//        str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
-//
-//        var arr=str.split("&"); //各个参数放到数组里
-//        for(var i=0;i < arr.length;i++){
-//            num=arr[i].indexOf("=");
-//            if(num>0){
-//                name=arr[i].substring(0,num);
-//                value=arr[i].substr(num+1);
-//                this[name]=value;
-//            }
-//        }
-    }
+        　
+        });
 
 
 
 
 
-
-
-
-
-
-
-    var E = window.wangEditor;
-    var editor1 = new E('#div1');  // 两个参数也可以传入 elem 对象，class 选择器
-
-    editor1.customConfig.menus = [
-        'head',  // 标题
-        'bold',  // 粗体
-        'italic',  // 斜体
-        'underline',  // 下划线
-        'strikeThrough',  // 删除线
-        'foreColor',  // 文字颜色
-        'backColor',  // 背景颜色
-
-        'justify',  // 对齐方式
-        'quote',  // 引用
-
-        'undo',  // 撤销
-        'redo'  // 重复
-    ];
-
-    editor1.create();
-
-    document.getElementById('submit').addEventListener('click', function () {
-       // document.getElementById("kAnswer").value=editor1.txt.text();  //获取纯文本
-        document.getElementById("kAnswer").value=editor1.txt.html();   //获取带格式的文本
-
-    }, false)
 
 
     $(function(){
+
+        var button;
+        $("#agree").click(function(){
+            button=document.getElementById("agree").value
+
+
+        });
+        $("#disagree").click(function(){
+            button=document.getElementById("disagree").value
+
+
+        });
         $("#knowledge").submit(function(){
+            var str=location.href; //取得整个地址栏
+            var num=str.indexOf("?");
+            str=str.substr(num+4);
+            document.getElementById("id").value=str;
+            document.getElementById("button").value=button;
+            document.getElementById("kApprMemo").value=document.getElementById("kApprMemo2").innerText
+
             var data = $(this).serialize(); //序列化表单数据
-            $.getJSON("http://localhost:8080/knowledgeRepo/updateKnowledge.form",data,function(json){
+            $.getJSON("http://localhost:8080/knowledgeRepo/knowledgeApprova.form",data,function(json){
                 var msg = '';
 
-                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+                msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
             });
-            alert("编辑成功！")
-           location.href="index.html#!/knowledgeRepo/knowledgeList.html"
+            alert("审批成功！")
+            location.href="index.html#!/knowledgeRepo/knowledgeList.html";
 
+            return false;
         });
     });
 
-    $("#back").click(function () {
-        location.href="index.html#!/knowledgeRepo/knowledgeList.html";
-    })
+
 
 </script>
 
