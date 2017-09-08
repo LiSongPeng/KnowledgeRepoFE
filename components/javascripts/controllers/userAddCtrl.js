@@ -50,6 +50,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
        if (uRole!=null){
            uRoleList=uRole.toString();
        }
+       $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
        console.log(uRoleList);
         $http({
             method:"POST",
@@ -58,6 +59,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
             data:$.param({
+                createUserId:$scope.currUser,
                 id:$scope.user.id,
                 uName:$scope.user.uName,
                 uPassword:$scope.user.uPassword,

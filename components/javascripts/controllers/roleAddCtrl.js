@@ -16,6 +16,7 @@ function roleAddCtrl ($scope,$http,$state,$location,testURL) {
         $scope.title="编辑角色";
         console.log("sendhttp");
         $scope.editId=$location.search().editId;
+        $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
         $http({
             method: "POST",
             url: testURL + "role/query.form",
@@ -23,6 +24,7 @@ function roleAddCtrl ($scope,$http,$state,$location,testURL) {
                 'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
             data: $.param({
+                createUserId:$scope.currUser.id,
                 id:$scope.editId,
                 currentPage:1,
                 pageSize:1
