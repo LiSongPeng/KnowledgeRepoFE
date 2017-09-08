@@ -7,12 +7,9 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
         events:false,
         modules:Modules_Config
     });
-    $urlRouterProvider.otherwise("/home");
+    $urlRouterProvider.otherwise("/search.html");
     $stateProvider
-        .state('home', {
-            url: '/home',
-            templateUrl: 'home.html'
-        })
+
         .state("knowledgeList",{
             url:"/knowledgeRepo/knowledgeList.html",
             templateUrl:"knowledgeRepo/knowledgeList.html",
@@ -132,6 +129,15 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             resolve:{
                 deps:function ($ocLazyLoad) {
                     return $ocLazyLoad.load(["toastr","res_roleAdd"])
+                }
+            }
+        })
+        .state("roleAuthor",{
+            url:"/role/roleAuthor.html",
+            templateUrl:"role/roleAuthor.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","jqGrid","res_roleAuth"])
                 }
             }
         })

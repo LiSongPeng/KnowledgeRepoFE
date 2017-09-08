@@ -2,39 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户列表</title>
+    <title>Title</title>
 </head>
-<body ng-app="rlistapp">
-    <div class="row" ng-controller="rGridCtrl">
-        <div class="col-xs-12"  style="height: 100%">
-            <div id="grid-search"></div>
-            <table id="grid-table"></table>
-            <div id="grid-pager"></div>
+<body>
+<div class="row" ng-app="rAuthapp">
+    <div class="col-sm-12 "  style="height: 100%" ng-controller="rAuthCtrl">
+        <div>
+            <button ng-click="authSubmit()" class="btn btn-success">授权</button>
+            <button ng-click="authBack()" class="btn btn-gray">取消</button>
         </div>
+        <div id="grid-search"></div>
+        <table id="grid-table"></table>
+        <div id="grid-pager"></div>
     </div>
-    <script type="text/javascript">
+</div>
+    <script>
         jQuery(function ($) {
-            var user_query_url='role/query.form';
+            var resource_query_url='resource/query.form';
             var grid_selector = "#grid-table";
             var pager_selector = "#grid-pager";
             var grid_searcher ="#grid-search";
-            var colNames=['角色ID','角色名称','角色描述','创建者','删除状态','创建时间'];
+            var nameFormat= '<label>'+
+                '<input type="checkbox" class="ace" id="chxCheckAll">'+
+                '<span class="lbl align-top" >资源名称</span>'+
+                '</label>';
+            var colNames=['资源id',nameFormat];
             var colModel=[
-                {name:'id',index:'id',key:true,width:60,hidden:true,editable:false},
-                {name:'rName',index:'rName',width:80,editable:true,editoptions:{size:"40",maxlength:"50"}},
-                {name:'rDescription',index:'rDescription',width:140,sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
-                {name:'createUserId',index:'createUserId',width:60,editable:false},
-                {name:'deleteStatus',index:'deleteStatus',width:50,edittype:"checkbox",
-                    formatter:function (cellvalue,options,rowObject) {
-                        var color="",cev="未删除";
-                        if (cellvalue===0){
-                            color="red";
-                            cev="已删除";
-                        }
-                        var total="<span style='color:"+color+"'>"+cev+"</span>"
-                        return total;
-                    }},
-                {name:'createTime',index:'createTime',width:110,editable:false,sorttype:"date"}
+                {name:'id',index:'id',key:true,hidden:true,editable:false},
+                {name:'sName',index:'sName',width:70,sortable:false,formatter:showName}
             ];
             var prmNames={
                 page:"currentPage",    // 表示请求页码的参数名称
@@ -48,7 +43,7 @@
                 editoper:"edit", // 当在edit模式中提交数据时，操作的名称
                 addoper:"add", // 当在add模式中提交数据时，操作的名称
                 deloper:"del", // 当在delete模式中提交数据时，操作的名称
-                subgridid:"id", // 当点击以载入数据到子表时，传递的数据名称
+                subgridid:"subid", // 当点击以载入数据到子表时，传递的数据名称
                 npage: null,
                 totalrows:"totalCounts" // 表示需从Server得到总共多少行数据的参数名称，参见jqGrid选项中的rowTotal
             };
@@ -63,45 +58,51 @@
                 repeatitems: false
             };
             jQuery(grid_selector).jqGrid({
-                url: BASE_URL+user_query_url,
+                url: BASE_URL+resource_query_url,
                 mtype:"POST",
                 datatype: "json",
                 height: 500,
+                treeGrid:true,//w为ture则为树形表格
+                treeGridModel:"adjacency",
+                ExpandColumn:"sName",//展开的列
+//                ExpandColClick:true,//树形表格是否展开
+                treeReader : {
+                    level_field: "level",
+                    parent_id_field: "sParentId",
+                    leaf_field: "leaf",
+                    expanded_field: "expanded"
+                },
+                treeIcons:{plus:'glyphicon glyphicon-chevron-right',minus:'glyphicon glyphicon-chevron-down',leaf:'glyphicon glyphicon-arrow-right'},
                 colNames: colNames,
                 colModel: colModel,
+                page:false,
                 viewrecords: true,
-                rowNum: 15,
-                rowList: [10, 15, 20, 25, 30],
+                rowNum: -1,
                 pager: pager_selector,
-                multiselect: false,
-                multiboxonly: true,
-                caption: "角色列表",
+                caption: "角色授权",
                 autowidth: true,
-                rownumbers:true,
                 prmNames: prmNames,
                 jsonReader: jsonReaderConfig,
                 loadComplete : function() {
                     var table = this;
                     setTimeout(function(){
                         styleCheckbox(table);
-
                         updateActionIcons(table);
                         updatePagerIcons(table);
                         enableTooltips(table);
                     }, 0);
-                },
-                editurl:BASE_URL+"role/delete.form"
+                }
             });
             jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
                 edit: false,
                 editicon : 'icon-pencil gray',
                 add: false,
                 addicon : 'icon-plus-sign purple',
-                del: true,
+                del: false,
                 delicon : 'icon-trash red',
                 search: false,
                 searchicon : 'icon-search orange',
-                refresh: true,
+                refresh: false,
                 refreshicon : 'icon-refresh green',
                 view: false,
                 viewicon : 'icon-zoom-in grey'
@@ -117,75 +118,54 @@
                 },
                 onClick : function(e) {
                     alert(1);
-                }})
-                .navButtonAdd(pager_selector,{
-                    caption:"",
-                    buttonicon:"icon-plus-sign purple",
-                    onClickButton:function () {
-                        window.location.href="#!/role/roleAdd.html";
-                    },
-                    title:"新建角色",
-                    position:"first"
-                })
-                .navButtonAdd(pager_selector,{
-                    caption:"",
-                    buttonicon:"glyphicon-briefcase lightBlue",
-                    onClickButton:function () {
-                        var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-                        alert(selid);
-                        window.location.href="#!/role/roleAuthor.html?authId="+selid;
-                    },
-                    title:"角色授权",
-                    position:"first"
-                })
-                .navButtonAdd(pager_selector,{
-                    caption:"",
-                    buttonicon:"icon-pencil gray",
-                    onClickButton:function () {
-                        var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-                        if (selid==null||selid===""){
-                            toastr.warning("未选取资源");
-                            return;
-                        }
-                        window.location.href="#!/role/roleAdd.html?edit=true&editId="+selid;
-                    },
-                    title:"编辑角色",
-                    position:"first"
+                }});
+            //全选/全不选
+            $("#chxCheckAll").on('click', function(){
+                $("input[id^='chx']").each(function(){
+                    $(this).prop("checked", $("#chxCheckAll").is(':checked'));
                 });
-
-
-            jQuery(grid_searcher).filterGrid(grid_selector,{
-//                gridModel: true,
-                filterModel:[{
-                    label:'角色名称',
-                    name:'rName',
-                    stype:'text'
-                }],
-                formtype: 'horizontal',
-                autosearch: false,
-                buttonclass: 'fm-button btn-purple',
-                enableSearch: true,
-                enableClear: true
             });
 
-
-            function style_edit_form(form) {
-                //enable datepicker on "sdate" field and switches for "stock" field
-//                form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-//                    .end().find('input[name=stock]')
-//                    .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
-
-                //update buttons classes
-                var buttons = form.next().find('.EditButton .fm-button');
-                buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
-                buttons.eq(0).addClass('btn-primary').prepend('<i class="icon-ok"></i>');
-                buttons.eq(1).prepend('<i class="icon-remove"></i>')
-
-                buttons = form.next().find('.navButton a');
-                buttons.find('.ui-icon').remove();
-                buttons.eq(0).append('<i class="icon-chevron-left"></i>');
-                buttons.eq(1).append('<i class="icon-chevron-right"></i>');
+            function showName( cellvalue, options, cell ) {
+                var rowId = cell.id;
+                var checkbox = '<label >'+
+                    '<input type="checkbox" id="chx'+rowId+'" class="ace" value="'+rowId+'" onclick="clickCheckbox('+rowId+', this);" />'+
+                    '<span class="lbl align-top" ></span>'+
+                    cell.sName +
+                    '</label>';
+                return  checkbox ;
             }
+//checkbox事件
+            clickCheckbox = function clickCheckbox(rowid, $this) {
+                checkChildren(rowid,$this);
+                if($($this).is(':checked')){
+                    checkParent(rowid, $this);
+                }else{
+                    $("#chxCheckAll").prop("checked",false);
+                }
+            };
+//递归选中子节点
+            function checkChildren(rowid,$this){
+                console.log(jQuery(grid_selector).jqGrid('getNodeChildren',$(grid_selector).jqGrid("getRowData", rowid)));
+                var records = jQuery(grid_selector).jqGrid('getNodeChildren',$(grid_selector).jqGrid("getRowData", rowid));
+                if(records.length>0){
+                    for (var i=0;i<records.length;i++){
+                        var cb = $("#chx"+records[i].id);
+                        cb.prop("checked", $($this).is(':checked'));
+                        checkChildren(records[i].id,cb);
+                    }
+                }
+            }
+//递归选中父节点
+            function checkParent(rowid, $this){
+                var parent = $(grid_selector).jqGrid('getNodeParent',$(grid_selector).jqGrid("getRowData", rowid));
+                if(parent){
+                    var cb = $("#chx"+parent.id);
+                    cb.prop("checked", $($this).is(':checked'));
+                    checkParent(parent.id,cb);
+                }
+            }
+
 
             function style_delete_form(form) {
                 var buttons = form.next().find('.EditButton .fm-button');
@@ -193,21 +173,6 @@
                 buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
                 buttons.eq(1).prepend('<i class="icon-remove"></i>')
             }
-
-            function style_search_filters(form) {
-                form.find('.delete-rule').val('X');
-                form.find('.add-rule').addClass('btn btn-xs btn-primary');
-                form.find('.add-group').addClass('btn btn-xs btn-success');
-                form.find('.delete-group').addClass('btn btn-xs btn-danger');
-            }
-            function style_search_form(form) {
-                var dialog = form.closest('.ui-jqdialog');
-                var buttons = dialog.find('.EditTable')
-                buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'icon-retweet');
-                buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'icon-comment-alt');
-                buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'icon-search');
-            }
-
 
             function styleCheckbox(table) {
                 /**
@@ -259,6 +224,8 @@
                 $('.navtable .ui-pg-button').tooltip({container:'body'});
                 $(table).find('.ui-pg-div').tooltip({container:'body'});
             }
+
+
 
         });
     </script>

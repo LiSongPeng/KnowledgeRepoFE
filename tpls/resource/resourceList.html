@@ -18,13 +18,8 @@
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
         var grid_searcher ="#grid-search";
-        var colNames=['修改','资源id','资源名称','资源类型','资源Url','资源图标','资源排序','删除状态','创建人','创建时间'];
+        var colNames=['资源id','资源名称','资源类型','资源Url','资源图标','资源排序','删除状态','创建人','创建时间'];
         var colModel=[
-            {name:'edit',index:'',width:80, fixed:true, sortable:false, resize:false,
-                formatter: function (cellvalue,options,rowObject) {
-                    var html="<button class='fm-button' onclick='goEdit(\""+rowObject.id+"\")' ng-click='toEdit($event)'>修改</button>";
-                    return html;
-                }},
             {name:'id',index:'id',key:true,width:60,hidden:true,editable:false},
             {name:'sName',index:'sName',width:70,editable:true,editoptions:{size:"40",maxlength:"50"}},
             {name:'sType',index:'sType',width:50,hidden:true,editable:true,editoptions:{size:"40",maxlength:"50"}},
@@ -82,7 +77,7 @@
             treeReader : {
                 level_field: "level",
                 parent_id_field: "sParentId",
-                leaf_field: "isLeaf",
+                leaf_field: "leaf",
                 expanded_field: "expanded"
             },
             treeIcons:{plus:'glyphicon glyphicon-chevron-right',minus:'glyphicon glyphicon-chevron-down',leaf:'glyphicon glyphicon-arrow-right'},
@@ -92,7 +87,7 @@
             viewrecords: true,
             rowNum: -1,
             pager: pager_selector,
-            multiselect: true,
+            multiselect: false,
             multiboxonly: true,
             caption: "资源列表",
             autowidth: true,
@@ -143,6 +138,19 @@
                     window.location.href="#!/resource/resourceAdd.html";
                 },
                 title:"新建资源",
+                position:"first"
+            }).navButtonAdd(pager_selector,{
+                caption:"",
+                buttonicon:"icon-pencil gray",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取资源");
+                        return;
+                    }
+                    window.location.href="#!/resource/resourceAdd.html?edit=true&editId="+selid;
+                },
+                title:"编辑资源",
                 position:"first"
             });
 
@@ -240,10 +248,8 @@
             $(table).find('.ui-pg-div').tooltip({container:'body'});
         }
 
+
     });
-    function goEdit(rowid) {
-        window.location.href="#!/resource/resourceAdd.html?edit=true&editId="+rowid;
-    }
 </script>
 
 </body>

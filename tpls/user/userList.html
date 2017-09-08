@@ -97,7 +97,7 @@
                         enableTooltips(table);
                     }, 0);
                 },
-                editurl:BASE_URL+"user/edit.form"
+                editurl:BASE_URL+"user/delete.form"
             });
             jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
                 edit: false,
@@ -133,6 +133,19 @@
                     },
                     title:"新建用户",
                     position:"first"
+                }).navButtonAdd(pager_selector,{
+                    caption:"",
+                    buttonicon:"icon-pencil gray",
+                    onClickButton:function () {
+                        var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                        if (selid==null||selid===""){
+                            toastr.warning("未选取资源");
+                            return;
+                        }
+                        window.location.href="#!/user/userAdd.html?edit=true&editId="+selid;
+                    },
+                    title:"编辑用户",
+                    position:"first"
                 });
 
 
@@ -160,43 +173,12 @@
             });
 
 
-            function style_edit_form(form) {
-                //enable datepicker on "sdate" field and switches for "stock" field
-//                form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-//                    .end().find('input[name=stock]')
-//                    .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
-
-                //update buttons classes
-                var buttons = form.next().find('.EditButton .fm-button');
-                buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
-                buttons.eq(0).addClass('btn-primary').prepend('<i class="icon-ok"></i>');
-                buttons.eq(1).prepend('<i class="icon-remove"></i>')
-
-                buttons = form.next().find('.navButton a');
-                buttons.find('.ui-icon').remove();
-                buttons.eq(0).append('<i class="icon-chevron-left"></i>');
-                buttons.eq(1).append('<i class="icon-chevron-right"></i>');
-            }
 
             function style_delete_form(form) {
                 var buttons = form.next().find('.EditButton .fm-button');
                 buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
                 buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
                 buttons.eq(1).prepend('<i class="icon-remove"></i>')
-            }
-
-            function style_search_filters(form) {
-                form.find('.delete-rule').val('X');
-                form.find('.add-rule').addClass('btn btn-xs btn-primary');
-                form.find('.add-group').addClass('btn btn-xs btn-success');
-                form.find('.delete-group').addClass('btn btn-xs btn-danger');
-            }
-            function style_search_form(form) {
-                var dialog = form.closest('.ui-jqdialog');
-                var buttons = dialog.find('.EditTable')
-                buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'icon-retweet');
-                buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'icon-comment-alt');
-                buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'icon-search');
             }
 
 

@@ -11,10 +11,8 @@ function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
     $scope.resource={};
     $scope.editflag=$location.search().edit||false;
     $scope.title="新建资源";
-    alert($scope.editflag);
     if ($scope.editflag==="true"||$scope.editflag===true){
         $scope.title="编辑资源";
-        console.log("sendhttp");
         $scope.editId=$location.search().editId;
         $http({
             method: "POST",
@@ -43,6 +41,7 @@ function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
        if ($scope.editflag==="true"){
            tourl="resource/update.form";
        }
+        $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
         $http({
             method:"POST",
             url:testURL+tourl,
@@ -50,6 +49,7 @@ function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
             data:$.param({
+                createUserId:$scope.currUser,
                 id:$scope.resource.id,
                 sName:$scope.resource.sName,
                 sUrl:$scope.resource.sUrl,
@@ -60,10 +60,10 @@ function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
             $scope.resource={};
             if ($scope.editflag==="true"){
                 toastr.success("修改资源成功");
-                $state.go("resourceList");
             }else{
                 toastr.success("创建资源成功");
             }
+            $state.go("resourceList");
         },function (data) {
             toastr.error("创建资源失败:"+data.status);
         });

@@ -111,5 +111,11 @@ app.constant('Modules_Config', [
             "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
             "../components/javascripts/controllers/resourceAddCtrl.js"
         ]
+    },{
+        name:'res_roleAuth',
+        serie:true,
+        files:[
+            "../components/javascripts/controllers/roleAuthCtrl.js"
+        ]
     }
 ]);

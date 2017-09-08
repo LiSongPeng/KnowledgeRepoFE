@@ -23,6 +23,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
             },
             data: $.param({
                 id:$scope.editId,
+                search:true,
                 currentPage:1,
                 pageSize:1
             })
@@ -59,7 +60,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
             data:$.param({
-                createUserId:$scope.currUser,
+                createUserId:$scope.currUser.id,
                 id:$scope.user.id,
                 uName:$scope.user.uName,
                 uPassword:$scope.user.uPassword,
@@ -70,12 +71,16 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
             $scope.user={};
             if ($scope.editflag==="true"){
                 toastr.success("修改用户成功");
-                $state.go("userList");
             }else{
                 toastr.success("创建用户成功");
             }
+            $state.go("userList");
         },function (data) {
-            toastr.error("创建用户失败:"+data.status);
+            if ($scope.editflag==="true") {
+                toastr.error("修改用户失败");
+            }else{
+                toastr.error("创建用户失败:"+data.status);
+            }
         });
     }
 }
