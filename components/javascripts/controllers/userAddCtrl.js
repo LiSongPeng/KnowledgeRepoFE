@@ -17,9 +17,9 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
         $scope.editId=$location.search().editId;
         $http({
             method: "POST",
-            url: testURL + "user/query.form",
+            url: testURL + "user/userUpdate/queryById.form",
             headers: {
-                'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+                'Content-Type': "application/x-www-form-urlencoded"
             },
             data: $.param({
                 id:$scope.editId,
@@ -29,7 +29,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
             })
         }).then(function success(response){
             console.log(response);
-            $scope.user=response.data.content[0];
+            $scope.user=response.data;
             toastr.success("获取用户信息成功");
         },function error(response) {
             toastr.error("获取要编辑的用户信息失败,错误代码:"+response.status);
@@ -38,13 +38,14 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
     }
 
     $scope.submitAdd=function () {
+        $('#userAddForm').bootstrapValidator('validate');
        if (!$("#userAddForm").data("bootstrapValidator").isValid()){
             toastr.warning("输入不合法");
            return;
        }
        var tourl="user/add.form";
        if ($scope.editflag==="true"){
-           tourl="user/update.form";
+           tourl="user/userUpdate/update.form";
        }
        var uRole=$('#role-selector').val();
        var uRoleList= null;
@@ -73,7 +74,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
             }else{
                 toastr.success("创建用户成功");
             }
-            $state.go("userList");
+            $state.go("用户列表");
         },function (data) {
             if ($scope.editflag==="true") {
                 toastr.error("修改用户失败");

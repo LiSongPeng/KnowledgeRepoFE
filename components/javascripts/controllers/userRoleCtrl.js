@@ -7,46 +7,40 @@ function userRoleCtrl($scope,$state,$http,testURL,$location) {
     $scope.editId=$location.search().editId;
     $http({
         method: "GET",
-        url: testURL+"role/getRoleOption.form"
+        url: testURL+"user/userRole/getUserRole.form",
+        headers : {
+            'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+        },
+        params:{
+            uid:$scope.editId
+        }
     }).then(function (response) {
         $scope.roletree=[];
-        var rolelist=response.data;
-        for(var i in rolelist){
+        var resdata=response.data;
+        for(var i in resdata.allRole){
             var role={
-                text:rolelist[i].rName,
-                roleId:rolelist[i].id,
-                icon: "glyphicon glyphicon-unchecked",
-                selectedIcon: "glyphicon glyphicon-check",
+                text:resdata.allRole[i].rName,
+                roleId:resdata.allRole[i].id,
                 state:{
                     selected: false
                 }
             };
             $scope.roletree.push(role);
 
-            $http({
-                method: "POST",
-                url: testURL+"role/getUserRole.form",
-                headers: {
-                    'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
-                },
-                data: $.param({
-                    uid:$scope.editId
-                })
-            }).then(function (response) {
-                for(var i in $scope.roletree){
-                    for (var j in response.data){
-                       if($scope.roletree[i].roleId==response.data[j]){
-                           $scope.roletree[i].state.selected=true;
-                       }
+            for(var i in $scope.roletree){
+                for (var j in resdata.userRole){
+                    if($scope.roletree[i].roleId==resdata.userRole[j]){
+                        $scope.roletree[i].state.selected=true;
                     }
                 }
-                $('#roleTree').treeview({
-                    data:$scope.roletree,
-                    multiSelect:true
-                })
-            },function (response) {
-                toastr.error("获取用户角色失败");
-            });
+            }
+            $('#roleTree').treeview({
+                data:$scope.roletree,
+                nodeIcon: "glyphicon glyphicon-unchecked",
+                selectedIcon: "glyphicon glyphicon-check",
+                multiSelect:true
+            })
+
         }
     },function (response) {
         toastr.error("获取角色列表失败");
@@ -62,7 +56,7 @@ function userRoleCtrl($scope,$state,$http,testURL,$location) {
         }
         $http({
             method:"POST",
-            url:testURL+"user/setUserRole.form",
+            url:testURL+"user/userRole/setUserRole.form",
             headers : {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
@@ -72,14 +66,14 @@ function userRoleCtrl($scope,$state,$http,testURL,$location) {
             })
         }).then(function (data) {
             toastr.success("用户角色设置成功");
-            $state.go("userList");
+            $state.go("用户管理");
         },function (data) {
             toastr.error("用户角色设置失败");
         });
     };
 
     $scope.userroleBack=function () {
-        $state.go("userList");
+        $state.go("用户管理");
     };
 
 }

@@ -2,16 +2,13 @@
  * Created by Letg4 on 2017/8/28.
  */
 var indexapp = angular.module('indexapp', ['mainRouter', 'globalconfig']);
-indexapp.config(function ($stateProvider, $urlRouterProvider) {
-    // $stateProvider
-    //     .state('home', {
-    //         url: '/home',
-    //         templateUrl: 'home.html'
-    //     });
-    // $urlRouterProvider.otherwise('/home');
-});
+// indexapp.config(function ($httpProvider) {
+//     var currUid=window.sessionStorage.getItem("currUser");
+//     console.log(currUid);
+//     $httpProvider.defaults.headers.common = { 'Current-UserId' : currUid.id }
+// });
 indexapp.controller('navController', ['$scope', function ($scope) {
-    $scope.currUser = JSON.parse(window.sessionStorage.getItem('currUser'));
+    $scope.currUser = window.sessionStorage.getItem('currUser');
     $scope.quit = function () {
         window.sessionStorage.setItem("currUser", null);
         window.location.href = "login.html";

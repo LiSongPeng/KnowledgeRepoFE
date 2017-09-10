@@ -129,62 +129,7 @@
     </div>
 </div>
 <script>
-    (function($) {
-        //自定义表单验证规则
-        $.fn.bootstrapValidator.validators = {
-            confirm_pass : {
-                validate: function(validator, $field, options) {
-                    return $("#uPassword").val() === $field.val();
-                }
-            },
-            size_valid:{
-                validate: function (validator,$field,options) {
-                    var len=$field.val().length;
-                    if(len<options.minLen){
-                        return false;
-                    }
-                    if(len>options.maxLen){
-                        return false;
-                    }else{
-                        return true;
-                    }
-                }
-            }
-    };
-    }(window.jQuery));
-    $(function() {
-        // validate form
-        var tform = $("#roleAddForm");
-        tform.bootstrapValidator({
-            submitButtons: null,
-            fields:{
-                rName:{
-                    enabled:true,
-                    message:'输入不合法',
-                    container: null,
-                    // 定义每个验证规则
-                    validators: {
-                        notEmpty: {message: '角色名不能为空'},
-                        size_valid: {minLen:0,maxLen:50,message: '角色名长度在6-50之间'}
-                    }
-                },
-                rrDescription:{
-                    enabled:true,
-                    message:'输入不合法',
-                    validators:{
-                        size_valid: {minLen:0,maxLen:200,message: '描述长度不能超过200'}
 
-                    }
-                }
-            }
-        });
-        // 修复bootstrap validator重复向服务端提交bug
-        tform.on('success.form.bv', function(e) {
-            // Prevent form submission
-            e.preventDefault();
-        });
-
-    });
 </script>
 </body>
 </html>

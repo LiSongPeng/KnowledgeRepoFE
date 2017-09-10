@@ -110,8 +110,10 @@
             }, function (response) {
                 var id;
                 if (response) {
+                    response=JSON.stringify(response);
+                    console.log("response"+response)
                     window.sessionStorage.setItem("currUser", response);
-                    response = $.parseJSON(response);
+//                    response = $.parseJSON(response);
                     toastr.info("登录成功,正在跳转到首页");
                     id = window.setTimeout(function () {
                         window.clearTimeout(id);

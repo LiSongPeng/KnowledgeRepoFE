@@ -91,6 +91,9 @@
         .form-group>small.help-block{
             padding-left: 100px;
         }
+        .select2-search:after{
+            content: none;
+        }
     </style>
 </head>
 <body ng-app="resourceAdd">
@@ -111,6 +114,14 @@
         </div>
         <div class="form-group">
             <label>
+                <span>父级资源 :</span>
+            </label>
+            <select class="form-control " id="sParentId" name="sParentId">
+
+            </select>
+        </div>
+        <div class="form-group">
+            <label>
                 <span>资源url :</span>
             </label>
             <input class="form-control" id="sUrl" type="text" ng-model="resource.sUrl" name="sUrl"  />
@@ -126,9 +137,11 @@
                 <span>资源类型 :</span>
             </label>
             <!--<textarea id="kAnswer" name="kAnswer" placeholder="填写知识解答"></textarea>-->
-            <input class="form-control" id="sType"  type="text" ng-model="resource.sType" name="sType" />
+            <select class="form-control" id="sType" name="sType">
+                <option value="0">菜单项</option>
+                <option value="1">功能项</option>
+            </select>
         </div>
-
         <div class="pull-right" style="margin-right: 50px">
             <input type="reset" class="button" id="reset" value="重置" />
             <span>&nbsp;&nbsp;</span>
@@ -140,43 +153,7 @@
     </div>
 </div>
 <script>
-    (function($) {
-        //自定义表单验证规则
-        $.fn.bootstrapValidator.validators = {
-            confirm_pass : {
-                validate: function(validator, $field, options) {
-                    return $("#uPassword").val() === $field.val();
-                }
-            },
-            size_valid:{
-                validate: function (validator,$field,options) {
-                    var len=$field.val().length;
-                    if(len<options.minLen){
-                        return false;
-                    }
-                    if(len>options.maxLen){
-                        return false;
-                    }else{
-                        return true;
-                    }
-                }
-            }
-    };
-    }(window.jQuery));
-    $(function() {
-        // validate form
-        var tform = $("#userAddForm");
-        tform.bootstrapValidator({
-            submitButtons: null,
 
-        });
-        // 修复bootstrap validator重复向服务端提交bug
-        tform.on('success.form.bv', function(e) {
-            // Prevent form submission
-            e.preventDefault();
-        });
-
-    });
 </script>
 </body>
 </html>

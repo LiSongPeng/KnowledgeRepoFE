@@ -166,23 +166,6 @@
     $(function() {
         // validate form
         var tform = $("#userAddForm");
-        $.ajax({
-            url:BASE_URL+"role/getRoleOption.form",
-            method:'GET',
-            type:'JSON',
-            success:function (data) {
-                data=JSON.parse(data);
-                console.log(data);
-                var objSelect = document.getElementById("role-selector")
-                for( var opt in data){
-                    objSelect.options.add(new Option(data[opt].rName,data[opt].id));
-                }
-            },
-            error:function (requet,textStatus,errorthrown) {
-                toastr.warning("获取角色列表出错:"+textStatus);
-            }
-        });
-
         tform.bootstrapValidator({
             submitButtons: null,
             fields:{

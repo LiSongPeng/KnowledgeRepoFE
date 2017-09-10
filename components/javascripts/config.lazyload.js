@@ -106,8 +106,8 @@ app.constant('Modules_Config', [
         name:'res_roleAdd',
         serie:true,
         files:[
-            "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
-            "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
+            // "../components/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            // "../components/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
             "../components/javascripts/controllers/roleAddCtrl.js"
         ]
     },{

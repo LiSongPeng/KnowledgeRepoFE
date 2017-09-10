@@ -21,17 +21,17 @@ function rAuthCtrl($scope,$http,$location,$state,testURL) {
         }
         return r;
     };
-    $scope.treeSetSelected=function (list,textattr,selattr,sellist) {
+    $scope.treeSetSelected=function (list,textattr,selattr,rolereslist) {
         for(var i in list){
             list[i].text=list[i][textattr];
-            if ($.inArray(list[i][selattr],sellist)){
-                list[i].state={checked:true};
+            if ($.inArray(list[i][selattr],rolereslist)!=-1){
+                list[i].state={selected:true};
             }
         }
     };
     $http({
         method: "GET",
-        url: testURL+"role/getResources.form",
+        url: testURL+"role/roleAuth/getResources.form",
         headers : {
             'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
         },
@@ -46,54 +46,77 @@ function rAuthCtrl($scope,$http,$location,$state,testURL) {
         $scope.restree=$scope.transData(reslist,'sId','sParentId','nodes');
         $('#resourceTree').treeview({
             data:$scope.restree,
-            showCheckbox:true,
-            multiSelect:false,
-            onNodeChecked: function (event,node) {
+            // showCheckbox:true,
+            selectedBackColor: '#f5f5f5',
+            selectedColor: '#171717',
+            nodeIcon: "glyphicon glyphicon-unchecked",
+            selectedIcon: "glyphicon glyphicon-check",
+            multiSelect:true,
+            // onNodeChecked: function (event,node) {
+            //     // $('#resourceTree').treeview('selectNode',[node.nodeId,{silent:false}]);
+            //     var children=node.nodes;
+            //     for(var i in children){
+            //         $('#resourceTree').treeview('checkNode',[children[i].nodeId]);
+            //         // $('#resourceTree').treeview('selectNode',[children[i].nodeId,{silent:false}]);
+            //     }
+            // },
+            // onNodeUnchecked:function (event,node) {
+            //     // $('#resourceTree').treeview('unselectNode',[node.nodeId]);
+            //     var children=node.nodes;
+            //     for(var i in children){
+            //         $('#resourceTree').treeview('uncheckNode',[children[i].nodeId,{silent:false}]);
+            //         // $('#resourceTree').treeview('unselectNode',[children[i].nodeId,{silent:false}]);
+            //     }
+            // },
+            onNodeSelected: function (event,node) {
                 // $('#resourceTree').treeview('selectNode',[node.nodeId,{silent:false}]);
                 var children=node.nodes;
                 for(var i in children){
-                    $('#resourceTree').treeview('checkNode',[children[i].nodeId]);
+                    $('#resourceTree').treeview('selectNode',[children[i].nodeId]);
                     // $('#resourceTree').treeview('selectNode',[children[i].nodeId,{silent:false}]);
                 }
             },
-            onNodeUnchecked:function (event,node) {
+            onNodeUnselected:function (event,node) {
                 // $('#resourceTree').treeview('unselectNode',[node.nodeId]);
                 var children=node.nodes;
                 for(var i in children){
-                    $('#resourceTree').treeview('uncheckNode',[children[i].nodeId,{silent:false}]);
+                    $('#resourceTree').treeview('unselectNode',[children[i].nodeId,{silent:false}]);
                     // $('#resourceTree').treeview('unselectNode',[children[i].nodeId,{silent:false}]);
                 }
             }
         })
     },function (response) {
+
         toastr.error("获取资源列表失败");
     });
 
 
     $scope.authSubmit=function () {
         var roleresList=[];
-        var treelen= $('#treeview-checkable  li').length;
-        $("input[id^='chx']:checked").each(function(){
-            roleList.push($(this).attr("id").slice(3));
-        });
+        var sellist=$('#resourceTree').treeview('getSelected');
+        for(var i in sellist){
+            roleresList.push(sellist[i].sId);
+        }
+        console.log(sellist);
+        console.log(roleresList);
         $http({
             method:"POST",
-            url:testURL+"role/setRoleRes.form",
+            url:testURL+"role/roleAuth/setRoleRes.form",
             headers : {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
             data:$.param({
                 roleId:$scope.authRoleId,
-                resIds:JSON.stringify(roleList)
+                resIds:JSON.stringify(roleresList)
             })
         }).then(function (response) {
             toastr.success("角色授权成功");
-            $state.go("roleList");
+            $state.go("角色管理");
         },function (data) {
             toastr.error("角色授权失败:"+data.status);
         });
-    }
+    };
     $scope.authBack=function () {
-        $state.go("roleList");
+        $state.go("角色管理");
     }
 }

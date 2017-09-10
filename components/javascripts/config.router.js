@@ -61,7 +61,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
 
         })
 
-        .state("userList",{
+        .state("用户管理",{
             url:"/user/userList.html",
             templateUrl:"user/userList.html",
             resolve:{
@@ -88,7 +88,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
-        .state("userAdd",{
+        .state("用户添加",{
             url:"/user/userAdd.html",
             templateUrl:"user/userAdd.html",
             resolve:{
@@ -97,7 +97,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
-        .state("resourceList",{
+        .state("资源管理",{
             url:"/resource/resourceList.html",
             templateUrl:"resource/resourceList.html",
             resolve:{
@@ -105,7 +105,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                     return $ocLazyLoad.load(["toastr","jqGrid","res_resourceList"])
                 }
             }
-        }).state("roleList",{
+        }).state("角色管理",{
             url:"/role/roleList.html",
             templateUrl:"role/roleList.html",
             resolve:{
@@ -114,16 +114,16 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
-        .state("resourceAdd",{
+        .state("新建资源",{
             url:"/resource/resourceAdd.html",
             templateUrl:"resource/resourceAdd.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["toastr","res_resourceAdd"])
+                    return $ocLazyLoad.load(["res_resourceAdd"])
                 }
             }
         })
-        .state("roleAdd",{
+        .state("新建角色",{
             url:"/role/roleAdd.html",
             templateUrl:"role/roleAdd.html",
             resolve:{
@@ -132,7 +132,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
-        .state("roleAuthor",{
+        .state("角色授权",{
             url:"/role/roleAuthor.html",
             templateUrl:"role/roleAuthor.html",
             resolve:{
@@ -141,7 +141,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
-        .state("userRole",{
+        .state("设置用户角色",{
             url:"/user/userRole.html",
             templateUrl:"user/userRole.html",
             resolve:{

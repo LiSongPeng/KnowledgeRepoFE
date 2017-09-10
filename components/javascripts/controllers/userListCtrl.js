@@ -2,10 +2,11 @@
  * Created by Letg4 on 2017/9/6.
  */
 
-var ulistapp=angular.module('ulistapp',['ui.router']);
+var ulistapp=angular.module('ulistapp',['globalconfig','ui.router']);
 
 ulistapp.controller("uGridCtrl",uGridCtrl);
-function uGridCtrl($scope,$state) {
+function uGridCtrl($scope,$state,$http,testURL) {
+
 
     jQuery(function ($) {
         var user_query_url='user/query.form';
@@ -23,7 +24,14 @@ function uGridCtrl($scope,$state) {
             {name:'uName',index:'uName',width:80,editable:true,editoptions:{size:"40",maxlength:"50"}},
             {name:'uPassword',index:'uPassword',width:80,hidden:true,editable:true,editoptions:{size:"40",maxlength:"50"}},
             {name:'uDescription',index:'uDescription',width:140,sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
-            {name:'createUserId',index:'createUserId',width:60,editable:false},
+            {name:'createUser',index:'createUser',width:60,editable:false,
+                formatter:function (cellvalue,options,rowObject){
+                    var crtuser=angular.fromJson(cellvalue);
+                    if (crtuser===null){
+                        return "无";
+                    }
+                    return cellvalue.uName;
+                }   },
             {name:'deleteStatus',index:'deleteStatus',width:50,edittype:"checkbox",
                 formatter:function (cellvalue,options,rowObject) {
                     var color="",cev="未删除";
@@ -63,7 +71,16 @@ function uGridCtrl($scope,$state) {
             userdata: "userdata",
             repeatitems: false
         };
+        var currUid=window.sessionStorage.getItem("currUser");
+        var currUser=JSON.parse(currUid);
         jQuery(grid_selector).jqGrid({
+            ajaxGridOptions:{
+                beforeSend:function(jqXHR, settings) {
+                    var currUid=window.sessionStorage.getItem("currUser");
+                    var currUser=JSON.parse(currUid);
+                    jqXHR.setRequestHeader("Current-UserId",currUser.id);
+                }
+            },
             url: BASE_URL+user_query_url,
             mtype:"POST",
             datatype: "json",
@@ -91,6 +108,11 @@ function uGridCtrl($scope,$state) {
                     enableTooltips(table);
                 }, 0);
             },
+            // loadBeforeSend:  function(jqXHR, settings) {
+            //     var currUid=window.sessionStorage.getItem("currUser");
+            //     var currUser=JSON.parse(currUid);
+            //     jqXHR.setRequestHeader("Current-UserId",currUser.id);
+            // },
             editurl:BASE_URL+"user/delete.form"
         });
         jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
@@ -98,7 +120,7 @@ function uGridCtrl($scope,$state) {
             editicon : 'icon-pencil gray',
             add: false,
             addicon : 'icon-plus-sign purple',
-            del: true,
+            del: false,
             delicon : 'icon-trash red',
             search: false,
             searchicon : 'icon-search orange',
@@ -106,19 +128,7 @@ function uGridCtrl($scope,$state) {
             refreshicon : 'icon-refresh green',
             view: false,
             viewicon : 'icon-zoom-in grey'
-        },{},{},{recreateForm: true,
-            beforeShowForm : function(e) {
-                var form = $(e[0]);
-                if(form.data('styled')) return false;
-
-                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                style_delete_form(form);
-
-                form.data('styled', true);
-            },
-            onClick : function(e) {
-                alert(1);
-            }})
+        },{},{},{})
             .navButtonAdd(pager_selector,{
                 caption:"",
                 buttonicon:"icon-plus-sign purple",
@@ -126,6 +136,39 @@ function uGridCtrl($scope,$state) {
                     window.location.href="#!/user/userAdd.html";
                 },
                 title:"新建用户",
+                position:"first"
+            })
+            .navButtonAdd(pager_selector,{
+                caption:"",
+                buttonicon:"icon-trash red",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取用户");
+                        return;
+                    }
+                    confirm(function (selid) {
+                        $http({
+                            method: "POST",
+                            url: testURL+"user/delete.form",
+                            headers : {
+                                'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+                            },
+                            data:$.param({
+                                id:selid
+                            })
+                        }).then(function (response) {
+                            jQuery('#grid-table').jqGrid('delRowData',selid);
+                            toastr.success("删除成功！");
+                        },function (response) {
+                            if (response.status===403){
+                                toastr.warning("删除失败！您所在的用户组没有此权限");
+                            }
+                            toastr.error("删除失败！错误代码及信息:"+response.status);
+                        })
+                    },selid)
+                },
+                title:"删除用户",
                 position:"first"
             })
             .navButtonAdd(pager_selector,{
@@ -161,17 +204,8 @@ function uGridCtrl($scope,$state) {
         jQuery(grid_searcher).filterGrid(grid_selector,{
 //                gridModel: true,
             filterModel:[{
-                label:'用户ID',
-                name:'id',
-                stype:'text',
-                placeholder: '用户Id'
-            },{
                 label:'用户名称',
                 name:'uName',
-                stype:'text'
-            },{
-                label:'最后上线时间',
-                name:'uLastOnline',
                 stype:'text'
             }],
             formtype: 'horizontal',
@@ -181,6 +215,32 @@ function uGridCtrl($scope,$state) {
             enableClear: true
         });
 
+        function confirm(fun, params) {
+            if ($("#myConfirm").length > 0) {
+                $("#myConfirm").remove();
+            }
+            var html = "<div class='modal fade' id='myConfirm' >"
+                + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+                + "<div class='modal-content'>"
+                + "<div class='modal-header'  style='font-size:16px; '>"
+                + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+                + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+                + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+                + "是否确定要删除？"
+                + "</div>"
+                + "<div class='modal-footer ' style=''>"
+                + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+                + "<button class='btn btn-info' data-dismiss='modal'>取消</button>"
+                + "</div>" + "</div></div></div>";
+            $("body").append(html);
+
+            $("#myConfirm").modal("show");
+
+            $("#confirmOk").on("click", function() {
+                $("#myConfirm").modal("hide");
+                fun(params); // 执行函数
+            });
+        }
 
 
         function style_delete_form(form) {
@@ -250,6 +310,6 @@ function uGridCtrl($scope,$state) {
     $scope.toEdit = function (event) {
         var thistr = $(event.target).parents("tr.jqgrow").eq(0);
         var rowid = thistr.attr("id");
-        $state.go('userAdd', {edit: true, editId: rowid});
+        $state.go('新建用户', {edit: true, editId: rowid});
     }
 }

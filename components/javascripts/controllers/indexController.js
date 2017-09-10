@@ -2,26 +2,27 @@ function mainController($scope,$http,testURL,$rootScope) {
     $scope.resList=[];
 //				从服务器获取json权限数据
 
-    $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
+    $scope.currUser=window.sessionStorage.getItem("currUser");
     $scope.$on('getUserRes',function () {
         $http({
             method: "POST",
             url: testURL + "resource/getUserRes.form",
             headers: {
                 'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
-            },
-            data: $.param({
-                userid: $scope.currUser.id
-            })
-        }).then(function (response) {
-            if(response.data==="notlogin"){
-                alert("用户未登录")
-            }else {
-                $scope.resList=response.data;
-                $scope.$broadcast('refreshResTree',$scope.resList);
             }
+        }).then(function (response) {
+            $scope.resList=response.data;
+            $scope.$broadcast('refreshResTree',$scope.resList);
         },function (response) {
-                alert("获取资源失败:"+response.status);
+            if (response.status===401){
+                toastr.warning("请先登录，正在跳转至登录页面");
+                var tologin = window.setTimeout(function () {
+                    window.clearTimeout(tologin);
+                    window.location.href = "login.html";
+                }, 1000);
+            }else {
+                toastr.warning("无法获取到导航资源列表,错误代码"+response.status);
+            }
         });
     });
     $scope.$emit('getUserRes');
@@ -88,7 +89,7 @@ function navController($scope,$rootScope) {
 
     $scope.isLeaf = function(item){
         for(var i=0;i<$scope.resList.length;i++){
-            if(item.id===$scope.resList[i].sParentId){
+            if($scope.resList[i].sType===0&&item.id===$scope.resList[i].sParentId){
                 return false;
             }
         }
@@ -96,8 +97,10 @@ function navController($scope,$rootScope) {
     };
     $scope.navClick=function (item,e) {
         $('.nav-list li').removeClass('active');
+        $('.nav-list li').removeClass('open');
         $(e.target).parents('li').addClass('active');
         $(e.target).parents('li').addClass('open');
+        $(e.target).parent('li').addClass('open');
         var pathdom=$(e.target).parents('li').children('a').children('span');
         $scope.$emit('pageChange',{
             resitem: item,

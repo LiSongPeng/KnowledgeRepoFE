@@ -1,10 +1,10 @@
 /**
  * Created by Letg4 on 2017/9/6.
  */
-var slistapp=angular.module('slistapp',['ui.router']);
+var slistapp=angular.module('slistapp',['globalconfig','ui.router']);
 
 slistapp.controller("sGridCtrl",sGridCtrl);
-function sGridCtrl($scope,$state) {
+function sGridCtrl($scope,$state,$http,testURL) {
 
     jQuery(function ($) {
         var resource_query_url='resource/query.form';
@@ -29,7 +29,14 @@ function sGridCtrl($scope,$state) {
                     var total="<span style='color:"+color+"'>"+cev+"</span>"
                     return total;
                 }},
-            {name:'createUser',index:'treeData.createUser',width:70,editable:false},
+            {name:'createUser',index:'treeData.createUser',width:70,editable:false,
+                formatter:function (cellvalue,options,rowObject){
+                    var crtuser=angular.fromJson(cellvalue);
+                    if (crtuser===null){
+                        return "无";
+                    }
+                    return cellvalue.uName;
+            }},
             {name:'createTime',index:'treeData.createTime',width:100,editable:false,sorttype:"date"}
         ];
         var prmNames={
@@ -58,7 +65,16 @@ function sGridCtrl($scope,$state) {
             userdata: "userdata",
             repeatitems: false
         };
+
+
         jQuery(grid_selector).jqGrid({
+            ajaxGridOptions:{
+                beforeSend:function(jqXHR, settings) {
+                    var currUid=window.sessionStorage.getItem("currUser");
+                    var currUser=JSON.parse(currUid);
+                    jqXHR.setRequestHeader("Current-UserId",currUser.id);
+                }
+            },
             url: BASE_URL+resource_query_url,
             mtype:"POST",
             datatype: "json",
@@ -96,14 +112,14 @@ function sGridCtrl($scope,$state) {
                     enableTooltips(table);
                 }, 0);
             },
-            editurl:BASE_URL+"user/edit.form"
+            editurl:BASE_URL+"resource/edit.form"
         });
         jQuery(grid_selector).jqGrid('navGrid',pager_selector,{
             edit: false,
             editicon : 'icon-pencil gray',
             add: false,
             addicon : 'icon-plus-sign purple',
-            del: true,
+            del: false,
             delicon : 'icon-trash red',
             search: false,
             searchicon : 'icon-search orange',
@@ -111,19 +127,7 @@ function sGridCtrl($scope,$state) {
             refreshicon : 'icon-refresh green',
             view: false,
             viewicon : 'icon-zoom-in grey'
-        },{},{},{recreateForm: true,
-            beforeShowForm : function(e) {
-                var form = $(e[0]);
-                if(form.data('styled')) return false;
-
-                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                style_delete_form(form);
-
-                form.data('styled', true);
-            },
-            onClick : function(e) {
-                alert(1);
-            }})
+        },{},{},{})
             .navButtonAdd(pager_selector,{
                 caption:"",
                 buttonicon:"icon-plus-sign purple",
@@ -132,7 +136,41 @@ function sGridCtrl($scope,$state) {
                 },
                 title:"新建资源",
                 position:"first"
-            }).navButtonAdd(pager_selector,{
+            })
+            .navButtonAdd(pager_selector,{
+                caption:"",
+                buttonicon:"icon-trash red",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取用户");
+                        return;
+                    }
+                    confirm(function (selid) {
+                        $http({
+                            method: "POST",
+                            url: testURL+"resource/delete.form",
+                            headers : {
+                                'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+                            },
+                            data:$.param({
+                                id:selid
+                            })
+                        }).then(function (response) {
+                            jQuery('#grid-table').jqGrid('delRowData',selid);
+                            toastr.success("删除成功！");
+                        },function (response) {
+                            if (response.status===403){
+                                toastr.warning("删除失败！您所在的用户组没有此权限");
+                            }
+                            toastr.error("删除失败！错误代码及信息:"+response.status);
+                        })
+                    },selid)
+                },
+                title:"删除资源",
+                position:"first"
+            })
+            .navButtonAdd(pager_selector,{
             caption:"",
             buttonicon:"icon-pencil gray",
             onClickButton:function () {
@@ -247,6 +285,6 @@ function sGridCtrl($scope,$state) {
     $scope.toEdit = function (event) {
         var thistr = $(event.target).parents("tr.jqgrow").eq(0);
         var rowid = thistr.attr("id");
-        $state.go('resourceAdd', {edit: true, editId: rowid});
+        $state.go('新建资源', {edit: true, editId: rowid});
     }
 }
