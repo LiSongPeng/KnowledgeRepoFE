@@ -137,7 +137,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"role/roleAuthor.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["toastr","jqGrid","res_roleAuth"])
+                    return $ocLazyLoad.load(["toastr","bootstrap-treeview","res_roleAuth"])
                 }
             }
         })

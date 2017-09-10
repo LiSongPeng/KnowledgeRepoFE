@@ -78,7 +78,8 @@ function userRoleCtrl($scope,$state,$http,testURL,$location) {
         });
     };
 
-    jQuery(function ($) {
+    $scope.userroleBack=function () {
+        $state.go("userList");
+    };
 
-    })
 }
