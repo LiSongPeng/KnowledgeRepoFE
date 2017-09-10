@@ -55,7 +55,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"knowledgeRepo/knowledgeApprova.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["res_knowledgeAdd"]);
+                    return $ocLazyLoad.load(["res_knowledgeAdd","jqGrid"]);
                 }
             }
 
