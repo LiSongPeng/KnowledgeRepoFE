@@ -136,8 +136,8 @@
         /*}*/
     </style>
 
-    <script src="../../components/javascripts/wangEditor.min.js"></script>
-    <script src="../../components/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/wangEditor.min.js"></script>
+    <script src="/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 <div class="basic-grey">
@@ -314,7 +314,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/knowledgeRepo/kno/knowledgeApprova.form",
+                url: BASE_URL+"kno/knowledgeApprova.form",
                 data:data,
                 dataType: "json",
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
@@ -338,13 +338,13 @@
 ////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
 //            });
             alert("审批成功！")
-            location.href = "index.html#!/knowledgeRepo/knowledgeList.html";
+            location.href = "home.html#!/knowledgeRepo/knowledgeList.html";
 
             return false;
         });
     });
     $("#back").click(function () {
-            location.href = "index.html#!/knowledgeRepo/knowledgeList2.html";
+            location.href = "home.html#!/knowledgeRepo/knowledgeList2.html";
         }
     )
 

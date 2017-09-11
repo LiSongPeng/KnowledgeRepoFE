@@ -11,7 +11,7 @@ indexapp.controller('navController', ['$scope', function ($scope) {
     $scope.currUser = JSON.parse(window.sessionStorage.getItem('currUser'));
     $scope.quit = function () {
         window.sessionStorage.setItem("currUser", null);
-        window.location.href = "login.html";
+        window.location.href = "home.html";
     };
 }]);
 indexapp.controller('mainCtrl', mainController);

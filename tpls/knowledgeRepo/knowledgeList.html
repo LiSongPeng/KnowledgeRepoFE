@@ -4,13 +4,13 @@
     <meta charset="utf-8"/>
     <title>知识管理</title>
     <!--&lt;!&ndash;后加的2个&ndash;&gt;-->
-    <!--<link rel="stylesheet" type="text/css" href="../components/javascripts/query-ui.min.css"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="../components/javascripts/jquery-ui.theme.min.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="/javascripts/query-ui.min.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="/javascripts/jquery-ui.theme.min.css"/>-->
 
-    <!--<link rel="stylesheet" type="text/css" href="../components/javascripts/jquery-ui-1.10.3.custom.min.js"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="../components/javascripts/jquery-ui-1.10.3.full.min.js"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="../components/plugins/jqGrid/css/ui.jqgrid-bootstrap-ui.css"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="../components/plugins/jqGrid/css/ui.jqgrid.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="/javascripts/jquery-ui-1.10.3.custom.min.js"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="/javascripts/jquery-ui-1.10.3.full.min.js"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="/plugins/jqGrid/css/ui.jqgrid-bootstrap-ui.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="/plugins/jqGrid/css/ui.jqgrid.css"/>-->
 
 
 </head>
@@ -25,9 +25,9 @@
 </div>
 
 
-<!--<script src="../components/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>-->
-<script src="../components/plugins/jqGrid/js/grid.locale-cn.js" type="text/javascript" charset="utf-8"></script>
-<script src="../components/plugins/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="/plugins/jqGrid/js/grid.locale-cn.js" type="text/javascript" charset="utf-8"></script>
+<script src="/plugins/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     //当 datatype 为"local" 时需填写
     var grid_data = [{
@@ -55,7 +55,7 @@
                 }
             },
 
-            url: "http://localhost:8080/knowledgeRepo/kno/selectPage.form",
+            url: BASE_URL+"kno/selectPage.form",
 
 
             mtype: "GET",
@@ -181,7 +181,7 @@
                 buttonicon:"icon-plus-sign purple",
                 onClickButton:function () {
 
-                    location.href="index.html#!/knowledgeRepo/knowledgeAdd.html"
+                    location.href="home.html#!/knowledgeRepo/knowledgeAdd.html"
                 },
 //                title:"知识添加",
                 position:"first"
@@ -197,11 +197,11 @@
                 if(ids==''){
                     alert("请选择需要编辑的内容");
 
-                    location.href="index.html#!/knowledgeRepo/knowledgeList.html"
+                    location.href="home.html#!/knowledgeRepo/knowledgeList.html"
 
                 }else {
 
-                location.href="index.html#!/knowledgeRepo/knowledgeEdit.html?id="+ids}
+                location.href="home.html#!/knowledgeRepo/knowledgeEdit.html?id="+ids}
             },
 //                title:"知识编辑",
             position:"first"
@@ -219,7 +219,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost:8080/knowledgeRepo/kno/knowledgeDelete.form",
+                        url: BASE_URL+"kno/knowledgeDelete.form",
                         data: {"id": selid},
                         async:true,
                         headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
