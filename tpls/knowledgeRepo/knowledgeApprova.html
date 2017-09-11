@@ -204,11 +204,11 @@
 
         <label>
             <span>审批意见 :</span>
-            <!--<textarea id="kAnswer" name="kAnswer" placeholder="填写知识解答"></textarea>-->
-            <input id="kApprMemo" name="kApprMemo" style="display:none"/>
+            <textarea id="kApprMemo" name="kApprMemo" placeholder="填写知识解答"></textarea>
+            <!--<input id="kApprMemo" name="kApprMemo" style="display:none"/>-->
             <input id="button" name="button" style="display:none"/>
-            <div id="div1" class="text">
-            </div>
+            <!--<div id="div1" class="text">-->
+            <!--</div>-->
 
 
         </label>
@@ -228,16 +228,16 @@
     var str = location.href; //取得整个地址栏
     var num = str.indexOf("?");
     str = str.substr(num + 1);
-    var E = window.wangEditor;
-    var editor1 = new E('#div1');
-    var editor2 = new E('#div2');
-
-    editor1.customConfig.menus = [];
-    editor2.customConfig.menus = [];
-
-    editor1.create();
-    editor2.create();
-    editor2.$textElem.attr('contenteditable', false)
+//    var E = window.wangEditor;
+//    var editor1 = new E('#div1');
+//    var editor2 = new E('#div2');
+//
+//    editor1.customConfig.menus = [];
+//    editor2.customConfig.menus = [];
+//
+//    editor1.create();
+//    editor2.create();
+//    editor2.$textElem.attr('contenteditable', false)
     $(function () {
 
 
@@ -308,7 +308,7 @@
             document.getElementById("button").value = button;
 
 
-            document.getElementById("kApprMemo").value = editor1.txt.text();
+            //document.getElementById("kApprMemo").value = editor1.txt.text();
 
             var data = $(this).serialize(); //序列化表单数据
 
