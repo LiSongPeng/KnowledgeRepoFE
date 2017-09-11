@@ -1,5 +1,5 @@
 var search = angular.module("search", ["globalconfig"]);
-search.controller("searchController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
+search.controller("searchController", ["$scope", "$http", "$sce","testURL",function ($scope, $http, $sce,testURL) {
     $scope.displayResult = false;
     $scope.response = {
         data: {
@@ -29,7 +29,7 @@ search.controller("searchController", ["$scope", "$http", "$sce", function ($sco
         }
         $http({
             method: "GET",
-            url: "http://localhost:8080/knowledgeRepo/repo/searchIndex.form?keyWord=" + $scope.keyWord
+            url: testURL+"repo/searchIndex.form?keyWord=" + $scope.keyWord
             + "&page=" + page + "&orderBy=" + $scope.orderBy + "&order=" + $scope.order,
         }).then(function successCallback(response) {
             if (response.data.data.pages > 0) {
@@ -59,7 +59,7 @@ search.controller("searchController", ["$scope", "$http", "$sce", function ($sco
             });*/
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/knowledgeRepo/repo/getInputHint.form",
+                url: testURL+"repo/getInputHint.form",
                 data: {"keyWord": keyWord},
                 dataType: "json",
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},

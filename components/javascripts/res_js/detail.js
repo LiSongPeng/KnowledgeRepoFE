@@ -5,7 +5,7 @@ function getParameter(name) {
     return str.substr(str.indexOf(name) + name.length + 1, str.length);
 }
 
-var detailController = detail.controller("detailController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
+var detailController = detail.controller("detailController", ["$scope", "$http", "$sce","testURL", function ($scope, $http, $sce,testURL) {
     var detailId = getParameter("detailId");
     if (!detailId) {
         toastr.error("没有输入查询的知识ID");
@@ -31,7 +31,7 @@ var detailController = detail.controller("detailController", ["$scope", "$http",
     }
     $http({
         method: "GET",
-        url: "http://localhost:8080/knowledgeRepo/repo/getKnowledgeDetail.form?id=" + detailId,
+        url: testURL+"repo/getKnowledgeDetail.form?id=" + detailId,
     }).then(function successCallback(response) {
         if (response.data.flag == 200) {
             $scope.response = response.data.data;
