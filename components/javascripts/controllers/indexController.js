@@ -97,10 +97,11 @@ function navController($scope,$rootScope) {
     };
     $scope.navClick=function (item,e) {
         $('.nav-list li').removeClass('active');
-        $('.nav-list li').removeClass('open');
-        $(e.target).parents('li').addClass('active');
-        $(e.target).parents('li').addClass('open');
-        $(e.target).parent('li').addClass('open');
+        $("li #nav-"+item.id).addClass('active');
+        // $('.nav-list li').removeClass('open');
+        // $(e.target).parents('li').addClass('active');
+        // $(e.target).parents('li').addClass('open');
+        // $(e.target).parent('li').addClass('open');
         var pathdom=$(e.target).parents('li').children('a').children('span');
         $scope.$emit('pageChange',{
             resitem: item,
