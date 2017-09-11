@@ -55,7 +55,7 @@
                 }
             },
 
-            url: "http://localhost:8080/knowledgeRepo/kno/selectPage.form",
+            url: BASE_URL+"kno/selectPage.form",
 
 
             mtype: "GET",
@@ -219,7 +219,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost:8080/knowledgeRepo/kno/knowledgeDelete.form",
+                        url: BASE_URL+"kno/knowledgeDelete.form",
                         data: {"id": selid},
                         async:true,
                         headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},

@@ -182,7 +182,7 @@
             var data = $(this).serialize(); //序列化表单数据
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/knowledgeRepo/kno/addKnowledge.form",
+                url: BASE_URL+"/kno/addKnowledge.form",
                 data:data,
                 dataType: "json",
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
