@@ -156,21 +156,42 @@
 
         var url="http://localhost:8080/knowledgeRepo/queryKnowledgeById.form?"+str;
 
-        $.getJSON(url,function(data){
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                success: function (data) {
+                    document.getElementById("kTitle").value=data.kTitle;
+                    document.getElementById("id").value=data.id;
+                    document.getElementById("createUserId").value=data.createUserId;
+                    //document.getElementsByTagName("p").innerHTML=data.kAnswer;
+                    document.getElementById("aa").innerHTML=data.kAnswer;
 
-                document.getElementById("kTitle").value=data.kTitle;
-                document.getElementById("id").value=data.id;
-                document.getElementById("createUserId").value=data.createUserId;
-                //document.getElementsByTagName("p").innerHTML=data.kAnswer;
-                document.getElementById("aa").innerHTML=data.kAnswer;
+                    var msg = '';
 
-            var msg = '';
-
-            msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
-        });
+                }
+            });
+
+//        $.getJSON(url,function(data){
+//
+//                document.getElementById("kTitle").value=data.kTitle;
+//                document.getElementById("id").value=data.id;
+//                document.getElementById("createUserId").value=data.createUserId;
+//                //document.getElementsByTagName("p").innerHTML=data.kAnswer;
+//                document.getElementById("aa").innerHTML=data.kAnswer;
+//
+//            var msg = '';
+//
+//            msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+//
+//
+////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+//        });
 
 
     });
@@ -183,6 +204,9 @@
 
 
         location.href="http://localhost:8080/knowledgeRepo/queryKnowledgeById.html?id="+str
+
+
+
 //        var num=str.indexOf("?")
 //        str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
 //
@@ -229,6 +253,24 @@
     $(function(){
         $("#knowledge").submit(function(){
             var data = $(this).serialize(); //序列化表单数据
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/knowledgeRepo/updateKnowledge.form",
+                dataType: "json",
+                data: data,
+                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                success: function (data) {
+                    var msg = '';
+
+                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+
+
+//                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+                }
+            });
+
+
             $.getJSON("http://localhost:8080/knowledgeRepo/updateKnowledge.form",data,function(json){
                 var msg = '';
 

@@ -47,6 +47,13 @@
     var pager_selector = "#grid-pager";
     $(document).ready(function () {
         $("#grid-table").jqGrid({
+            ajaxGridOptions:{
+                beforeSend:function(jqXHR, settings) {
+                    var currUid=window.sessionStorage.getItem("currUser");
+                    var currUser=JSON.parse(currUid);
+                    jqXHR.setRequestHeader("Current-UserId",currUser.id);
+                }
+            },
 
             url: "http://localhost:8080/knowledgeRepo/selectPage2.form",
 

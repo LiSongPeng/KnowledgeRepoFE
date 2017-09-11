@@ -143,7 +143,7 @@ function sGridCtrl($scope,$state,$http,testURL) {
                 onClickButton:function () {
                     var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
                     if (selid==null||selid===""){
-                        toastr.warning("未选取用户");
+                        toastr.warning("未选取资源");
                         return;
                     }
                     confirm(function (selid) {
@@ -185,7 +185,32 @@ function sGridCtrl($scope,$state,$http,testURL) {
             position:"first"
         });
 
+        function confirm(fun, params) {
+            if ($("#myConfirm").length > 0) {
+                $("#myConfirm").remove();
+            }
+            var html = "<div class='modal fade' id='myConfirm' >"
+                + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+                + "<div class='modal-content'>"
+                + "<div class='modal-header'  style='font-size:16px; '>"
+                + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+                + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+                + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+                + "是否确定要删除？"
+                + "</div>"
+                + "<div class='modal-footer ' style=''>"
+                + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+                + "<button class='btn btn-info' data-dismiss='modal'>取消</button>"
+                + "</div>" + "</div></div></div>";
+            $("body").append(html);
 
+            $("#myConfirm").modal("show");
+
+            $("#confirmOk").on("click", function() {
+                $("#myConfirm").modal("hide");
+                fun(params); // 执行函数
+            });
+        }
 
 
         function style_edit_form(form) {

@@ -180,14 +180,37 @@
     $(function(){
         $("#knowledge").submit(function(){
             var data = $(this).serialize(); //序列化表单数据
-            $.getJSON("http://localhost:8080/knowledgeRepo/addKnowledge.form",data,function(json){
-                var msg = '';
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/knowledgeRepo/addKnowledge.form",
+                data:data,
+                dataType: "json",
+                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                success: function (data) {
+
+                    document.getElementById("kTitle").innerText = data.kTitle;
+                    document.getElementById("aa").innerHTML = data.kAnswer;
+                    document.getElementById("kUseCount").innerText = data.kUseCount;
+                    // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
+
+
+                    var msg = '';
 
                     msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+                }
             });
+
+//            $.getJSON("http://localhost:8080/knowledgeRepo/addKnowledge.form",data,function(json){
+//                var msg = '';
+//
+//                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+//
+//
+////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+//            });
             alert("添加成功！");
             location.href="index.html#!/knowledgeRepo/knowledgeList.html";
 

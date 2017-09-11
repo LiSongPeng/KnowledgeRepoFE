@@ -245,21 +245,43 @@
 
         var url = "http://localhost:8080/knowledgeRepo/queryKnowledgeById.form?" + str;
 
-        $.getJSON(url, function (data) {
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+            success: function (data) {
 
-            document.getElementById("kTitle").innerText = data.kTitle;
-            document.getElementById("aa").innerHTML = data.kAnswer;
-            document.getElementById("kUseCount").innerText = data.kUseCount;
-            // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
+                document.getElementById("kTitle").innerText = data.kTitle;
+                document.getElementById("aa").innerHTML = data.kAnswer;
+                document.getElementById("kUseCount").innerText = data.kUseCount;
+                // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
 
 
-            var msg = '';
+                var msg = '';
 
-            msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+                msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+            }
         });
+
+//        $.getJSON(url, function (data) {
+//
+//            document.getElementById("kTitle").innerText = data.kTitle;
+//            document.getElementById("aa").innerHTML = data.kAnswer;
+//            document.getElementById("kUseCount").innerText = data.kUseCount;
+//            // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
+//
+//
+//            var msg = '';
+//
+//            msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+//
+//
+////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+//        });
 
 
     });
@@ -289,14 +311,32 @@
             document.getElementById("kApprMemo").value = editor1.txt.text();
 
             var data = $(this).serialize(); //序列化表单数据
-            $.getJSON("http://localhost:8080/knowledgeRepo/knowledgeApprova.form", data, function (json) {
-                var msg = '';
 
-                msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/knowledgeRepo/knowledgeApprova.form",
+                data:data,
+                dataType: "json",
+                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                success: function (json) {
+                    var msg = '';
+
+                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+
+                }
             });
+
+//            $.getJSON("http://localhost:8080/knowledgeRepo/knowledgeApprova.form", data, function (json) {
+//                var msg = '';
+//
+//                msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+//
+//
+////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+//            });
             alert("审批成功！")
             location.href = "index.html#!/knowledgeRepo/knowledgeList.html";
 

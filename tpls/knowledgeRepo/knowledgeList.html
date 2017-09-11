@@ -47,6 +47,13 @@
     var pager_selector = "#grid-pager";
     $(document).ready(function () {
         $("#grid-table").jqGrid({
+            ajaxGridOptions:{
+                beforeSend:function(jqXHR, settings) {
+                    var currUid=window.sessionStorage.getItem("currUser");
+                    var currUser=JSON.parse(currUid);
+                    jqXHR.setRequestHeader("Current-UserId",currUser.id);
+                }
+            },
 
             url: "http://localhost:8080/knowledgeRepo/selectPage.form",
 
@@ -144,7 +151,7 @@
             editicon : 'icon-pencil gray',
             add: false,
             addicon : 'icon-plus-sign purple',
-            del: true,
+            del: false,
             delicon : 'icon-trash red',
             search: false,
             searchicon : 'icon-search orange',
@@ -160,7 +167,7 @@
               {
 
 
-                        url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form"
+//                        url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form"
 
 
 
@@ -199,8 +206,60 @@
 //                title:"知识编辑",
             position:"first"
         }, {
+        }).navButtonAdd(pager_selector,{
+            caption:"",
+            buttonicon:"icon-trash red",
+            onClickButton:function () {
+                var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                if (selid==null||selid===""){
+                    toastr.warning("未选取用户");
+                    return;
+                }
+                confirm(function (selid) {
+
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form",
+                        data: {"id": selid},
+                        dataType: "json",
+                        headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                        success: function (response) {
+                            process(response.data);
+                        }
+                    });
+                },selid)
+            },
+            title:"删除资源",
+            position:"first"
         });
 
+
+        function confirm(fun, params) {
+            if ($("#myConfirm").length > 0) {
+                $("#myConfirm").remove();
+            }
+            var html = "<div class='modal fade' id='myConfirm' >"
+                + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+                + "<div class='modal-content'>"
+                + "<div class='modal-header'  style='font-size:16px; '>"
+                + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+                + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+                + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+                + "是否确定要删除？"
+                + "</div>"
+                + "<div class='modal-footer ' style=''>"
+                + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+                + "<button class='btn btn-info' data-dismiss='modal'>取消</button>"
+                + "</div>" + "</div></div></div>";
+            $("body").append(html);
+
+            $("#myConfirm").modal("show");
+
+            $("#confirmOk").on("click", function() {
+                $("#myConfirm").modal("hide");
+                fun(params); // 执行函数
+            });
+        }
 
 
         function style_edit_form(form) {
