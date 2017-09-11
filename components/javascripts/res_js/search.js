@@ -1,4 +1,4 @@
-var search = angular.module("search",[]);
+var search = angular.module("search", ["globalconfig"]);
 search.controller("searchController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
     $scope.displayResult = false;
     $scope.response = {
@@ -54,8 +54,18 @@ search.controller("searchController", ["$scope", "$http", "$sce", function ($sco
     };
     jQuery('#keyWord').typeahead({
         source: function (keyWord, process) {
-            jQuery.getJSON('http://localhost:8080/knowledgeRepo/repo/getInputHint.form', {"keyWord": keyWord}, function (response) {
+            /*jQuery.getJSON('http://localhost:8080/knowledgeRepo/repo/getInputHint.form', , function (response) {
                 process(response.data);
+            });*/
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/knowledgeRepo/repo/getInputHint.form",
+                data: {"keyWord": keyWord},
+                dataType: "json",
+                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                success: function (response) {
+                    process(response.data);
+                }
             });
         },
         updater: function (item) {

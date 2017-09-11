@@ -1,4 +1,4 @@
-var detail = angular.module("detail", []);
+var detail = angular.module("detail", ['globalconfig']);
 
 function getParameter(name) {
     var str = window.location.href;
