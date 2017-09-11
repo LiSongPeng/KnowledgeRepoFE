@@ -56,6 +56,12 @@ app.constant('Modules_Config', [
             "/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
             "/plugins/bootstrap-validator/js/bootstrapValidator.min.js"
         ]
+    },{
+        name: 'wangEditor',
+        serie: true,
+        files: [
+            "/javascripts/wangEditor.min.js"
+        ]
     }, {
         name: 'res_search',
         serie: true,
@@ -68,13 +74,6 @@ app.constant('Modules_Config', [
         serie: true,
         files: [
             "/javascripts/res_js/detail.js"
-        ]
-    }, {
-        name: 'res_knowledgeAdd',
-        serie: true,
-        files: [
-            "/javascripts/wangEditor.min.js",
-            "/javascripts/jquery-2.0.3.min.js"
         ]
     },{
         name:'res_userList',
@@ -129,6 +128,39 @@ app.constant('Modules_Config', [
         serie:true,
         files:[
             "/javascripts/controllers/userRoleCtrl.js"
+        ]
+    }, {
+        name: 'res_knowledgeAdd',
+        serie: true,
+        files: [
+            "/javascripts/res_js/knowledgeAdd.js"
+        ]
+    },
+    // {
+    //     name:'res_knowledgeEdit',
+    //     serie:true,
+    //     files:[
+    //         "/javascripts/res_js/knowledgeEdit.js"
+    //     ]
+    // },
+    // {
+    //     name:'res_knowledgeApprova',
+    //     serie:true,
+    //     files:[
+    //         "/javascripts/res_js/knowledgeApprova.js"
+    //     ]
+    // },
+    {
+        name:'res_knowledgeList',
+        serie:true,
+        files:[
+            "/javascripts/res_js/knowledgeList.js"
+        ]
+    },{
+        name:'res_knowledgeList2',
+        serie:true,
+        files:[
+            "/javascripts/res_js/knowledgeList2.js"
         ]
     }
 ]);

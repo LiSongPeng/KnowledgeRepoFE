@@ -15,7 +15,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"knowledgeRepo/knowledgeList.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load("jqGrid");
+                    return $ocLazyLoad.load(["jqGrid","res_knowledgeList"]);
                 }
             }
         })
@@ -24,7 +24,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             templateUrl:"knowledgeRepo/knowledgeList2.html",
             resolve:{
                 deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load("jqGrid");
+                    return $ocLazyLoad.load(["jqGrid","res_knowledgeList2"]);
                 }
             }
         })
@@ -43,9 +43,9 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             url:"/knowledgeRepo/knowledgeEdit.html",
             templateUrl:"knowledgeRepo/knowledgeEdit.html",
             resolve:{
-                deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["res_knowledgeAdd"]);
-                }
+                // deps:function ($ocLazyLoad) {
+                //     return $ocLazyLoad.load(["res_knowledgeEdit"]);
+                // }
             }
 
         })
@@ -54,9 +54,9 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             url:"/knowledgeRepo/knowledgeApprova.html",
             templateUrl:"knowledgeRepo/knowledgeApprova.html",
             resolve:{
-                deps:function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(["res_knowledgeAdd","jqGrid"]);
-                }
+                // deps:function ($ocLazyLoad) {
+                //     return $ocLazyLoad.load(["res_knowledgeApprova"]);
+                // }
             }
 
         })
@@ -70,7 +70,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
-        .state("search",{
+        .state("知识搜索",{
             url:"/search.html",
             templateUrl:"search.html",
             resolve:{
