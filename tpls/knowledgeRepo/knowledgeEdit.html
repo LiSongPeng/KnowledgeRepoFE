@@ -154,7 +154,7 @@
         var num=str.indexOf("?");
         str=str.substr(num+1);
 
-        var url="http://localhost:8080/knowledgeRepo/queryKnowledgeById.form?"+str;
+        var url="http://localhost:8080/knowledgeRepo/kno/queryKnowledgeById.form?"+str;
 
             $.ajax({
                 type: "GET",
@@ -195,31 +195,31 @@
 
 
     });
-    function UrlSearch()
-    {
-        var name,value;
-        var str=location.href; //取得整个地址栏
-        alert(str);
-
-
-
-        location.href="http://localhost:8080/knowledgeRepo/queryKnowledgeById.html?id="+str
-
-
-
-//        var num=str.indexOf("?")
-//        str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
+//    function UrlSearch()
+//    {
+//        var name,value;
+//        var str=location.href; //取得整个地址栏
+//        alert(str);
 //
-//        var arr=str.split("&"); //各个参数放到数组里
-//        for(var i=0;i < arr.length;i++){
-//            num=arr[i].indexOf("=");
-//            if(num>0){
-//                name=arr[i].substring(0,num);
-//                value=arr[i].substr(num+1);
-//                this[name]=value;
-//            }
-//        }
-    }
+//
+//
+//        location.href="http://localhost:8080/knowledgeRepo/kno/queryKnowledgeById.html?id="+str
+//
+//
+//
+////        var num=str.indexOf("?")
+////        str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
+////
+////        var arr=str.split("&"); //各个参数放到数组里
+////        for(var i=0;i < arr.length;i++){
+////            num=arr[i].indexOf("=");
+////            if(num>0){
+////                name=arr[i].substring(0,num);
+////                value=arr[i].substr(num+1);
+////                this[name]=value;
+////            }
+////        }
+//    }
 
 
     var E = window.wangEditor;
@@ -256,7 +256,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/knowledgeRepo/updateKnowledge.form",
+                url: "http://localhost:8080/knowledgeRepo/kno/updateKnowledge.form",
                 dataType: "json",
                 data: data,
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},

@@ -55,7 +55,7 @@
                 }
             },
 
-            url: "http://localhost:8080/knowledgeRepo/selectPage.form",
+            url: "http://localhost:8080/knowledgeRepo/kno/selectPage.form",
 
 
             mtype: "GET",
@@ -219,14 +219,22 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form",
+                        url: "http://localhost:8080/knowledgeRepo/kno/knowledgeDelete.form",
                         data: {"id": selid},
-                        dataType: "json",
+                        async:true,
                         headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                         success: function (response) {
-                            process(response.data);
+                            console.log("ahaha ");
+                            $('#grid-table').trigger('reloadGrid');
+                            toastr.success("删除成功！");
+                        },
+                        error:function (response) {
+
                         }
+
                     });
+
+
                 },selid)
             },
             title:"删除资源",

@@ -10,7 +10,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
     $urlRouterProvider.otherwise("/search.html");
     $stateProvider
 
-        .state("knowledgeList",{
+        .state("知识管理",{
             url:"/knowledgeRepo/knowledgeList.html",
             templateUrl:"knowledgeRepo/knowledgeList.html",
             resolve:{
@@ -19,7 +19,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
-        .state("knowledgeList2",{
+            .state("知识审批",{
             url:"/knowledgeRepo/knowledgeList2.html",
             templateUrl:"knowledgeRepo/knowledgeList2.html",
             resolve:{
@@ -29,7 +29,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             }
         })
 
-        .state("knowledgeAdd",{
+        .state("知识添加",{
         url:"/knowledgeRepo/knowledgeAdd.html",
         templateUrl:"knowledgeRepo/knowledgeAdd.html",
         resolve:{
@@ -39,7 +39,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
         }
 
     })
-        .state("knowledgeEdit",{
+        .state("知识编辑",{
             url:"/knowledgeRepo/knowledgeEdit.html",
             templateUrl:"knowledgeRepo/knowledgeEdit.html",
             resolve:{
@@ -50,7 +50,7 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
 
         })
 
-        .state("knowledgeApprova",{
+        .state("知识审批批",{
             url:"/knowledgeRepo/knowledgeApprova.html",
             templateUrl:"knowledgeRepo/knowledgeApprova.html",
             resolve:{
