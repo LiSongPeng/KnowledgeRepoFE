@@ -42,12 +42,12 @@ function knlgListCtrl($scope ) {
 //            jsonp:"callback",
             height: "auto", //高度，表格高度。可为数值、百分比或'auto'
 
-            colNames: ['知识id', '知识标题', '知识解答', '使用次数', '最后一次使用时间', '审批状态', '审批人', '审批时间', '审批意见', '创建人', '创建时间'],
+            colNames: ['知识id', '知识标题', '使用次数', '最后一次使用时间', '审批状态', '审批人', '审批时间', '审批意见', '创建人', '创建时间'],
             colModel: [
 
                 {name: "id", index: "id", hidden: true, width: 100, editable: false},
                 {name: "kTitle", index: "kTitle", width: 100, editable: true},
-                {name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
+                //{name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
                 {name: "kUseCount", index: "kUseCount", width: 100, editable: true},
                 {
                     name: "kUserTimeLast",
