@@ -24,15 +24,15 @@ function knlgListCtrl($scope ) {
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
     $(document).ready(function () {
-        $("#grid-table").jqGrid({
+        jQuery("#grid-table").jqGrid({
             ajaxGridOptions: {
                 beforeSend: function (jqXHR, settings) {
                     var currUid = window.sessionStorage.getItem("currUser");
                     var currUser = JSON.parse(currUid);
                     jqXHR.setRequestHeader("Current-UserId", currUser.id);
                 }
-            },
 
+            },
             url: BASE_URL + "kno/selectPage.form",
 
 
@@ -158,7 +158,7 @@ function knlgListCtrl($scope ) {
             {
 
 
-//                        url: "http://localhost:8080/knowledgeRepo/knowledgeDelete.form"
+//                        url: BASE_URL+"knowledgeDelete.form"
 
 
             }, // delete options

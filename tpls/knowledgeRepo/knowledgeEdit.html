@@ -203,7 +203,7 @@
 //
 //
 //
-//        location.href="http://localhost:8080/knowledgeRepo/kno/queryKnowledgeById.html?id="+str
+//        location.href=BASE_URL+"kno/queryKnowledgeById.html?id="+str
 //
 //
 //
@@ -257,12 +257,13 @@
             $.ajax({
                 type: "GET",
                 url: BASE_URL+"kno/updateKnowledge.form",
-                dataType: "json",
                 data: data,
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                 success: function (data) {
                     var msg = '';
 
+                    alert("编辑成功！")
+                    location.href="#!/knowledgeRepo/knowledgeList.html"
                     msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
 
@@ -271,7 +272,7 @@
             });
 
 
-//            $.getJSON("http://localhost:8080/knowledgeRepo/updateKnowledge.form",data,function(json){
+//            $.getJSON(BASE_URL+"updateKnowledge.form",data,function(json){
 //                var msg = '';
 //
 //                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
@@ -279,14 +280,13 @@
 //
 ////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
 //            });
-            alert("编辑成功！")
-           location.href="home.html#!/knowledgeRepo/knowledgeList.html"
+
 
         });
     });
 
     $("#back").click(function () {
-        location.href="index.html#!/knowledgeRepo/knowledgeList.html";
+        location.href="#!/knowledgeRepo/knowledgeList.html";
     })
 
 </script>

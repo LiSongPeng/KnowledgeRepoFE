@@ -3,11 +3,11 @@
  */
 var userRoleApp=angular.module('userRoleApp',['ui.router','globalconfig']);
 userRoleApp.controller("userRoleCtrl",userRoleCtrl);
-function userRoleCtrl($scope,$state,$http,testURL,$location) {
+function userRoleCtrl($scope,$state,$http,$location) {
     $scope.editId=$location.search().editId;
     $http({
         method: "GET",
-        url: testURL+"user/userRole/getUserRole.form",
+        url: BASE_URL+"user/userRole/getUserRole.form",
         headers : {
             'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
         },
@@ -56,7 +56,7 @@ function userRoleCtrl($scope,$state,$http,testURL,$location) {
         }
         $http({
             method:"POST",
-            url:testURL+"user/userRole/setUserRole.form",
+            url:BASE_URL+"user/userRole/setUserRole.form",
             headers : {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },

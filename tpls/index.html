@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/stylesheets/ace/ace-rtl.min.css"/>
     <link rel="stylesheet" href="/stylesheets/ace/ace-ie.min.css"/>
     <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+    <script src="/javascripts/globalset/jsconst.js"></script>
     <script src="/stylesheets/ace/html5shiv.js"></script>
     <script src="/stylesheets/ace/respond.js"></script>
     <script src="/javascripts/jquery-2.0.3.min.js"></script>
@@ -104,7 +105,7 @@
                 toastr.error("密码不能为空");
                 return false;
             }
-            $.post("http://localhost:8080/knowledgeRepo/user/login.form", {
+            $.post(BASE_URL+"user/login.form", {
                 "username": username,
                 "password": password
             }, function (response) {

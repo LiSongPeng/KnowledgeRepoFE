@@ -58,12 +58,15 @@ $(function(){
 
                 msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
+                alert("添加成功！");
+                location.href="#!/knowledgeRepo/knowledgeList.html";
+
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
             }
         });
 
-//            $.getJSON("http://localhost:8080/knowledgeRepo/addKnowledge.form",data,function(json){
+//            $.getJSON(BASE_URL+"addKnowledge.form",data,function(json){
 //                var msg = '';
 //
 //                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
@@ -71,15 +74,12 @@ $(function(){
 //
 ////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
 //            });
-        alert("添加成功！");
-        location.href="home.html#!/knowledgeRepo/knowledgeList.html";
 
-        return false;
     });
 });
 
 $("#back").click(function () {
-        location.href="home.html#!/knowledgeRepo/knowledgeList.html";
+        location.href="#!/knowledgeRepo/knowledgeList.html";
     }
 )
 };

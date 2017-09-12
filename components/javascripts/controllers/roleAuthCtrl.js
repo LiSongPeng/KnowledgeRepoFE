@@ -3,7 +3,7 @@
  */
 var rAuthApp=angular.module('rAuthapp',['globalconfig','ui.router']);
 rAuthApp.controller("rAuthCtrl",rAuthCtrl);
-function rAuthCtrl($scope,$http,$location,$state,testURL) {
+function rAuthCtrl($scope,$http,$location,$state) {
     $scope.authRoleId=$location.search().authId;
     $scope.transData=function (a, idStr, pidStr, chindrenStr){
         var r = [], hash = {}, id = idStr, pid = pidStr, children = chindrenStr, i = 0, j = 0, len = a.length;
@@ -31,7 +31,7 @@ function rAuthCtrl($scope,$http,$location,$state,testURL) {
     };
     $http({
         method: "GET",
-        url: testURL+"role/roleAuth/getResources.form",
+        url: BASE_URL+"role/roleAuth/getResources.form",
         headers : {
             'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
         },
@@ -101,7 +101,7 @@ function rAuthCtrl($scope,$http,$location,$state,testURL) {
         console.log(roleresList);
         $http({
             method:"POST",
-            url:testURL+"role/roleAuth/setRoleRes.form",
+            url:BASE_URL+"role/roleAuth/setRoleRes.form",
             headers : {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },

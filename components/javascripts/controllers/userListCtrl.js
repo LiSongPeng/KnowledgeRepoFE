@@ -5,7 +5,7 @@
 var ulistapp=angular.module('ulistapp',['globalconfig','ui.router']);
 
 ulistapp.controller("uGridCtrl",uGridCtrl);
-function uGridCtrl($scope,$state,$http,testURL) {
+function uGridCtrl($scope,$state,$http) {
 
 
     jQuery(function ($) {
@@ -150,7 +150,7 @@ function uGridCtrl($scope,$state,$http,testURL) {
                     confirm(function (selid) {
                         $http({
                             method: "POST",
-                            url: testURL+"user/delete.form",
+                            url: BASE_URL+"user/delete.form",
                             headers : {
                                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
                             },

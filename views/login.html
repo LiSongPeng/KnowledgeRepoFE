@@ -104,7 +104,7 @@
                 toastr.error("密码不能为空");
                 return false;
             }
-            $.post("http://localhost:8080/knowledgeRepo/user/login.form", {
+            $.post(BASE_URL+"user/login.form", {
                 "username": username,
                 "password": password
             }, function (response) {

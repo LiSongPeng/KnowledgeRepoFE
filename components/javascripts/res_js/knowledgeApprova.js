@@ -24,7 +24,7 @@ $(function () {
 
 
 
-    var url = "http://localhost:8080/knowledgeRepo/kno/queryKnowledgeById.form?" + str;
+    var url = BASE_URL+"kno/queryKnowledgeById.form?" + str;
 
     $.ajax({
         type: "GET",
@@ -110,7 +110,7 @@ $(function () {
             }
         });
 
-//            $.getJSON("http://localhost:8080/knowledgeRepo/knowledgeApprova.form", data, function (json) {
+//            $.getJSON(BASE_URL+"aknowledgeApprova.form", data, function (json) {
 //                var msg = '';
 //
 //                msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："

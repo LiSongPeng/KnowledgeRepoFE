@@ -7,7 +7,7 @@ var userAdd=angular.module('userAdd',['globalconfig','ui.router']);
 //     $httpProvider.defaults.headers.post = {"Content-Type": "application/x-www-form-urlencoded"};
 // });
 userAdd.controller("userAddCtrl",userAddCtrl);
-function userAddCtrl ($scope,$http,$state,$location,testURL) {
+function userAddCtrl ($scope,$http,$state,$location) {
     $scope.user={};
     $scope.editflag=$location.search().edit||false;
     $scope.title="新建用户";
@@ -17,7 +17,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
         $scope.editId=$location.search().editId;
         $http({
             method: "POST",
-            url: testURL + "user/userUpdate/queryById.form",
+            url: BASE_URL + "user/userUpdate/queryById.form",
             headers: {
                 'Content-Type': "application/x-www-form-urlencoded"
             },
@@ -56,7 +56,7 @@ function userAddCtrl ($scope,$http,$state,$location,testURL) {
        console.log(uRoleList);
         $http({
             method:"POST",
-            url:testURL+tourl,
+            url:BASE_URL+tourl,
             headers : {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },

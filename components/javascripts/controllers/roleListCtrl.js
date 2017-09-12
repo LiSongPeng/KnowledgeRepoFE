@@ -4,7 +4,7 @@
 var rlistapp=angular.module('rlistapp',['globalconfig','ui.router']);
 
 rlistapp.controller("rGridCtrl",uGridCtrl);
-function uGridCtrl($scope,$state,$http,testURL) {
+function uGridCtrl($scope,$state,$http) {
 
     jQuery(function ($) {
         var role_query_url='role/queryList.form';
@@ -136,7 +136,7 @@ function uGridCtrl($scope,$state,$http,testURL) {
                     confirm(function (selid) {
                         $http({
                             method: "POST",
-                            url: testURL+"role/delete.form",
+                            url: BASE_URL+"role/delete.form",
                             headers : {
                                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
                             },

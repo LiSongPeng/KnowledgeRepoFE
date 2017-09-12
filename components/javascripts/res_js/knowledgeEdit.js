@@ -60,7 +60,7 @@ function knlgEditCtrl($scope) {
 //
 //
 //
-//        location.href="http://localhost:8080/knowledgeRepo/kno/queryKnowledgeById.html?id="+str
+//        location.href=BASE_URL+"kno/queryKnowledgeById.html?id="+str
 //
 //
 //
@@ -128,7 +128,7 @@ function knlgEditCtrl($scope) {
             });
 
 
-//            $.getJSON("http://localhost:8080/knowledgeRepo/updateKnowledge.form",data,function(json){
+//            $.getJSON(BASE_URL+"updateKnowledge.form",data,function(json){
 //                var msg = '';
 //
 //                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："

@@ -1,4 +1,4 @@
-function mainController($scope,$http,testURL,$rootScope) {
+function mainController($scope,$http,$rootScope) {
     $scope.resList=[];
 //				从服务器获取json权限数据
 
@@ -6,7 +6,7 @@ function mainController($scope,$http,testURL,$rootScope) {
     $scope.$on('getUserRes',function () {
         $http({
             method: "POST",
-            url: testURL + "resource/getUserRes.form",
+            url: BASE_URL + "resource/getUserRes.form",
             headers: {
                 'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             }

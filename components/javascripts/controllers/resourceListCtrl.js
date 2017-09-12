@@ -4,7 +4,7 @@
 var slistapp=angular.module('slistapp',['globalconfig','ui.router']);
 
 slistapp.controller("sGridCtrl",sGridCtrl);
-function sGridCtrl($scope,$state,$http,testURL) {
+function sGridCtrl($scope,$state,$http) {
 
     jQuery(function ($) {
         var resource_query_url='resource/query.form';
@@ -149,7 +149,7 @@ function sGridCtrl($scope,$state,$http,testURL) {
                     confirm(function (selid) {
                         $http({
                             method: "POST",
-                            url: testURL+"resource/delete.form",
+                            url: BASE_URL+"resource/delete.form",
                             headers : {
                                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
                             },

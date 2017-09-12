@@ -7,7 +7,7 @@ var roleAdd=angular.module('roleAdd',['globalconfig','ui.router',['bootstrap-val
 //     $httpProvider.defaults.headers.post = {"Content-Type": "application/x-www-form-urlencoded"};
 // });
 roleAdd.controller("roleAddCtrl",roleAddCtrl);
-function roleAddCtrl ($scope,$http,$state,$location,testURL) {
+function roleAddCtrl ($scope,$http,$state,$location) {
 
     (function($) {
         //自定义表单验证规则
@@ -75,7 +75,7 @@ function roleAddCtrl ($scope,$http,$state,$location,testURL) {
         $scope.editId=$location.search().editId;
         $http({
             method: "POST",
-            url: testURL + "role/roleUpdate/query.form",
+            url: BASE_URL + "role/roleUpdate/query.form",
             headers: {
                 'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
@@ -104,7 +104,7 @@ function roleAddCtrl ($scope,$http,$state,$location,testURL) {
         $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
         $http({
             method:"POST",
-            url:testURL+tourl,
+            url:BASE_URL+tourl,
             headers : {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },

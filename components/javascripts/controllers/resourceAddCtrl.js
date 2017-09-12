@@ -7,7 +7,7 @@ var userAdd=angular.module('resourceAdd',['globalconfig','ui.router',["select2",
 //     $httpProvider.defaults.headers.post = {"Content-Type": "application/x-www-form-urlencoded"};
 // });
 userAdd.controller("resourceAddCtrl",resourceAddCtrl);
-function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
+function resourceAddCtrl ($scope,$http,$state,$location) {
     (function($) {
         //自定义表单验证规则
         $.fn.bootstrapValidator.validators = {
@@ -55,7 +55,7 @@ function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
         $scope.editId=$location.search().editId;
         $http({
             method: "POST",
-            url: testURL + "resource/resourceAdd/selectById.form",
+            url: BASE_URL + "resource/resourceAdd/selectById.form",
             headers: {
                 'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
@@ -77,7 +77,7 @@ function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
     function initParentSelect() {
         $http({
             method:"GET",
-            url: testURL + "resource/getResOptions.form"
+            url: BASE_URL + "resource/getResOptions.form"
         }).then(function (response) {
             var resOptions= response.data.resOptions;
             resOptions.splice(0,0,{id:"-1",text:"设置父资源为空"});
@@ -107,7 +107,7 @@ function resourceAddCtrl ($scope,$http,$state,$location,testURL) {
         $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
         $http({
             method:"POST",
-            url:testURL+tourl,
+            url:BASE_URL+tourl,
             headers : {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
