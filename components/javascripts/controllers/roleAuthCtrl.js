@@ -86,8 +86,12 @@ function rAuthCtrl($scope,$http,$location,$state) {
             }
         })
     },function (response) {
-
-        toastr.error("获取资源列表失败");
+        if(response.status===401){
+            toastr.warning("您所在的用户组没有权限！");
+            return $state.go('角色管理');
+        }else {
+            toastr.error("获取资源列表失败");
+        }
     });
 
 

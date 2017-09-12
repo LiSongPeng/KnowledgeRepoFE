@@ -15,11 +15,7 @@ function mainController($scope,$http,$rootScope) {
             $scope.$broadcast('refreshResTree',$scope.resList);
         },function (response) {
             if (response.status===401){
-                toastr.warning("请先登录，正在跳转至登录页面");
-                var tologin = window.setTimeout(function () {
-                    window.clearTimeout(tologin);
-                    window.location.href = "home.html";
-                }, 1000);
+                toastr.warning("未登录无法获取导航列表");
             }else {
                 toastr.warning("无法获取到导航资源列表,错误代码"+response.status);
             }

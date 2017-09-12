@@ -43,7 +43,11 @@ function userRoleCtrl($scope,$state,$http,$location) {
 
         }
     },function (response) {
-        toastr.error("获取角色列表失败");
+        if(response.status===401){
+            toastr.warning("您所在的用户组没有权限！");
+        }else {
+            toastr.error("获取角色列表失败");
+        }
     });
 
 

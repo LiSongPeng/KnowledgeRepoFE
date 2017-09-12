@@ -14,12 +14,20 @@ function sGridCtrl($scope,$state,$http) {
         var colNames=['资源id','资源名称','资源类型','资源Url','资源图标','资源排序','删除状态','创建人','创建时间'];
         var colModel=[
             {name:'id',index:'id',key:true,width:60,hidden:true,editable:false},
-            {name:'sName',index:'sName',width:70,editable:true,editoptions:{size:"40",maxlength:"50"}},
-            {name:'sType',index:'sType',width:50,hidden:true,editable:true,editoptions:{size:"40",maxlength:"50"}},
+            {name:'sName',index:'sName',width:100,editable:true,editoptions:{size:"40",maxlength:"50"}},
+            {name:'sType',index:'sType',width:45,editable:true,editoptions:{size:"40",maxlength:"50"},
+                formatter:function (cellvalue,options,rowObject){
+                    var stype=angular.fromJson(cellvalue);
+                    if (stype===1){
+                        return "功能项";
+                    }else if(stype===0){
+                        return '菜单项';
+                    }
+                }},
             {name:'sUrl',index:'treeData.sUrl',width:80,sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
             {name:'sIcon',index:'treeData.sIcon',width:50,editable:false},
-            {name:'sIndex',index:'treeData.sIndex',width:40,editable:false},
-            {name:'deleteStatus',index:'treeData.deleteStatus',width:50,edittype:"checkbox",
+            {name:'sIndex',index:'treeData.sIndex',width:35,editable:false},
+            {name:'deleteStatus',index:'treeData.deleteStatus',width:40,edittype:"checkbox",
                 formatter:function (cellvalue,options,rowObject) {
                     var color="",cev="未删除";
                     if (cellvalue===0){
@@ -29,7 +37,7 @@ function sGridCtrl($scope,$state,$http) {
                     var total="<span style='color:"+color+"'>"+cev+"</span>"
                     return total;
                 }},
-            {name:'createUser',index:'treeData.createUser',width:70,editable:false,
+            {name:'createUser',index:'treeData.createUser',width:60,editable:false,
                 formatter:function (cellvalue,options,rowObject){
                     var crtuser=angular.fromJson(cellvalue);
                     if (crtuser===null){
@@ -37,7 +45,7 @@ function sGridCtrl($scope,$state,$http) {
                     }
                     return cellvalue.uName;
             }},
-            {name:'createTime',index:'treeData.createTime',width:100,editable:false,sorttype:"date"}
+            {name:'createTime',index:'treeData.createTime',width:80,editable:false,sorttype:"date"}
         ];
         var prmNames={
             page:"currentPage",    // 表示请求页码的参数名称

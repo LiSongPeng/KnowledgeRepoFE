@@ -10,8 +10,8 @@ var indexapp = angular.module('indexapp', ['mainRouter', 'globalconfig']);
 indexapp.controller('navController', ['$scope', function ($scope) {
     $scope.currUser = JSON.parse(window.sessionStorage.getItem('currUser'));
     $scope.quit = function () {
-        window.sessionStorage.setItem("currUser", null);
-        window.location.href = "home.html";
+        window.sessionStorage.removeItem("currUser");
+        window.location.href = "index.html";
     };
 }]);
 indexapp.controller('mainCtrl', mainController);
