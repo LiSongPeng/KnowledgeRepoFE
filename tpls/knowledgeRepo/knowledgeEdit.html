@@ -108,7 +108,7 @@
 </head>
 <body onload="UrlSearch();">
 <div class="basic-grey">
-    <form action="#" method="post" class="STYLE-NAME" id="knowledge">
+    <form  method="post" class="STYLE-NAME" id="knowledge">
         <h1>知识编辑
             <!--<span>Please fill all the texts in the fields.</span>-->
         </h1>
@@ -261,13 +261,15 @@
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                 success: function (data) {
                     var msg = '';
-
                     alert("编辑成功！")
                     location.href="#!/knowledgeRepo/knowledgeList.html"
                     msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
+                },
+                error:function (data) {
+                    alert("error")
                 }
             });
 

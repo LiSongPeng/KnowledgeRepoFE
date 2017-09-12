@@ -55,7 +55,7 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
         $scope.editId=$location.search().editId;
         $http({
             method: "POST",
-            url: BASE_URL + "resource/resourceAdd/selectById.form",
+            url: BASE_URL + "resource/resourceUpdate/selectById.form",
             headers: {
                 'Content-Type': "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
@@ -75,11 +75,23 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
         });
     }else {initParentSelect()}
     function initParentSelect() {
+        var tourl="resource/resourceAdd/getResOptions.form";
+        if ($scope.editflag==="true"){
+            tourl="resource/resourceUpdate/getResOptions.form";
+        }
         $http({
             method:"GET",
-            url: BASE_URL + "resource/getResOptions.form"
+            url: BASE_URL + tourl,
         }).then(function (response) {
             var resOptions= response.data.resOptions;
+            if ($scope.editflag==="true") {
+                for (var i in resOptions) {
+                    if (resOptions[i].id ===$scope.resource.id){
+                        resOptions.splice(i,1);
+                        break;
+                    }
+                }
+            }
             resOptions.splice(0,0,{id:"-1",text:"设置父资源为空"});
             console.log(resOptions);
             $('#sParentId').select2({
