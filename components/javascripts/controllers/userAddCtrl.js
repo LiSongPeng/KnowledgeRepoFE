@@ -13,7 +13,6 @@ function userAddCtrl ($scope,$http,$state,$location) {
     $scope.title="新建用户";
     if ($scope.editflag==="true"||$scope.editflag===true){
         $scope.title="编辑用户";
-        console.log("sendhttp");
         $scope.editId=$location.search().editId;
         $http({
             method: "POST",
@@ -32,9 +31,26 @@ function userAddCtrl ($scope,$http,$state,$location) {
             $scope.user=response.data;
             toastr.success("获取用户信息成功");
         },function error(response) {
-            toastr.error("获取要编辑的用户信息失败,错误代码:"+response.status);
+            if(response.status===401){
+                toastr.warning("您所在的用户组没有权限！");
+            }else {
+                toastr.error("获取要编辑的用户信息失败,错误代码:" + response.status);
+            }
+            $state.go('用户管理');
         });
-        console.log("sendhttp");
+    }else {
+        $http({
+            method: "GET",
+            url: BASE_URL + "user/userAdd/check.form"
+        }).then(function success(response){
+        },function error(response) {
+            if(response.status===401){
+                toastr.warning("您所在的用户组没有权限！");
+            }else {
+                toastr.error("权限验证出错:" + response.status);
+            }
+            $state.go('用户管理');
+        });
     }
 
     $scope.submitAdd=function () {
@@ -43,7 +59,7 @@ function userAddCtrl ($scope,$http,$state,$location) {
             toastr.warning("输入不合法");
            return;
        }
-       var tourl="user/add.form";
+       var tourl="user/userAdd/add.form";
        if ($scope.editflag==="true"){
            tourl="user/userUpdate/update.form";
        }

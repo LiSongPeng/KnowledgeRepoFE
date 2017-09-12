@@ -89,7 +89,25 @@ function roleAddCtrl ($scope,$http,$state,$location) {
             $scope.role=response.data.content[0];
             toastr.success("获取角色信息成功");
         },function error(response) {
-            toastr.error("获取要编辑的角色信息失败,错误代码:"+response.status);
+            if(response.status===401){
+                toastr.warning("您所在的用户组没有权限！");
+            }else {
+                toastr.error("获取要编辑的角色信息失败,错误代码:" + response.status);
+            }
+            $state.go('角色管理');
+        });
+    }else {
+        $http({
+            method: "GET",
+            url: BASE_URL + "role/roleAdd/check.form"
+        }).then(function success(response){
+        },function error(response) {
+            if(response.status===401){
+                toastr.warning("您所在的用户组没有权限！");
+            }else {
+                toastr.error("权限验证出错:" + response.status);
+            }
+            $state.go('角色管理');
         });
     }
     $scope.submitAdd=function () {
@@ -97,7 +115,7 @@ function roleAddCtrl ($scope,$http,$state,$location) {
             toastr.warning("输入不合法");
            return;
        }
-       var tourl="role/add.form";
+       var tourl="role/roleAdd/add.form";
        if ($scope.editflag==="true"){
            tourl="role/roleUpdate/update.form";
        }

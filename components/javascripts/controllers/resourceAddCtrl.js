@@ -44,7 +44,9 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
             // Prevent form submission
             e.preventDefault();
         });
-        $('#sType').select2();
+        $('#sType').select2({
+            minimumResultsForSearch: -1
+        });
     });
 
     $scope.resource={};
@@ -70,7 +72,11 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
             $('#sType').val($scope.resource.sType).trigger('change');
             toastr.success("获取资源信息成功");
         },function error(response) {
-            toastr.error("获取要编辑的资源信息失败,错误代码:"+response.status);
+            if(response.status===401){
+                toastr.warning("您所在的用户组没有权限！");
+            }else {
+                toastr.error("获取要编辑的资源信息失败,错误代码:"+response.status);
+            }
             $state.go("资源管理");
         });
     }else {initParentSelect()}

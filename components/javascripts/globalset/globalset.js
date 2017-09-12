@@ -8,7 +8,10 @@
 // })();
 var glconfig=angular.module('globalconfig',[]);
 glconfig.config(function ($httpProvider) {
-    var currUid=window.sessionStorage.getItem("currUser");
-    var currUser=JSON.parse(currUid);
-    $httpProvider.defaults.headers.common = { 'Current-UserId' : currUser.id }
+    var currUserStr=window.sessionStorage.getItem("currUser");
+    if(currUserStr===null){
+    } else {
+        var currUser=JSON.parse(currUserStr);
+        $httpProvider.defaults.headers.common = { 'Current-UserId' : currUser.id }
+    }
 });
