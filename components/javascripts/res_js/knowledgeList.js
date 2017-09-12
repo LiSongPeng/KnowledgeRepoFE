@@ -56,7 +56,14 @@ function knlgListCtrl($scope ) {
                     sortable: false,
                     editable: true,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString()
+
+                        if(cellvalue==undefined){
+                            return "";
+                        }else{
+                            return new Date(cellvalue).toLocaleString()
+                        }
+
+
                     }
                 },
                 {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true},
@@ -67,7 +74,11 @@ function knlgListCtrl($scope ) {
                     width: 220,
                     editable: true,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString()
+                        if(cellvalue==undefined){
+                            return "";
+                        }else{
+                            return new Date(cellvalue).toLocaleString()
+                        }
                     }
                 },
                 {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true},
