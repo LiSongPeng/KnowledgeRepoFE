@@ -7,7 +7,7 @@ search.controller("searchController", ["$scope", "$http", "$sce",function ($scop
         },
     };
     $scope.orderBy = "1";
-    $scope.order = "1";
+    $scope.order = "2";
     $scope.isActive = function (page) {
         if (page == $scope.response.data.pageNum)
             return "active";

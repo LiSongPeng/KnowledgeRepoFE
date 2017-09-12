@@ -43,7 +43,7 @@ function uGridCtrl($scope,$state,$http) {
                     return total;
                 }},
             {name:'createTime',index:'createTime',width:110,editable:false,sorttype:"date"},
-            {name:'uLastOnline',index:'uLastOnline',width:110,editable:false,sorttype:"date"}
+            {name:'uLastOnLine',index:'uLastOnLine',width:110,editable:false,sorttype:"date"}
         ];
         var prmNames={
             page:"currentPage",    // 表示请求页码的参数名称
