@@ -48,9 +48,9 @@ $(function(){
             headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
             success: function (data) {
 
-                document.getElementById("kTitle").innerText = data.kTitle;
-                document.getElementById("aa").innerHTML = data.kAnswer;
-                document.getElementById("kUseCount").innerText = data.kUseCount;
+                // document.getElementById("kTitle").innerText = data.kTitle;
+                // document.getElementById("aa").innerHTML = data.kAnswer;
+                // document.getElementById("kUseCount").innerText = data.kUseCount;
                 // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
 
 
