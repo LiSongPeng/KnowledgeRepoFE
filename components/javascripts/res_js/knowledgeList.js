@@ -1,6 +1,4 @@
-/**
- * Created by Letg4 on 2017/9/11.
- */
+
 //当 datatype 为"local" 时需填写
 var knlgList=angular.module('knlgList',['globalconfig',['jqGrid']]);
 
@@ -156,7 +154,7 @@ function knlgListCtrl($scope ) {
                 addicon: 'icon-plus-sign purple',
                 del: false,
                 delicon: 'icon-trash red',
-                search: false,
+                search: true,
                 searchicon: 'icon-search orange',
                 refresh: true,
                 refreshicon: 'icon-refresh green',
