@@ -130,8 +130,8 @@
         }
 
         /*#div2{*/
-            /*high: 50px;*/
-            /*width: 200px;*/
+        /*high: 50px;*/
+        /*width: 200px;*/
 
         /*}*/
     </style>
@@ -142,7 +142,7 @@
 </head>
 <body>
 <div class="basic-grey">
-    <form  method="post" class="STYLE-NAME" id="knowledge">
+    <form method="post" class="STYLE-NAME" id="knowledge">
         <h1>知识审批
             <!--<span>Please fill all the texts in the fields.</span>-->
         </h1>
@@ -172,9 +172,9 @@
 
                 <tr>
 
-                <td colspan="2">
-                    <p id="aa"></p>
-                </td>
+                    <td colspan="2">
+                        <p id="aa"></p>
+                    </td>
 
 
             </table>
@@ -207,8 +207,6 @@
         </div>
 
 
-
-
         <label>
             <span>审批意见 :</span>
             <textarea id="kApprMemo" name="kApprMemo" placeholder="填写审批意见"></textarea>
@@ -235,22 +233,10 @@
     var str = location.href; //取得整个地址栏
     var num = str.indexOf("?");
     str = str.substr(num + 1);
-//    var E = window.wangEditor;
-//    var editor1 = new E('#div1');
-//    var editor2 = new E('#div2');
-//
-//    editor1.customConfig.menus = [];
-//    editor2.customConfig.menus = [];
-//
-//    editor1.create();
-//    editor2.create();
-//    editor2.$textElem.attr('contenteditable', false)
     $(function () {
 
 
-
-
-        var url = BASE_URL+"kno/queryKnowledgeById.form?" + str;
+        var url = BASE_URL + "kno/queryKnowledgeById.form?" + str;
         $.ajax({
             type: "GET",
             url: url,
@@ -261,33 +247,11 @@
                 document.getElementById("kTitle").innerText = data.kTitle;
                 document.getElementById("aa").innerHTML = data.kAnswer;
                 document.getElementById("kUseCount").innerText = data.kUseCount;
-                // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
-
-
                 var msg = '';
 
                 msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
-
-
-//                $("#myform").after(msg); //将返回信息插入页面对应的元素后
             }
         });
-
-//        $.getJSON(url, function (data) {
-//
-//            document.getElementById("kTitle").innerText = data.kTitle;
-//            document.getElementById("aa").innerHTML = data.kAnswer;
-//            document.getElementById("kUseCount").innerText = data.kUseCount;
-//            // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
-//
-//
-//            var msg = '';
-//
-//            msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
-//
-//
-////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
-//        });
 
 
     });
@@ -314,39 +278,30 @@
             document.getElementById("button").value = button;
 
 
-            //document.getElementById("kApprMemo").value = editor1.txt.text();
 
             var data = $(this).serialize(); //序列化表单数据
 
             $.ajax({
                 type: "GET",
-                url: BASE_URL+"kno/knowledgeApprova.form",
-                data:data,
+                url: BASE_URL + "kno/knowledgeApprova.form",
+                data: data,
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                 success: function (json) {
                     var msg = '';
 
                     msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
                     alert("审批成功！");
-                    location.href ="#!/knowledgeRepo/knowledgeList2.html";
+                    location.href = "#!/knowledgeRepo/knowledgeList2.html";
 
-//                $("#myform").after(msg); //将返回信息插入页面对应的元素后
 
                 }
             });
 
-//            $.getJSON(BASE_URL+"knowledgeApprova.form", data, function (json) {
-//                var msg = '';
-//
-//                msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
-//
-//
-////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
-//            });
+
         });
     });
     $("#back").click(function () {
-            location.href ="#!/knowledgeRepo/knowledgeList2.html";
+            location.href = "#!/knowledgeRepo/knowledgeList2.html";
         }
     )
 
