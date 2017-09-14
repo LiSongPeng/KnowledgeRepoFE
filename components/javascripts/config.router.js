@@ -1,6 +1,5 @@
 var app=angular.module('mainRouter',['ui.router','lazyloadConfig']);
 
-
 app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modules_Config) {
     $ocLazyLoadProvider.config({
         debug:true,

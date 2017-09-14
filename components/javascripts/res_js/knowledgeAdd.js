@@ -31,8 +31,7 @@ editor1.create()
 document.getElementById('submit').addEventListener('click', function () {
     // document.getElementById("kAnswer").value=editor1.txt.text();  //获取纯文本
     document.getElementById("kAnswer").value=editor1.txt.html();       //获取带格式的文本
-    var a = editor1.txt.html();
-    alert(a)
+
 
 
 }, false)
