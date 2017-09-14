@@ -172,7 +172,9 @@ function knlgListCtrl($scope ) {
 
             }, // delete options
             {
-                multipleSearch: true
+
+                multipleSearch: true,
+                url: BASE_URL+"knowledgeDelete.form"
             })
             .navButtonAdd(pager_selector, {
                 caption: "",
@@ -237,6 +239,18 @@ function knlgListCtrl($scope ) {
             title: "删除资源",
             position: "first"
         });
+
+
+        // $("#searchButton").click(function(){
+        //
+        //
+        //     url: "kno/knowledgeDelete.form"
+        //
+        //
+        //
+        // });
+
+
 
 
         function confirm(fun, params) {
