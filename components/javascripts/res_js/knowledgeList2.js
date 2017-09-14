@@ -89,7 +89,7 @@ function knlgList2Ctrl($scope) {
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
             //scroll: 1,
-            rowNum: 8, //每页显示记录数
+            rowNum: 10, //每页显示记录数
             rowList: [10, 20, 30], //用于改变显示行数的下拉列表框的元素数组。
             pager: pager_selector, //分页、按钮所在的浏览导航栏
             altRows: true, //设置为交替行表格,默认为false
@@ -179,7 +179,7 @@ function knlgList2Ctrl($scope) {
                         location.href = "home.html#!/knowledgeRepo/knowledgeApprova.html?id=" + ids
                     }
                 },
-//                title:"知识编辑",
+                title:"知识审批",
                 position: "first"
             }, {});
 

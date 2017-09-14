@@ -94,7 +94,7 @@ function knlgListCtrl($scope ) {
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
             //scroll: 1,
-            rowNum: 8, //每页显示记录数
+            rowNum: 10, //每页显示记录数
             rowList: [10, 20, 30], //用于改变显示行数的下拉列表框的元素数组。
             pager: pager_selector, //分页、按钮所在的浏览导航栏
             altRows: true, //设置为交替行表格,默认为false
@@ -183,7 +183,7 @@ function knlgListCtrl($scope ) {
 
                     location.href = "home.html#!/knowledgeRepo/knowledgeAdd.html"
                 },
-//                title:"知识添加",
+                title:"知识添加",
                 position: "first"
             }, {})
 
@@ -203,7 +203,7 @@ function knlgListCtrl($scope ) {
                         location.href = "home.html#!/knowledgeRepo/knowledgeEdit.html?id=" + ids
                     }
                 },
-//                title:"知识编辑",
+                title:"知识编辑",
                 position: "first"
             }, {}).navButtonAdd(pager_selector, {
             caption: "",
@@ -211,7 +211,7 @@ function knlgListCtrl($scope ) {
             onClickButton: function () {
                 var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
                 if (selid == null || selid === "") {
-                    toastr.warning("未选取用户");
+                    // toastr.warning("未选取知识");
                     return;
                 }
                 confirm(function (selid) {
