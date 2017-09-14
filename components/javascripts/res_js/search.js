@@ -29,10 +29,11 @@ search.controller("searchController", ["$scope", "$http", "$sce", function ($sco
         }
         $http({
             method: "GET",
-            url: BASE_URL + "repo/searchIndex.form?keyWord=" +encodeURIComponent($scope.keyWord)
+            url: BASE_URL + "repo/searchIndex.form?keyWord=" + encodeURIComponent($scope.keyWord)
             + "&page=" + page + "&orderBy=" + $scope.orderBy + "&order=" + $scope.order,
         }).then(function successCallback(response) {
-            if (response.data.data.pages > 0) {
+            console.log(response.data);
+            if (response.data.data != null && response.data.data.pages > 0) {
                 $scope.response = response.data;
                 $scope.displayResult = true;
                 var pagers = [];
@@ -60,7 +61,7 @@ search.controller("searchController", ["$scope", "$http", "$sce", function ($sco
             $.ajax({
                 type: "GET",
                 url: BASE_URL + "repo/getInputHint.form",
-                data: {"keyWord":keyWord},
+                data: {"keyWord": keyWord},
                 dataType: "json",
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                 success: function (response) {
