@@ -121,23 +121,25 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
        }
         var sparentid=$('#sParentId').select2('data')[0];
         var sType=$('#sType').select2('data')[0];
-        if (sparentid.id=="-1"){sparentid.id=null;}
         $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
+        var postdata={
+            createUserId:$scope.currUser.id,
+            id:$scope.resource.id,
+            sName:$scope.resource.sName,
+            sUrl:$scope.resource.sUrl,
+            sType:sType.id,
+            sIcon:$scope.resource.sIcon
+        };
+        if (sparentid.id!="-1"&&sparentid!=-1){
+            postdata.sParentId=sparentid.id
+        }
         $http({
             method:"POST",
             url:BASE_URL+tourl,
             headers : {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
-            data:$.param({
-                createUserId:$scope.currUser.id,
-                id:$scope.resource.id,
-                sName:$scope.resource.sName,
-                sParentId:sparentid.id,
-                sUrl:$scope.resource.sUrl,
-                sType:sType.id,
-                sIcon:$scope.resource.sIcon
-            })
+            data:$.param(postdata)
         }).then(function (data) {
             if ($scope.editflag==="true"){
                 toastr.success("修改资源成功");
