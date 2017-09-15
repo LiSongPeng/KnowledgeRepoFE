@@ -5,11 +5,10 @@
 var knlgAdd=angular.module('knlgAdd',['globalconfig',['wangEditor']]);
 
 knlgAdd.controller('knlgAddCtrl',knlgAddCtrl);
+
 function knlgAddCtrl($scope) {
-
-var E = window.wangEditor
-var editor1 = new E('#div1')  // 两个参数也可以传入 elem 对象，class 选择器
-
+    var E = window.wangEditor;
+    var editor1 = new E('#div1');  // 两个参数也可以传入 elem 对象，class 选择器
 editor1.customConfig.menus = [
     'head',  // 标题
     'bold',  // 粗体
@@ -101,7 +100,7 @@ $("#back").click(function () {
 
 
         var html = "<div class='modal fade' id='myConfirm' >"
-            + "<div class='modal-dialog' style='z-index:2700; margin-top:30px; width:400px; '>"
+            + "<div class='modal-dialog' style='z-index:2700; margin-top:10px; width:400px; '>"
             + "<div class='modal-content'>"
             + "<div class='modal-header'  style='font-size:16px; '>"
             + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
@@ -114,11 +113,12 @@ $("#back").click(function () {
 
             + "</div>" + "</div></div></div>";
         $("body").append(html);
-
+        editor1.$textElem.attr('contenteditable', false);
         $("#myConfirm").modal("show");
 
         $("#confirmOk").on("click", function () {
             $("#myConfirm").modal("hide");
+            editor1.$textElem.attr('contenteditable', true);
             $("#kTitle").focus();
 
         });
@@ -144,11 +144,12 @@ $("#back").click(function () {
 
             + "</div>" + "</div></div></div>";
         $("body").append(html);
-
+        editor1.$textElem.attr('contenteditable', false);
         $("#myConfirm").modal("show");
 
         $("#confirmOk").on("click", function () {
             $("#myConfirm").modal("hide");
+            editor1.$textElem.attr('contenteditable', true);
             location.href="#!/knowledgeRepo/knowledgeList.html";
 
         });
