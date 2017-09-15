@@ -1,5 +1,5 @@
 var search = angular.module("search", ["globalconfig"]);
-search.controller("searchController", ["$scope", "$http", "$sce",function ($scope, $http, $sce) {
+search.controller("searchController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
     $scope.displayResult = false;
     $scope.response = {
         data: {
@@ -29,10 +29,11 @@ search.controller("searchController", ["$scope", "$http", "$sce",function ($scop
         }
         $http({
             method: "GET",
-            url: BASE_URL+"repo/searchIndex.form?keyWord=" + $scope.keyWord
+            url: BASE_URL + "repo/searchIndex.form?keyWord=" + encodeURIComponent($scope.keyWord)
             + "&page=" + page + "&orderBy=" + $scope.orderBy + "&order=" + $scope.order,
         }).then(function successCallback(response) {
-            if (response.data.data.pages > 0) {
+            console.log(response.data);
+            if (response.data.data != null && response.data.data.pages > 0) {
                 $scope.response = response.data;
                 $scope.displayResult = true;
                 var pagers = [];
@@ -49,7 +50,7 @@ search.controller("searchController", ["$scope", "$http", "$sce",function ($scop
             }
 
         }, function errorCallback(response) {
-            toastr.error("数据加载失败");
+            toastr.info("未查找到结果");
         });
     };
     jQuery('#keyWord').typeahead({
@@ -59,7 +60,7 @@ search.controller("searchController", ["$scope", "$http", "$sce",function ($scop
             });*/
             $.ajax({
                 type: "GET",
-                url: BASE_URL+"repo/getInputHint.form",
+                url: BASE_URL + "repo/getInputHint.form",
                 data: {"keyWord": keyWord},
                 dataType: "json",
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},

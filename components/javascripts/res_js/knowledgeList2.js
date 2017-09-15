@@ -21,6 +21,7 @@ function knlgList2Ctrl($scope) {
     }];
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
+    var grid_searcher ="#grid-search";
     $(document).ready(function () {
         $("#grid-table").jqGrid({
             ajaxGridOptions: {
@@ -54,7 +55,12 @@ function knlgList2Ctrl($scope) {
                     sortable: false,
                     editable: true,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString()
+                        if(cellvalue==undefined){
+                            return "";
+                        }else{
+                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+
+                        }
                     }
                 },
                 {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true},
@@ -65,7 +71,11 @@ function knlgList2Ctrl($scope) {
                     width: 220,
                     editable: true,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString()
+                        if(cellvalue==undefined){
+                            return "";
+                        }else{
+                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+                        }
                     }
                 },
                 {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true},
@@ -76,12 +86,12 @@ function knlgList2Ctrl($scope) {
                     width: 220,
                     editable: true,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString()
+                        return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
                     }
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
             //scroll: 1,
-            rowNum: 8, //每页显示记录数
+            rowNum: 10, //每页显示记录数
             rowList: [10, 20, 30], //用于改变显示行数的下拉列表框的元素数组。
             pager: pager_selector, //分页、按钮所在的浏览导航栏
             altRows: true, //设置为交替行表格,默认为false
@@ -155,25 +165,94 @@ function knlgList2Ctrl($scope) {
             {}, // add options
             {}, // delete options
             {})
+            // .navButtonAdd(pager_selector, {
+            //     caption: "",
+            //     buttonicon: "icon-pencil gray",
+            //     onClickButton: function () {
+            //         var ids = $(grid_selector).jqGrid('getGridParam', 'selarrrow');
+            //
+            //         if (ids == '') {
+            //             alert("请选择需要编辑的内容");
+            //
+            //             location.href = "home.html#!/knowledgeRepo/knowledgeList2.html"
+            //
+            //         } else {
+            //
+            //             location.href = "home.html#!/knowledgeRepo/knowledgeApprova.html?id=" + ids
+            //         }
+            //     },
+            //     title:"知识审批",
+            //     position: "first"
+            // }, {});
             .navButtonAdd(pager_selector, {
                 caption: "",
                 buttonicon: "icon-pencil gray",
                 onClickButton: function () {
-                    var ids = $(grid_selector).jqGrid('getGridParam', 'selarrrow');
 
-                    if (ids == '') {
-                        alert("请选择需要编辑的内容");
-
-                        location.href = "home.html#!/knowledgeRepo/knowledgeList2.html"
-
-                    } else {
-
-                        location.href = "home.html#!/knowledgeRepo/knowledgeApprova.html?id=" + ids
+                    var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
+                    if (selid == null || selid === "") {
+                        confirm(function (selid) {
+                        }, selid)
+                    }else {
+                        location.href = "home.html#!/knowledgeRepo/knowledgeApprova.html?id=" + selid
                     }
+
                 },
-//                title:"知识编辑",
+                title: "知识审批",
                 position: "first"
-            }, {});
+            });
+
+
+
+
+
+
+        function confirm(fun, params) {
+            if ($("#myConfirm").length > 0) {
+                $("#myConfirm").remove();
+            }
+            var html = "<div class='modal fade' id='myConfirm' >"
+                + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+                + "<div class='modal-content'>"
+                + "<div class='modal-header'  style='font-size:16px; '>"
+                + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+                + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+                + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+                + "请选择审批的内容？"
+                + "</div>"
+                + "<div class='modal-footer ' style=''>"
+                + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+
+                + "</div>" + "</div></div></div>";
+            $("body").append(html);
+
+            $("#myConfirm").modal("show");
+
+            $("#confirmOk").on("click", function () {
+                $("#myConfirm").modal("hide");
+                fun(params); // 执行函数
+            });
+        }
+
+
+        jQuery(grid_searcher).filterGrid(grid_selector,{
+//                gridModel: true,
+            filterModel:[{
+                label:'知识标题',
+                name:'kTitle',
+                stype:'text'
+            }],
+            searchButton:"搜索",
+            formtype: 'horizontal',
+            url: BASE_URL + "kno/search.form",
+            autosearch: false,
+            buttonclass: 'fm-button btn-purple',
+            enableSearch: true,
+            // enableClear: true,
+            // Find: "查找",
+            // //
+            // Clear: "重置"
+        });
 
         function style_edit_form(form) {
             //enable datepicker on "sdate" field and switches for "stock" field
