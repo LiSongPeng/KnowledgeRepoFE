@@ -40,17 +40,17 @@ document.getElementById('submit').addEventListener('click', function () {
     $(function(){
 
 
-        $("#kTitle").blur(function(){
-            if(document.getElementById("kTitle").value===null||document.getElementById("kTitle").value=== " ") {
-                confirm();
-            }
-        });
-
-
-
-
 
     $("#knowledge").submit(function(){
+
+
+        if(document.getElementById("kTitle").value.trim()=="") {
+            confirm();
+            return false;
+        }
+
+
+
         var data = $(this).serialize(); //序列化表单数据
         $.ajax({
             type: "GET",
@@ -69,8 +69,8 @@ document.getElementById('submit').addEventListener('click', function () {
 
                 msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
-                alert("添加成功！");
-                location.href="#!/knowledgeRepo/knowledgeList.html";
+                confirm2()
+
 
 
 //                $("#myform").after(msg); //将返回信息插入页面对应的元素后
@@ -98,6 +98,8 @@ $("#back").click(function () {
         if ($("#myConfirm").length > 0) {
             $("#myConfirm").remove();
         }
+
+
         var html = "<div class='modal fade' id='myConfirm' >"
             + "<div class='modal-dialog' style='z-index:2700; margin-top:30px; width:400px; '>"
             + "<div class='modal-content'>"
@@ -122,7 +124,35 @@ $("#back").click(function () {
         });
     }
 
+    function confirm2() {
+        if ($("#myConfirm").length > 0) {
+            $("#myConfirm").remove();
+        }
 
+
+        var html = "<div class='modal fade' id='myConfirm' >"
+            + "<div class='modal-dialog' style='z-index:2700; margin-top:30px; width:400px; '>"
+            + "<div class='modal-content'>"
+            + "<div class='modal-header'  style='font-size:16px; '>"
+            + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+            + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+            + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+            + "添加成功！！"
+            + "</div>"
+            + "<div class='modal-footer ' style=''>"
+            + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+
+            + "</div>" + "</div></div></div>";
+        $("body").append(html);
+
+        $("#myConfirm").modal("show");
+
+        $("#confirmOk").on("click", function () {
+            $("#myConfirm").modal("hide");
+            location.href="#!/knowledgeRepo/knowledgeList.html";
+
+        });
+    }
 
 
 };

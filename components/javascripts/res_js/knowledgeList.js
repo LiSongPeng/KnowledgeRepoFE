@@ -21,6 +21,7 @@ function knlgListCtrl($scope ) {
     }];
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
+    var grid_searcher ="#grid-search";
     $(document).ready(function () {
         jQuery("#grid-table").jqGrid({
             ajaxGridOptions: {
@@ -43,51 +44,57 @@ function knlgListCtrl($scope ) {
             colNames: ['知识id', '知识标题', '使用次数', '最后一次使用时间', '审批状态', '审批人', '审批时间', '审批意见', '创建人', '创建时间'],
             colModel: [
 
-                {name: "id", index: "id", hidden: true, width: 100, editable: false},
-                {name: "kTitle", index: "kTitle", width: 100, editable: true},
+                {name: "id", index: "id", hidden: true, width: 100, editable: false,search:false},
+                {name: "kTitle", index: "kTitle", sortable:false,width: 100, editable: true},
                 //{name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
-                {name: "kUseCount", index: "kUseCount", width: 100, editable: true},
+                {name: "kUseCount", index: "kUseCount",sortable:false, width: 100, editable: true,search:false},
                 {
                     name: "kUserTimeLast",
                     index: "kUserTimeLast",
                     width: 220,
                     sortable: false,
                     editable: true,
+
+                    search:false,
                     formatter: function (cellvalue, options, row) {
 
                         if(cellvalue==undefined){
                             return "";
                         }else{
-                            return new Date(cellvalue).toLocaleString()
+                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
                         }
 
 
                     }
                 },
-                {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true},
-                {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true},
+                {name: "kApprStatus", index: "kApprStatus", width: 150, sortable:false,editable: true},
+                {name: "kApprUserId", index: "kApprUserId", width: 150,sortable:false, editable: true,search:false},
                 {
                     name: "kApprTime",
                     index: "kApprTime",
                     width: 220,
                     editable: true,
+                    search:false,
+                    sortable:false,
                     formatter: function (cellvalue, options, row) {
                         if(cellvalue==undefined){
                             return "";
                         }else{
-                            return new Date(cellvalue).toLocaleString()
+                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
                         }
                     }
                 },
-                {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true},
-                {name: "createUserId", index: "createUserId", width: 150, editable: true},
+                {name: "kApprMemo", index: "kApprMemo", width: 150, sortable:false,editable: true,search:false},
+                {name: "createUserId", index: "createUserId", width: 150, sortable:false,editable: true,search:false},
                 {
                     name: "createTime",
                     index: "createTime",
                     width: 220,
                     editable: true,
+                    sortable:false,
+                    search:false,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString()
+                        return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
                     }
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
@@ -98,12 +105,19 @@ function knlgListCtrl($scope ) {
             altRows: true, //设置为交替行表格,默认为false
             multiselect: true, //是否多选
             multiboxonly: true, //是否只能点击复选框多选
-            //sortname:'id',//默认的排序列名
-            //sortorder:'asc',//默认的排序方式（asc升序，desc降序）
+            sortable:false,
+            // sortname:'kTitle',//默认的排序列名
+          //  sortorder:'asc',//默认的排序方式（asc升序，desc降序）
             caption: "知识管理", //表名
             autowidth: true, //自动宽
 //
             repeatitems: false,
+            search:"search", // 表示是否是搜索请求的参数名称
+
+
+
+
+
             jsonReader: {
 
                 root: "content",
@@ -154,7 +168,7 @@ function knlgListCtrl($scope ) {
                 addicon: 'icon-plus-sign purple',
                 del: false,
                 delicon: 'icon-trash red',
-                search: true,
+                search: false,
                 searchicon: 'icon-search orange',
                 refresh: true,
                 refreshicon: 'icon-refresh green',
@@ -173,9 +187,20 @@ function knlgListCtrl($scope ) {
             }, // delete options
             {
 
-                multipleSearch: true,
-                url: BASE_URL+"knowledgeDelete.form"
-            })
+     //            caption: "搜索...",
+     //
+     // Find: "查找",
+     //
+     //  Reset: "重置",
+     //   odata : ['have','null','equal', 'not equal', 'less', 'less or equal','greater','greater or equal', 'begins with','does not begin with','is in','is not in','ends with','does not end with','contains','does not contain'],
+     //
+     //  groupOps: [ { op: "AND", text: "all" }, { op: "OR", text: "any" } ],
+     //
+     //  matchText: " match",
+     //
+     //  rulesText: " rules"
+
+    })
             .navButtonAdd(pager_selector, {
                 caption: "",
                 buttonicon: "icon-plus-sign purple",
@@ -191,19 +216,17 @@ function knlgListCtrl($scope ) {
                 caption: "",
                 buttonicon: "icon-pencil gray",
                 onClickButton: function () {
-                    var ids = $(grid_selector).jqGrid('getGridParam', 'selarrrow');
 
-                    if (ids=="") {
-                        alert("请选择需要编辑的内容");
-
-                        location.href = "home.html#!/knowledgeRepo/knowledgeList.html"
-
-                    } else {
-
-                        location.href = "home.html#!/knowledgeRepo/knowledgeEdit.html?id=" + ids
+                    var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
+                    if (selid == null || selid === "") {
+                        confirm2(function (selid) {
+                        }, selid)
+                    }else {
+                        location.href = "home.html#!/knowledgeRepo/knowledgeEdit.html?id=" + selid
                     }
+
                 },
-                title:"知识编辑",
+                title: "知识审批",
                 position: "first"
             }, {}).navButtonAdd(pager_selector, {
             caption: "",
@@ -244,13 +267,30 @@ function knlgListCtrl($scope ) {
         // $("#searchButton").click(function(){
         //
         //
-        //     url: "kno/knowledgeDelete.form"
+        //
         //
         //
         //
         // });
 
-
+        jQuery(grid_searcher).filterGrid(grid_selector,{
+//                gridModel: true,
+            filterModel:[{
+                label:'知识标题',
+                name:'kTitle',
+                stype:'text'
+            }],
+            searchButton:"搜索",
+            formtype: 'horizontal',
+            url: BASE_URL + "kno/search.form",
+            autosearch: false,
+            buttonclass: 'fm-button btn-purple',
+            enableSearch: true,
+           // enableClear: true,
+            // Find: "查找",
+            // //
+            // Clear: "重置"
+        });
 
 
         function confirm(fun, params) {
@@ -280,7 +320,32 @@ function knlgListCtrl($scope ) {
             });
         }
 
+        function confirm2(fun, params) {
+            if ($("#myConfirm").length > 0) {
+                $("#myConfirm").remove();
+            }
+            var html = "<div class='modal fade' id='myConfirm' >"
+                + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+                + "<div class='modal-content'>"
+                + "<div class='modal-header'  style='font-size:16px; '>"
+                + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+                + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+                + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+                + "请选择要编辑的内容？"
+                + "</div>"
+                + "<div class='modal-footer ' style=''>"
+                + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
 
+                + "</div>" + "</div></div></div>";
+            $("body").append(html);
+
+            $("#myConfirm").modal("show");
+
+            $("#confirmOk").on("click", function () {
+                $("#myConfirm").modal("hide");
+                fun(params); // 执行函数
+            });
+        }
 
         // function confirm(fun, params) {
         //     if ($("#myConfirm").length > 0) {

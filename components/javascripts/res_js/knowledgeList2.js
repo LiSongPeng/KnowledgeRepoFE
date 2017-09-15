@@ -21,6 +21,7 @@ function knlgList2Ctrl($scope) {
     }];
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
+    var grid_searcher ="#grid-search";
     $(document).ready(function () {
         $("#grid-table").jqGrid({
             ajaxGridOptions: {
@@ -57,7 +58,8 @@ function knlgList2Ctrl($scope) {
                         if(cellvalue==undefined){
                             return "";
                         }else{
-                            return new Date(cellvalue).toLocaleString()
+                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+
                         }
                     }
                 },
@@ -72,7 +74,7 @@ function knlgList2Ctrl($scope) {
                         if(cellvalue==undefined){
                             return "";
                         }else{
-                            return new Date(cellvalue).toLocaleString()
+                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
                         }
                     }
                 },
@@ -84,7 +86,7 @@ function knlgList2Ctrl($scope) {
                     width: 220,
                     editable: true,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString()
+                        return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
                     }
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
@@ -216,7 +218,7 @@ function knlgList2Ctrl($scope) {
                 + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
                 + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
                 + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
-                + "请选择要编辑的内容？"
+                + "请选择审批的内容？"
                 + "</div>"
                 + "<div class='modal-footer ' style=''>"
                 + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
@@ -233,7 +235,24 @@ function knlgList2Ctrl($scope) {
         }
 
 
-
+        jQuery(grid_searcher).filterGrid(grid_selector,{
+//                gridModel: true,
+            filterModel:[{
+                label:'知识标题',
+                name:'kTitle',
+                stype:'text'
+            }],
+            searchButton:"搜索",
+            formtype: 'horizontal',
+            url: BASE_URL + "kno/search.form",
+            autosearch: false,
+            buttonclass: 'fm-button btn-purple',
+            enableSearch: true,
+            // enableClear: true,
+            // Find: "查找",
+            // //
+            // Clear: "重置"
+        });
 
         function style_edit_form(form) {
             //enable datepicker on "sdate" field and switches for "stock" field
