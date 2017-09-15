@@ -11,7 +11,7 @@ function uGridCtrl($scope,$state,$http) {
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
         var grid_searcher ="#grid-search";
-        var colNames=['角色ID','角色名称','角色描述','创建者','是否禁用','创建时间'];
+        var colNames=['角色ID','角色名称','角色描述','创建者','创建时间'];
         var colModel=[
             {name:'id',index:'id',key:true,width:60,hidden:true,editable:false},
             {name:'rName',index:'rName',width:80,editable:true,editoptions:{size:"40",maxlength:"50"}},
@@ -24,15 +24,15 @@ function uGridCtrl($scope,$state,$http) {
                     }
                     return cellvalue.uName;
                 }},
-            {name:'deleteStatus',index:'deleteStatus',width:50,edittype:"checkbox",
-                formatter:function ( cellvalue, options, rowobject ) {
-                    var total="<label class='inline'>" +
-                        "<input type='checkbox' "+(cellvalue===0?"checked":"")+" value=0 offval=1 id='"+rowobject.id+"_delStatus' name='deleteStatus' " +
-                        "role='checkbox' class='ace ace-switch ace-switch-5'/>" +
-                        "<span class='lbl'></span>" +
-                        "</label>";
-                    return total;
-                }},
+            // {name:'deleteStatus',index:'deleteStatus',width:50,edittype:"checkbox",
+            //     formatter:function ( cellvalue, options, rowobject ) {
+            //         var total="<label class='inline'>" +
+            //             "<input type='checkbox' "+(cellvalue===0?"checked":"")+" value=0 offval=1 id='"+rowobject.id+"_delStatus' name='deleteStatus' " +
+            //             "role='checkbox' class='ace ace-switch ace-switch-5'/>" +
+            //             "<span class='lbl'></span>" +
+            //             "</label>";
+            //         return total;
+            //     }},
             {name:'createTime',index:'createTime',width:110,editable:false,sorttype:"date"}
         ];
         var prmNames={
@@ -89,35 +89,35 @@ function uGridCtrl($scope,$state,$http) {
             prmNames: prmNames,
             jsonReader: jsonReaderConfig,
             loadComplete : function() {
-                $("input[id$='_delStatus']").on('change',function () {
-                    var thisdom=this;
-                    $(thisdom).prop("disabled",true);
-                    var uid=$(thisdom).attr('id').slice(0,-10);
-                    var cbchecked=$(thisdom).is(":checked");
-                    $http({
-                        method: "POST",
-                        url: BASE_URL+"role/updateDeleteStatus.form",
-                        headers : {
-                            'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
-                        },
-                        data:$.param({
-                            id:uid,
-                            deleteStatus: cbchecked?0:1
-                        })
-                    }).then(function (response) {
-                        $(thisdom).attr("disabled",false);
-                        toastr.success("修改逻辑删除状态成功！");
-
-                    },function (response) {
-                        $(thisdom).prop("checked",response.data.deleteStatus===1);
-                        $(thisdom).prop("disabled",false);
-                        if (response.status===403){
-                            toastr.warning("操作失败！您所在的用户组没有此权限");
-                        }
-                        toastr.error("操作失败！错误代码及信息:"+response.status);
-                    })
-
-                });
+                // $("input[id$='_delStatus']").on('change',function () {
+                //     var thisdom=this;
+                //     $(thisdom).prop("disabled",true);
+                //     var uid=$(thisdom).attr('id').slice(0,-10);
+                //     var cbchecked=$(thisdom).is(":checked");
+                //     $http({
+                //         method: "POST",
+                //         url: BASE_URL+"role/updateDeleteStatus.form",
+                //         headers : {
+                //             'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+                //         },
+                //         data:$.param({
+                //             id:uid,
+                //             deleteStatus: cbchecked?0:1
+                //         })
+                //     }).then(function (response) {
+                //         $(thisdom).attr("disabled",false);
+                //         toastr.success("修改逻辑删除状态成功！");
+                //
+                //     },function (response) {
+                //         $(thisdom).prop("checked",response.data.deleteStatus===1);
+                //         $(thisdom).prop("disabled",false);
+                //         if (response.status===403){
+                //             toastr.warning("操作失败！您所在的用户组没有此权限");
+                //         }
+                //         toastr.error("操作失败！错误代码及信息:"+response.status);
+                //     })
+                //
+                // });
                 var table = this;
                 setTimeout(function(){
                     styleCheckbox(table);
@@ -144,15 +144,54 @@ function uGridCtrl($scope,$state,$http) {
             viewicon : 'icon-zoom-in grey'
         },{},{},{})
             .navButtonAdd(pager_selector,{
+                title:"新建角色",
+                position:"last",
                 caption:"",
                 buttonicon:"icon-plus-sign purple",
                 onClickButton:function () {
-                    window.location.href="#!/role/roleAdd.html";
-                },
-                title:"新建角色",
-                position:"first"
+                    window.setTimeout(function () {
+                        $("div.tooltip[role='tooltip']").remove();
+                        window.location.href="#!/role/roleAdd.html";
+                    }, 0);
+                }
             })
             .navButtonAdd(pager_selector,{
+                title:"编辑角色",
+                position:"last",
+                caption:"",
+                buttonicon:"icon-pencil gray",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取角色");
+                        return;
+                    }
+                    window.setTimeout(function () {
+                        $("div.tooltip[role='tooltip']").remove();
+                        window.location.href="#!/role/roleAdd.html?edit=true&editId="+selid;
+                    }, 0);
+                }
+            })
+            .navButtonAdd(pager_selector,{
+                title:"角色授权",
+                position:"last",
+                caption:"",
+                buttonicon:"glyphicon-briefcase brown",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取角色");
+                        return;
+                    }
+                    window.setTimeout(function () {
+                        $("div.tooltip[role='tooltip']").remove();
+                        window.location.href="#!/role/roleAuthor.html?authId="+selid;
+                    }, 0);
+                }
+            })
+            .navButtonAdd(pager_selector,{
+                title:"删除角色",
+                position:"last",
                 caption:"",
                 buttonicon:"icon-trash red",
                 onClickButton:function () {
@@ -181,38 +220,9 @@ function uGridCtrl($scope,$state,$http) {
                             toastr.error("删除失败！错误代码及信息:"+response.status);
                         })
                     },selid)
-                },
-                title:"删除角色",
-                position:"first"
-            })
-            .navButtonAdd(pager_selector,{
-                caption:"",
-                buttonicon:"glyphicon-briefcase brown",
-                onClickButton:function () {
-                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-                    if (selid==null||selid===""){
-                        toastr.warning("未选取角色");
-                        return;
-                    }
-                    window.location.href="#!/role/roleAuthor.html?authId="+selid;
-                },
-                title:"角色授权",
-                position:"first"
-            })
-            .navButtonAdd(pager_selector,{
-                caption:"",
-                buttonicon:"icon-pencil gray",
-                onClickButton:function () {
-                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-                    if (selid==null||selid===""){
-                        toastr.warning("未选取角色");
-                        return;
-                    }
-                    window.location.href="#!/role/roleAdd.html?edit=true&editId="+selid;
-                },
-                title:"编辑角色",
-                position:"first"
+                }
             });
+
 
 
         jQuery(grid_searcher).filterGrid(grid_selector,{
@@ -222,6 +232,8 @@ function uGridCtrl($scope,$state,$http) {
                 name:'rName',
                 stype:'text'
             }],
+            searchButton:'查询',
+            clearButton:'清空',
             formtype: 'horizontal',
             autosearch: false,
             buttonclass: 'fm-button btn-purple',

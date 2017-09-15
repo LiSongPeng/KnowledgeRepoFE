@@ -107,7 +107,7 @@
             <label>
                 <span>角色名称 :</span>
             </label>
-            <input class="form-control " id="rName" type="text" ng-model="role.rName" name="rName" placeholder="用户名"/>
+            <input class="form-control " id="rName" type="text" ng-model="role.rName" name="rName" placeholder="角色名称"/>
         </div>
 
         <div class="form-group">
@@ -118,10 +118,11 @@
             <input class="form-control" id="rDescription"  type="text" ng-model="role.rDescription" name="rDescription" />
         </div>
 
-        <div class="pull-right" style="margin-right: 50px">
-            <input type="reset" class="button" id="reset" value="重置" />
-            <span>&nbsp;&nbsp;</span>
-            <input type="submit" class="button" id="submit" ng-click="submitAdd()" value="提交" />
+
+        <div style="margin-right: 40px">
+            <input type="button" class="button btn-default" id="back" ng-click="goBack()" value="返回" style="margin-left: 20px;text-shadow: 1px 1px 1px #7f7f7f;"/>
+            <input type="submit" class="button pull-right" id="submit" ng-click="submitAdd()" value="提交" />
+            <input type="reset" class="button pull-right" id="reset" value="重置" style="margin-right: 20px"/>
         </div>
     </form>
     </div>

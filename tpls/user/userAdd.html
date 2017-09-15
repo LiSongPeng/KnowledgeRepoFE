@@ -129,88 +129,16 @@
             <input class="form-control" id="uDescription"  type="text" ng-model="user.uDescription" name="uDescription" />
         </div>
 
-        <div class="pull-right" style="margin-right: 50px">
-            <input type="reset" class="button" id="reset" value="重置" />
-            <span>&nbsp;&nbsp;</span>
-            <input type="submit" class="button" id="submit" ng-click="submitAdd()" value="提交" />
+        <div style="margin-right: 40px">
+            <input type="button" class="button btn-default" id="back" ng-click="goBack()" value="返回" style="margin-left: 20px;text-shadow: 1px 1px 1px #7f7f7f;"/>
+            <input type="submit" class="button pull-right" id="submit" ng-click="submitAdd()" value="提交" />
+            <input type="reset" class="button pull-right" id="reset" value="重置" style="margin-right: 20px"/>
         </div>
     </form>
     </div>
 
     </div>
 </div>
-<script>
-    (function($) {
-        //自定义表单验证规则
-        $.fn.bootstrapValidator.validators = {
-            confirm_pass : {
-                validate: function(validator, $field, options) {
-                    return $("#uPassword").val() === $field.val();
-                }
-            },
-            size_valid:{
-                validate: function (validator,$field,options) {
-                    var len=$field.val().length;
-                    if(len<options.minLen){
-                        return false;
-                    }
-                    if(len>options.maxLen){
-                        return false;
-                    }else{
-                        return true;
-                    }
-                }
-            }
-    };
-    }(window.jQuery));
-    $(function() {
-        // validate form
-        var tform = $("#userAddForm");
-        tform.bootstrapValidator({
-            submitButtons: null,
-            fields:{
-                uName:{
-                    enabled:true,
-                    message:'输入不合法',
-                    container: null,
-                    // 定义每个验证规则
-                    validators: {
-                        notEmpty: {message: '用户名不能为空'},
-                        size_valid: {minLen:6,maxLen:50,message: '用户名长度在6-50之间'}
-                    }
-                },
-                uPassword:{
-                    enabled:true,
-                    message:'输入不合法',
-                    validators:{
-                        notEmpty: {message: '密码不能为空'},
-                        size_valid: {minLen:6,maxLen:50,message: '密码长度在6-50之间'}
-                    }
-                },
-                confirmPassword:{
-                    enabled:true,
-                    message:'输入不合法',
-                    validators:{
-                        confirm_pass: {message: '两次输入密码不相等'}
-                    }
-                },
-                uDescription:{
-                    enabled:true,
-                    message:'输入不合法',
-                    validators:{
-                        size_valid: {minLen:0,maxLen:200,message: '描述长度不能超过200'}
 
-                    }
-                }
-            }
-        });
-        // 修复bootstrap validator重复向服务端提交bug
-        tform.on('success.form.bv', function(e) {
-            // Prevent form submission
-            e.preventDefault();
-        });
-
-    });
-</script>
 </body>
 </html>

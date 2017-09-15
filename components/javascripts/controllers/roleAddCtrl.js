@@ -17,6 +17,11 @@ function roleAddCtrl ($scope,$http,$state,$location) {
                     return $("#uPassword").val() === $field.val();
                 }
             },
+            notEmpty:{
+                validate: function (validator, $field, options) {
+                    return !$field.val()===null||!"".equals==$field.val();
+                }
+            },
             size_valid:{
                 validate: function (validator,$field,options) {
                     var len=$field.val().length;
@@ -48,11 +53,11 @@ function roleAddCtrl ($scope,$http,$state,$location) {
                         size_valid: {minLen:0,maxLen:50,message: '角色名长度在6-50之间'}
                     }
                 },
-                rrDescription:{
+                rDescription:{
                     enabled:true,
                     message:'输入不合法',
                     validators:{
-                        size_valid: {minLen:0,maxLen:200,message: '描述长度不能超过200'}
+                        size_valid: {minLen:0,maxLen:100,message: '描述长度不能超过100字符'}
 
                     }
                 }
@@ -110,7 +115,13 @@ function roleAddCtrl ($scope,$http,$state,$location) {
             $state.go('角色管理');
         });
     }
+
+    $scope.goBack= function () {
+        $state.go('角色管理');
+    };
+
     $scope.submitAdd=function () {
+        $('#roleAddForm').bootstrapValidator('validate');
        if (!$("#roleAddForm").data("bootstrapValidator").isValid()){
             toastr.warning("输入不合法");
            return;
@@ -127,13 +138,11 @@ function roleAddCtrl ($scope,$http,$state,$location) {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
             data:$.param({
-                createUserId:$scope.currUser.id,
                 id:$scope.role.id,
                 rName:$scope.role.rName,
                 rDescription:$scope.role.rDescription
             })
         }).then(function (data) {
-            $scope.role={};
             if ($scope.editflag==="true"){
                 toastr.success("修改角色成功");
             }else{
@@ -141,6 +150,11 @@ function roleAddCtrl ($scope,$http,$state,$location) {
             }
             $state.go("角色管理");
         },function (data) {
+            $scope.role={};
+            if(data.status=40011){
+                toastr.warning("角色名已存在");
+                return;
+            }
             toastr.error("创建角色失败:"+data.status);
         });
     }

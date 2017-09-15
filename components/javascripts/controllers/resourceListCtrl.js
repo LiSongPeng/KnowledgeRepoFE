@@ -11,7 +11,7 @@ function sGridCtrl($scope,$state,$http) {
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
         var grid_searcher ="#grid-search";
-        var colNames=['资源id','资源名称','资源类型','资源Url','资源图标','资源排序','是否禁用','创建人','创建时间'];
+        var colNames=['资源id','资源名称','资源类型','资源Url','资源图标','资源排序','创建人','创建时间'];
         var colModel=[
             {name:'id',index:'id',key:true,width:60,hidden:true,editable:false},
             {name:'sName',index:'sName',width:100,editable:true,editoptions:{size:"40",maxlength:"50"}},
@@ -26,16 +26,16 @@ function sGridCtrl($scope,$state,$http) {
                 }},
             {name:'sUrl',index:'treeData.sUrl',width:80,sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
             {name:'sIcon',index:'treeData.sIcon',width:50,editable:false},
-            {name:'sIndex',index:'treeData.sIndex',width:35,editable:false},
-            {name:'deleteStatus',index:'treeData.deleteStatus',width:40,edittype:"checkbox",
-                formatter:function ( cellvalue, options, rowobject ) {
-                    var total="<label class='inline'>" +
-                        "<input type='checkbox' "+(cellvalue===0?"checked":"")+" value=0 offval=1 id='"+rowobject.id+"_delStatus' name='deleteStatus' " +
-                        "role='checkbox' class='ace ace-switch ace-switch-5'/>" +
-                        "<span class='lbl'></span>" +
-                        "</label>";
-                    return total;
-                }},
+            {name:'sIndex',index:'treeData.sIndex',width:40,sorttype:"int",editable:false},
+            // {name:'deleteStatus',index:'treeData.deleteStatus',width:40,edittype:"checkbox",
+            //     formatter:function ( cellvalue, options, rowobject ) {
+            //         var total="<label class='inline'>" +
+            //             "<input type='checkbox' "+(cellvalue===0?"checked":"")+" value=0 offval=1 id='"+rowobject.id+"_delStatus' name='deleteStatus' " +
+            //             "role='checkbox' class='ace ace-switch ace-switch-5'/>" +
+            //             "<span class='lbl'></span>" +
+            //             "</label>";
+            //         return total;
+            //     }},
             {name:'createUser',index:'treeData.createUser',width:60,editable:false,
                 formatter:function (cellvalue,options,rowObject){
                     var crtuser=angular.fromJson(cellvalue);
@@ -44,7 +44,7 @@ function sGridCtrl($scope,$state,$http) {
                     }
                     return cellvalue.uName;
             }},
-            {name:'createTime',index:'treeData.createTime',width:80,editable:false,sorttype:"date"}
+            {name:'createTime',index:'treeData.createTime',width:80,editable:false,sortable:true,sorttype:"date"}
         ];
         var prmNames={
             page:"currentPage",    // 表示请求页码的参数名称
@@ -110,35 +110,35 @@ function sGridCtrl($scope,$state,$http) {
             prmNames: prmNames,
             jsonReader: jsonReaderConfig,
             loadComplete : function() {
-                $("input[id$='_delStatus']").on('change',function () {
-                    var thisdom=this;
-                    $(thisdom).prop("disabled",true);
-                    var uid=$(thisdom).attr('id').slice(0,-10);
-                    var cbchecked=$(thisdom).is(":checked");
-                    $http({
-                        method: "POST",
-                        url: BASE_URL+"resource/updateDeleteStatus.form",
-                        headers : {
-                            'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
-                        },
-                        data:$.param({
-                            id:uid,
-                            deleteStatus: cbchecked?0:1
-                        })
-                    }).then(function (response) {
-                        $(thisdom).attr("disabled",false);
-                        toastr.success("修改逻辑删除状态成功！");
-
-                    },function (response) {
-                        $(thisdom).prop("checked",response.data.deleteStatus===1);
-                        $(thisdom).prop("disabled",false);
-                        if (response.status===403){
-                            toastr.warning("操作失败！您所在的用户组没有此权限");
-                        }
-                        toastr.error("操作失败！错误代码及信息:"+response.status);
-                    })
-
-                });
+                // $("input[id$='_delStatus']").on('change',function () {
+                //     var thisdom=this;
+                //     $(thisdom).prop("disabled",true);
+                //     var uid=$(thisdom).attr('id').slice(0,-10);
+                //     var cbchecked=$(thisdom).is(":checked");
+                //     $http({
+                //         method: "POST",
+                //         url: BASE_URL+"resource/updateDeleteStatus.form",
+                //         headers : {
+                //             'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+                //         },
+                //         data:$.param({
+                //             id:uid,
+                //             deleteStatus: cbchecked?0:1
+                //         })
+                //     }).then(function (response) {
+                //         $(thisdom).attr("disabled",false);
+                //         toastr.success("修改逻辑删除状态成功！");
+                //
+                //     },function (response) {
+                //         $(thisdom).prop("checked",response.data.deleteStatus===1);
+                //         $(thisdom).prop("disabled",false);
+                //         if (response.status===403){
+                //             toastr.warning("操作失败！您所在的用户组没有此权限");
+                //         }
+                //         toastr.error("操作失败！错误代码及信息:"+response.status);
+                //     })
+                //
+                // });
                 var table = this;
                 setTimeout(function(){
                     styleCheckbox(table);
@@ -165,15 +165,37 @@ function sGridCtrl($scope,$state,$http) {
             viewicon : 'icon-zoom-in grey'
         },{},{},{})
             .navButtonAdd(pager_selector,{
+                title:"新建资源",
+                position:"last",
                 caption:"",
                 buttonicon:"icon-plus-sign purple",
                 onClickButton:function () {
-                    window.location.href="#!/resource/resourceAdd.html";
-                },
-                title:"新建资源",
-                position:"first"
+                    window.setTimeout(function () {
+                        $("div.tooltip[role='tooltip']").remove();
+                        window.location.href="#!/resource/resourceAdd.html";
+                    }, 0);
+                }
             })
             .navButtonAdd(pager_selector,{
+                title:"编辑资源",
+                position:"last",
+                caption:"",
+                buttonicon:"icon-pencil gray",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取资源");
+                        return;
+                    }
+                    window.setTimeout(function () {
+                        $("div.tooltip[role='tooltip']").remove();
+                        window.location.href="#!/resource/resourceAdd.html?edit=true&editId="+selid;
+                    }, 0);
+                }
+            })
+            .navButtonAdd(pager_selector,{
+                title:"删除资源",
+                position:"last",
                 caption:"",
                 buttonicon:"icon-trash red",
                 onClickButton:function () {
@@ -202,24 +224,8 @@ function sGridCtrl($scope,$state,$http) {
                             toastr.error("删除失败！错误代码及信息:"+response.status);
                         })
                     },selid)
-                },
-                title:"删除资源",
-                position:"first"
-            })
-            .navButtonAdd(pager_selector,{
-            caption:"",
-            buttonicon:"icon-pencil gray",
-            onClickButton:function () {
-                var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-                if (selid==null||selid===""){
-                    toastr.warning("未选取资源");
-                    return;
                 }
-                window.location.href="#!/resource/resourceAdd.html?edit=true&editId="+selid;
-            },
-            title:"编辑资源",
-            position:"first"
-        });
+            });
 
         function confirm(fun, params) {
             if ($("#myConfirm").length > 0) {

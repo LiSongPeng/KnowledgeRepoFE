@@ -13,7 +13,7 @@ function uGridCtrl($scope,$state,$http) {
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
         var grid_searcher ="#grid-search";
-        var colNames=['用户ID','用户名称','用户密码','用户描述','创建者','是否禁用','创建时间','最后一次登录时间'];
+        var colNames=['用户ID','用户名称','用户密码','用户描述','创建者','创建时间','最后一次登录时间'];
         var colModel=[
 //                {name:'edit',index:'',width:80, fixed:true, sortable:false, resize:false,
 //                    formatter: function (cellvalue,options,rowObject) {
@@ -32,33 +32,16 @@ function uGridCtrl($scope,$state,$http) {
                     }
                     return cellvalue.uName;
                 }},
-            {name:'deleteStatus',index:'deleteStatus',width:50,edittype:"checkbox",
-                formatter:function ( cellvalue, options, rowobject ) {
-                    var total="<label class='inline'>" +
-                        "<input type='checkbox' "+(cellvalue===0?"checked":"")+" value=0 offval=1 id='"+rowobject.id+"_delStatus' name='deleteStatus' " +
-                        "role='checkbox' class='ace ace-switch ace-switch-5'/>" +
-                        "<span class='lbl'></span>" +
-                        "</label>";
-                    return total;
-                }
-            //     formatter:function (cellvalue,options,rowObject) {
-            //         var color="",cev="未删除";
-            //         if (cellvalue===0){
-            //             color="red";
-            //             cev="已删除";
-            //         }
-            //         var total="<span style='color:"+color+"'>"+cev+"</span>"
+            // {name:'deleteStatus',index:'deleteStatus',width:50,edittype:"checkbox",
+            //     formatter:function ( cellvalue, options, rowobject ) {
+            //         var total="<label class='inline'>" +
+            //             "<input type='checkbox' "+(cellvalue===0?"checked":"")+" value=0 offval=1 id='"+rowobject.id+"_delStatus' name='deleteStatus' " +
+            //             "role='checkbox' class='ace ace-switch ace-switch-5'/>" +
+            //             "<span class='lbl'></span>" +
+            //             "</label>";
             //         return total;
-            //     },unformat: function (cellvalue,options,cell){
-            //     var dstsstr=cellvalue;
-            //     if (dstsstr==='已删除'){
-            //         return 0;
-            //     }else if(dstsstr==='未删除'){
-            //         return 1;
             //     }
-            //     return null;
-            // }
-            },
+            // },
             {name:'createTime',index:'createTime',width:110,editable:false,sorttype:"date"},
             {name:'uLastOnLine',index:'uLastOnLine',width:110,editable:false,sorttype:"date"}
         ];
@@ -116,35 +99,35 @@ function uGridCtrl($scope,$state,$http) {
             prmNames: prmNames,
             jsonReader: jsonReaderConfig,
             loadComplete : function() {
-                $("input[id$='_delStatus']").on('change',function () {
-                    var thisdom=this;
-                    $(thisdom).prop("disabled",true);
-                    var uid=$(thisdom).attr('id').slice(0,-10);
-                    var cbchecked=$(thisdom).is(":checked");
-                    $http({
-                        method: "POST",
-                        url: BASE_URL+"user/updateDeleteStatus.form",
-                        headers : {
-                            'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
-                        },
-                        data:$.param({
-                            id:uid,
-                            deleteStatus: cbchecked?0:1
-                        })
-                    }).then(function (response) {
-                        $(thisdom).attr("disabled",false);
-                        toastr.success("修改逻辑删除状态成功！");
-
-                    },function (response) {
-                        $(thisdom).prop("checked",response.data.deleteStatus===1);
-                        $(thisdom).prop("disabled",false);
-                        if (response.status===403){
-                            toastr.warning("操作失败！您所在的用户组没有此权限");
-                        }
-                        toastr.error("操作失败！错误代码及信息:"+response.status);
-                    })
-
-                });
+                // $("input[id$='_delStatus']").on('change',function () {
+                //     var thisdom=this;
+                //     $(thisdom).prop("disabled",true);
+                //     var uid=$(thisdom).attr('id').slice(0,-10);
+                //     var cbchecked=$(thisdom).is(":checked");
+                //     $http({
+                //         method: "POST",
+                //         url: BASE_URL+"user/updateDeleteStatus.form",
+                //         headers : {
+                //             'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+                //         },
+                //         data:$.param({
+                //             id:uid,
+                //             deleteStatus: cbchecked?0:1
+                //         })
+                //     }).then(function (response) {
+                //         $(thisdom).attr("disabled",false);
+                //         toastr.success("修改逻辑删除状态成功！");
+                //
+                //     },function (response) {
+                //         $(thisdom).prop("checked",response.data.deleteStatus===1);
+                //         $(thisdom).prop("disabled",false);
+                //         if (response.status===403){
+                //             toastr.warning("操作失败！您所在的用户组没有此权限");
+                //         }
+                //         toastr.error("操作失败！错误代码及信息:"+response.status);
+                //     })
+                //
+                // });
                 var table = this;
                 setTimeout(function(){
                     styleCheckbox(table);
@@ -174,32 +157,59 @@ function uGridCtrl($scope,$state,$http) {
             refreshicon : 'icon-refresh green',
             view: false,
             viewicon : 'icon-zoom-in grey'
-        },{},{},{})
+        },{},{},{},{},{})
             .navButtonAdd(pager_selector,{
+                title:"新建用户",
+                position:"last",
                 caption:"",
                 buttonicon:"icon-plus-sign purple",
                 onClickButton:function () {
-                    window.location.href="#!/user/userAdd.html";
-                },
-                title:"新建用户",
-                position:"first"
+                    window.setTimeout(
+                        function () {
+                            $("div.tooltip[role='tooltip']").remove();
+                            window.location.href="#!/user/userAdd.html"
+                        },
+                    0)
+                }
             })
-            // .navButtonAdd(pager_selector,{
-            //     caption:"",
-            //     buttonicon:"icon-stop red",
-            //     onClickButton:function () {
-            //         var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-            //         if (selid==null||selid===""){
-            //             toastr.warning("未选取用户");
-            //             return;
-            //         }
-            //         console.log(jQuery('#grid-table').jqGrid('getRowData',selid).deleteStatus);
-            //
-            //     },
-            //     title:"逻辑删除",
-            //     position:"first"
-            // })
             .navButtonAdd(pager_selector,{
+                title:"编辑用户",
+                position:"last",
+                caption:"",
+                buttonicon:"icon-pencil gray",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取用户");
+                        return;
+                    }
+                    window.setTimeout(function () {
+                        $("div.tooltip[role='tooltip']").remove();
+                        window.location.href="#!/user/userAdd.html?edit=true&editId="+selid;
+                    }, 0);
+
+                }
+            })
+            .navButtonAdd(pager_selector,{
+                title:"设置用户角色",
+                position:"last",
+                caption:"",
+                buttonicon:"icon-user brown",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取用户");
+                        return;
+                    }
+                    window.setTimeout(function () {
+                        $("div.tooltip[role='tooltip']").remove();
+                        window.location.href="#!/user/userRole.html?edit=true&editId="+selid;
+                    }, 0);
+                }
+            })
+            .navButtonAdd(pager_selector,{
+                title:"删除用户",
+                position:"last",
                 caption:"",
                 buttonicon:"icon-trash red",
                 onClickButton:function () {
@@ -228,37 +238,7 @@ function uGridCtrl($scope,$state,$http) {
                             toastr.error("删除失败！错误代码及信息:"+response.status);
                         })
                     },"是否确定要删除？",selid)
-                },
-                title:"删除用户",
-                position:"first"
-            })
-            .navButtonAdd(pager_selector,{
-                caption:"",
-                buttonicon:"icon-pencil gray",
-                onClickButton:function () {
-                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-                    if (selid==null||selid===""){
-                        toastr.warning("未选取用户");
-                        return;
-                    }
-                    window.location.href="#!/user/userAdd.html?edit=true&editId="+selid;
-                },
-                title:"编辑用户",
-                position:"first"
-            })
-            .navButtonAdd(pager_selector,{
-                caption:"",
-                buttonicon:"icon-user brown",
-                onClickButton:function () {
-                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
-                    if (selid==null||selid===""){
-                        toastr.warning("未选取用户");
-                        return;
-                    }
-                    window.location.href="#!/user/userRole.html?edit=true&editId="+selid;
-                },
-                title:"设置用户角色",
-                position:"first"
+                }
             });
 
 
@@ -269,6 +249,8 @@ function uGridCtrl($scope,$state,$http) {
                 name:'uName',
                 stype:'text'
             }],
+            searchButton:'查询',
+            clearButton:'清空',
             formtype: 'horizontal',
             autosearch: false,
             buttonclass: 'fm-button btn-purple',

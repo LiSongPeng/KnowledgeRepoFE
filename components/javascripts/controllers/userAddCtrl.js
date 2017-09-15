@@ -8,6 +8,82 @@ var userAdd=angular.module('userAdd',['globalconfig','ui.router']);
 // });
 userAdd.controller("userAddCtrl",userAddCtrl);
 function userAddCtrl ($scope,$http,$state,$location) {
+    (function($) {
+        //自定义表单验证规则
+        $.fn.bootstrapValidator.validators = {
+            confirm_pass : {
+                validate: function(validator, $field, options) {
+                    return $("#uPassword").val() === $field.val();
+                }
+            },
+            size_valid:{
+                validate: function (validator,$field,options) {
+                    var len=$field.val().length;
+                    if(len<options.minLen){
+                        return false;
+                    }
+                    if(len>options.maxLen){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+            }
+        };
+    }(window.jQuery));
+    $(function() {
+        // validate form
+        var tform = $("#userAddForm");
+        tform.bootstrapValidator({
+            submitButtons: null,
+            fields:{
+                notEmpty:{
+                    validate: function (validator, $field, options) {
+                        return !$field.val()===null||!"".equals==$field.val();
+                    }
+                },
+                uName:{
+                    enabled:true,
+                    message:'输入不合法',
+                    container: null,
+                    // 定义每个验证规则
+                    validators: {
+                        notEmpty: {message: '用户名不能为空'},
+                        size_valid: {minLen:1,maxLen:20,message: '用户名长度在6-50之间'}
+                    }
+                },
+                uPassword:{
+                    enabled:true,
+                    message:'输入不合法',
+                    validators:{
+                        notEmpty: {message: '密码不能为空'},
+                        size_valid: {minLen:6,maxLen:20,message: '密码长度在6-50之间'}
+                    }
+                },
+                confirmPassword:{
+                    enabled:true,
+                    message:'输入不合法',
+                    validators:{
+                        confirm_pass: {message: '两次输入密码不相等'}
+                    }
+                },
+                uDescription:{
+                    enabled:true,
+                    message:'输入不合法',
+                    validators:{
+                        size_valid: {minLen:0,maxLen:200,message: '描述长度不能超过200'}
+
+                    }
+                }
+            }
+        });
+        // 修复bootstrap validator重复向服务端提交bug
+        tform.on('success.form.bv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+        });
+
+    });
     $scope.user={};
     $scope.editflag=$location.search().edit||false;
     $scope.title="新建用户";
@@ -53,6 +129,10 @@ function userAddCtrl ($scope,$http,$state,$location) {
         });
     }
 
+    $scope.goBack= function () {
+        $state.go('用户管理');
+    };
+
     $scope.submitAdd=function () {
         $('#userAddForm').bootstrapValidator('validate');
        if (!$("#userAddForm").data("bootstrapValidator").isValid()){
@@ -77,7 +157,6 @@ function userAddCtrl ($scope,$http,$state,$location) {
                 'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
             },
             data:$.param({
-                createUserId:$scope.currUser.id,
                 id:$scope.user.id,
                 uName:$scope.user.uName,
                 uPassword:$scope.user.uPassword,
@@ -90,8 +169,12 @@ function userAddCtrl ($scope,$http,$state,$location) {
             }else{
                 toastr.success("创建用户成功");
             }
-            $state.go("用户列表");
+            $state.go("用户管理");
         },function (data) {
+            if(data.status=40011){
+                toastr.warning("用户名已存在");
+                return;
+            }
             if ($scope.editflag==="true") {
                 toastr.error("修改用户失败");
             }else{

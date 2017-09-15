@@ -16,6 +16,11 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
                     return $("#uPassword").val() === $field.val();
                 }
             },
+            notEmpty:{
+                validate: function (validator, $field, options) {
+                    return !$field.val()===null||!("".equals==$field.val());
+                }
+            },
             size_valid:{
                 validate: function (validator,$field,options) {
                     var len=$field.val().length;
@@ -33,9 +38,29 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
     }(window.jQuery));
     $(function() {
         // validate form
-        var tform = $("#userAddForm");
+        var tform = $("#resourceAddForm");
         tform.bootstrapValidator({
             submitButtons: null,
+            fields:{
+                sName:{
+                    enabled:true,
+                    message:'输入不合法',
+                    container: null,
+                    // 定义每个验证规则
+                    validators: {
+                        notEmpty: {message: '资源名不能为空'},
+                        size_valid: {minLen:0,maxLen:50,message: '资源名长度在6-50之间'}
+                    }
+                },
+                sDescription:{
+                    enabled:true,
+                    message:'输入不合法',
+                    validators:{
+                        size_valid: {minLen:0,maxLen:100,message: '描述长度不能超过100'}
+
+                    }
+                }
+            }
 
         });
 
@@ -111,10 +136,16 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
         });
     }
 
-
+    $scope.goBack= function () {
+        $state.go('用户管理');
+    };
 
     $scope.submitAdd=function () {
-
+        $('#resourceAddForm').bootstrapValidator('validate');
+        if (!$("#resourceAddForm").data("bootstrapValidator").isValid()){
+            toastr.warning("输入不合法");
+            return;
+        }
        var tourl="resource/resourceAdd/add.form";
        if ($scope.editflag==="true"){
            tourl="resource/resourceUpdate/update.form";
@@ -123,9 +154,9 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
         var sType=$('#sType').select2('data')[0];
         $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
         var postdata={
-            createUserId:$scope.currUser.id,
             id:$scope.resource.id,
             sName:$scope.resource.sName,
+            sIndex:$scope.resource.sIndex,
             sUrl:$scope.resource.sUrl,
             sType:sType.id,
             sIcon:$scope.resource.sIcon
@@ -148,6 +179,10 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
             }
             $state.go("资源管理");
         },function (data) {
+            if(data.status=40011){
+                toastr.warning("资源名已存在");
+                return;
+            }
             toastr.error("创建资源失败:"+data.status);
         });
     }

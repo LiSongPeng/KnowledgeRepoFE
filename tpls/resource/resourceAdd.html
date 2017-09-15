@@ -39,9 +39,7 @@
             margin-top: 10px;
             color: #888;
         }
-        .basic-grey input[type="text"],
-        .basic-grey input[type="password"],
-        .basic-grey input[type="email"], .basic-grey textarea, .basic-grey select {
+        .basic-grey .form-control {
             border: 1px solid #DADADA;
             color: #888;
             height: 30px;
@@ -103,13 +101,14 @@
     <div class="row">
     <div class="col-sm-12">
 
-    <form class="required-validate form-horizontal" id="userAddForm" ng-controller="resourceAddCtrl">
+    <form class="required-validate form-horizontal" id="resourceAddForm" ng-controller="resourceAddCtrl">
 
         <h1 ng-model="title"></h1>
         <div class="form-group">
             <label>
                 <span>资源名 :</span>
             </label>
+
             <input class="form-control " id="sName" type="text" ng-model="resource.sName" name="sName" />
         </div>
         <div class="form-group">
@@ -120,6 +119,13 @@
 
             </select>
         </div>
+        <div class="form-group">
+            <label>
+                <span>资源排序 :</span>
+            </label>
+            <input  class="form-control" type="number" min="0"  ng-model="resource.sIndex" id="sIndex" name="sIndex"/>
+        </div>
+
         <div class="form-group">
             <label>
                 <span>资源url :</span>
@@ -142,11 +148,13 @@
                 <option value="1">功能项</option>
             </select>
         </div>
-        <div class="pull-right" style="margin-right: 50px">
-            <input type="reset" class="button" id="reset" value="重置" />
-            <span>&nbsp;&nbsp;</span>
-            <input type="submit" class="button" id="submit" ng-click="submitAdd()" value="提交" />
+
+        <div style="margin-right: 40px">
+            <input type="button" class="button btn-default" id="back" ng-click="goBack()" value="返回" style="margin-left: 20px;text-shadow: 1px 1px 1px #7f7f7f;"/>
+            <input type="submit" class="button pull-right" id="submit" ng-click="submitAdd()" value="提交" />
+            <input type="reset" class="button pull-right" id="reset" value="重置" style="margin-right: 20px"/>
         </div>
+
     </form>
     </div>
 

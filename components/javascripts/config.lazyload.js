@@ -9,7 +9,7 @@ app.constant('Modules_Config', [
             "/stylesheets/ace/ace.min.css",
             "/stylesheets/ace/ace-rtl.min.css",
             "/stylesheets/ace/ace-my-skins.css",
-            "/javascripts/jquery-ui-1.10.3.full.min.js",
+            // "/javascripts/jquery-ui-1.10.3.full.min.js",
             "/plugins/jqGrid/js/jquery.jqGrid.min.js",
             "/plugins/jqGrid/js/grid.locale-cn.js",
             "/plugins/jqGrid/js/grid.addons.js"
