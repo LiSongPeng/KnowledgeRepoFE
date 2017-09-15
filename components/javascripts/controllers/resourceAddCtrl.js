@@ -18,7 +18,7 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
             },
             notEmpty:{
                 validate: function (validator, $field, options) {
-                    return !$field.val()===null||!("".equals==$field.val());
+                    return $field.val()!=null&&""!=$field.val();
                 }
             },
             size_valid:{
@@ -49,7 +49,7 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
                     // 定义每个验证规则
                     validators: {
                         notEmpty: {message: '资源名不能为空'},
-                        size_valid: {minLen:0,maxLen:50,message: '资源名长度在6-50之间'}
+                        size_valid: {minLen:1,maxLen:20,message: '资源名长度在1-20之间'}
                     }
                 },
                 sDescription:{
@@ -156,7 +156,7 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
         var postdata={
             id:$scope.resource.id,
             sName:$scope.resource.sName,
-            sIndex:$scope.resource.sIndex,
+            sIndex: ($scope.resource.sIndex===null||$scope.resource.sIndex==='')?0:$scope.resource.sIndex,
             sUrl:$scope.resource.sUrl,
             sType:sType.id,
             sIcon:$scope.resource.sIcon
@@ -179,7 +179,7 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
             }
             $state.go("资源管理");
         },function (data) {
-            if(data.status=40011){
+            if(data.status===40011){
                 toastr.warning("资源名已存在");
                 return;
             }

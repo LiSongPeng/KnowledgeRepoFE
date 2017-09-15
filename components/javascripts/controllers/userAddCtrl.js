@@ -11,6 +11,11 @@ function userAddCtrl ($scope,$http,$state,$location) {
     (function($) {
         //自定义表单验证规则
         $.fn.bootstrapValidator.validators = {
+            notEmpty:{
+                validate: function (validator, $field, options) {
+                    return $field.val()!=null&&""!=$field.val();
+                }
+            },
             confirm_pass : {
                 validate: function(validator, $field, options) {
                     return $("#uPassword").val() === $field.val();
@@ -37,11 +42,6 @@ function userAddCtrl ($scope,$http,$state,$location) {
         tform.bootstrapValidator({
             submitButtons: null,
             fields:{
-                notEmpty:{
-                    validate: function (validator, $field, options) {
-                        return !$field.val()===null||!"".equals==$field.val();
-                    }
-                },
                 uName:{
                     enabled:true,
                     message:'输入不合法',
@@ -49,7 +49,7 @@ function userAddCtrl ($scope,$http,$state,$location) {
                     // 定义每个验证规则
                     validators: {
                         notEmpty: {message: '用户名不能为空'},
-                        size_valid: {minLen:1,maxLen:20,message: '用户名长度在6-50之间'}
+                        size_valid: {minLen:1,maxLen:20,message: '用户名长度在1-20之间'}
                     }
                 },
                 uPassword:{
@@ -57,7 +57,7 @@ function userAddCtrl ($scope,$http,$state,$location) {
                     message:'输入不合法',
                     validators:{
                         notEmpty: {message: '密码不能为空'},
-                        size_valid: {minLen:6,maxLen:20,message: '密码长度在6-50之间'}
+                        size_valid: {minLen:6,maxLen:20,message: '密码长度在6-20之间'}
                     }
                 },
                 confirmPassword:{
@@ -72,7 +72,6 @@ function userAddCtrl ($scope,$http,$state,$location) {
                     message:'输入不合法',
                     validators:{
                         size_valid: {minLen:0,maxLen:200,message: '描述长度不能超过200'}
-
                     }
                 }
             }
@@ -171,7 +170,7 @@ function userAddCtrl ($scope,$http,$state,$location) {
             }
             $state.go("用户管理");
         },function (data) {
-            if(data.status=40011){
+            if(data.status===40011){
                 toastr.warning("用户名已存在");
                 return;
             }

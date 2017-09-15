@@ -19,7 +19,7 @@ function roleAddCtrl ($scope,$http,$state,$location) {
             },
             notEmpty:{
                 validate: function (validator, $field, options) {
-                    return !$field.val()===null||!"".equals==$field.val();
+                    return $field.val()!=null&&""!=$field.val();
                 }
             },
             size_valid:{
@@ -50,7 +50,7 @@ function roleAddCtrl ($scope,$http,$state,$location) {
                     // 定义每个验证规则
                     validators: {
                         notEmpty: {message: '角色名不能为空'},
-                        size_valid: {minLen:0,maxLen:50,message: '角色名长度在6-50之间'}
+                        size_valid: {minLen:1,maxLen:20,message: '角色名长度在1-20之间'}
                     }
                 },
                 rDescription:{
@@ -151,7 +151,7 @@ function roleAddCtrl ($scope,$http,$state,$location) {
             $state.go("角色管理");
         },function (data) {
             $scope.role={};
-            if(data.status=40011){
+            if(data.status===40011){
                 toastr.warning("角色名已存在");
                 return;
             }
