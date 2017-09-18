@@ -79,7 +79,7 @@ function uGridCtrl($scope,$state,$http) {
             colModel: colModel,
             viewrecords: true,
             rowNum: 15,
-            rowList: [10, 15, 20, 25, 30],
+            rowList: [10, 20, 30],
             pager: pager_selector,
             multiselect: false,
             multiboxonly: true,
@@ -125,6 +125,7 @@ function uGridCtrl($scope,$state,$http) {
                     updateActionIcons(table);
                     updatePagerIcons(table);
                     enableTooltips(table);
+                    $("#sg_rName").attr('placeholder','角色名称')
                 }, 0);
             },
             editurl:BASE_URL+"role/delete.form"
@@ -228,7 +229,7 @@ function uGridCtrl($scope,$state,$http) {
         jQuery(grid_searcher).filterGrid(grid_selector,{
 //                gridModel: true,
             filterModel:[{
-                label:'角色名称',
+                label:'',
                 name:'rName',
                 stype:'text'
             }],
