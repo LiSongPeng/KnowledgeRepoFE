@@ -44,10 +44,10 @@ function knlgList2Ctrl($scope) {
             colNames: ['知识id', '知识标题', '使用次数', '最后一次使用时间', '审批状态', '审批人', '审批时间', '审批意见', '创建人', '创建时间'],
             colModel: [
 
-                {name: "id", index: "id", hidden: true, width: 100, editable: false},
-                {name: "kTitle", index: "kTitle", width: 100, editable: true},
+                {name: "id", index: "id", hidden: true, sortable:false,width: 100, editable: false},
+                {name: "kTitle", index: "kTitle", sortable:true,width: 100, editable: true},
                 //{name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
-                {name: "kUseCount", index: "kUseCount", width: 100, editable: true},
+                {name: "kUseCount", index: "kUseCount",sortable:true, width: 100, editable: true},
                 {
                     name: "kUserTimeLast",
                     index: "kUserTimeLast",
@@ -63,13 +63,14 @@ function knlgList2Ctrl($scope) {
                         }
                     }
                 },
-                {name: "kApprStatus", index: "kApprStatus", width: 150, editable: true},
-                {name: "kApprUserId", index: "kApprUserId", width: 150, editable: true},
+                {name: "kApprStatus", index: "kApprStatus", sortable:false,width: 150, editable: true},
+                {name: "kApprUserId", index: "kApprUserId",sortable:false, width: 150, editable: true},
                 {
                     name: "kApprTime",
                     index: "kApprTime",
                     width: 220,
                     editable: true,
+                    sortable:false,
                     formatter: function (cellvalue, options, row) {
                         if(cellvalue==undefined){
                             return "";
@@ -78,12 +79,13 @@ function knlgList2Ctrl($scope) {
                         }
                     }
                 },
-                {name: "kApprMemo", index: "kApprMemo", width: 150, editable: true},
-                {name: "createUserId", index: "createUserId", width: 150, editable: true},
+                {name: "kApprMemo", index: "kApprMemo", width: 150, sortable:false,editable: true},
+                {name: "createUserId", index: "createUserId",sortable:false, width: 150, editable: true},
                 {
                     name: "createTime",
                     index: "createTime",
                     width: 220,
+                    sortable:true,
                     editable: true,
                     formatter: function (cellvalue, options, row) {
                         return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
@@ -97,8 +99,8 @@ function knlgList2Ctrl($scope) {
             altRows: true, //设置为交替行表格,默认为false
             multiselect: true, //是否多选
             multiboxonly: true, //是否只能点击复选框多选
-            //sortname:'id',//默认的排序列名
-            //sortorder:'asc',//默认的排序方式（asc升序，desc降序）
+            sortname:'createTime',//默认的排序列名
+            sortorder:'desc',//默认的排序方式（asc升序，desc降序）
             caption: "知识管理", //表名
             autowidth: true, //自动宽
 //
@@ -194,12 +196,13 @@ function knlgList2Ctrl($scope) {
                         confirm(function (selid) {
                         }, selid)
                     }else {
+                        $("div.tooltip[role='tooltip']").remove();
                         location.href = "home.html#!/knowledgeRepo/knowledgeApprova.html?id=" + selid
                     }
 
                 },
                 title: "知识审批",
-                position: "first"
+
             });
 
 
