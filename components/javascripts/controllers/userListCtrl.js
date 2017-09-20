@@ -89,7 +89,7 @@ function uGridCtrl($scope,$state,$http) {
             colModel: colModel,
             viewrecords: true,
             rowNum: 15,
-            rowList: [10, 15, 20, 25, 30],
+            rowList: [10, 20, 30],
             pager: pager_selector,
             multiselect: false,
             multiboxonly: true,
@@ -135,6 +135,7 @@ function uGridCtrl($scope,$state,$http) {
                     updateActionIcons(table);
                     updatePagerIcons(table);
                     enableTooltips(table);
+                    $("#sg_uName").attr('placeholder','用户名称');
                 }, 0);
             },
             // loadBeforeSend:  function(jqXHR, settings) {
@@ -245,7 +246,7 @@ function uGridCtrl($scope,$state,$http) {
         jQuery(grid_searcher).filterGrid(grid_selector,{
 //                gridModel: true,
             filterModel:[{
-                label:'用户名称',
+                label:'',
                 name:'uName',
                 stype:'text'
             }],

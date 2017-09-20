@@ -137,6 +137,7 @@ function knlgListCtrl($scope ) {
                     updateActionIcons(table);
                     updatePagerIcons(table);
                     enableTooltips(table);
+                    $("#sg_kTitle").attr("placeholder","知识标题");
                 }, 0);
             },
 
@@ -281,7 +282,7 @@ function knlgListCtrl($scope ) {
         jQuery(grid_searcher).filterGrid(grid_selector,{
 //                gridModel: true,
             filterModel:[{
-                label:'知识标题',
+                label:'',
                 name:'kTitle',
                 stype:'text'
             }],
