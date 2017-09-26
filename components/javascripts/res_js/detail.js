@@ -6,6 +6,9 @@ function getParameter(name) {
 }
 
 var detailController = detail.controller("detailController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
+    toastr.options = {
+        "positionClass": "toast-top-center",
+    }
     var detailId = getParameter("detailId");
     if (!detailId) {
         toastr.error("没有输入查询的知识ID");
