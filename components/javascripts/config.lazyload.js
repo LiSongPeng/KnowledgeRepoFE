@@ -27,7 +27,8 @@ app.constant('Modules_Config', [
         serie: true,
         files: [
             "/plugins/toastr/toastr.css",
-            "/plugins/toastr/toastr.min.js"
+            "/plugins/toastr/toastr.min.js",
+            "/plugins/toastr/toastrSetting.js"
         ]
     }, {
         name: 'jBox',
