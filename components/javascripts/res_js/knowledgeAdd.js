@@ -23,14 +23,29 @@ editor1.customConfig.menus = [
 
     'undo',  // 撤销
     'redo'  // 重复
-]
+];
+    editor1.customConfig.zIndex = 100;
+    editor1.customConfig.pasteFilterStyle = true;
 
-editor1.create()
+    editor1.customConfig.onchange = function (html) {
+        if(editor1.txt.text().length>100){
+
+            toastr.warning("您输入的字符不应该大于100个！！");
+            toastr.warning("asfdsdrfsdfg");
+            alert(editor1.txt.html());
+            alert(editor1.txt.text());
+            alert(editor1.txt.text().length);
+            //confirm3();
+
+        }
+
+    };
+editor1.create();
 
 document.getElementById('submit').addEventListener('click', function () {
     // document.getElementById("kAnswer").value=editor1.txt.text();  //获取纯文本
     document.getElementById("kAnswer").value=editor1.txt.html();       //获取带格式的文本
-
+    //alert(editor1.txt.html());
 
 }, false)
 
@@ -41,18 +56,22 @@ document.getElementById('submit').addEventListener('click', function () {
 
 
     $("#knowledge").submit(function(){
-
+        alert(editor1.txt.text().length);
 
         if(document.getElementById("kTitle").value.trim()=="") {
-            confirm();
+            //confirm();
+            toastr.warning("知识标题是必填项！！");
+            return false;
+        }
+        if(editor1.txt.text().length>117){
+            confirm3();
             return false;
         }
 
 
-
         var data = $(this).serialize(); //序列化表单数据
         $.ajax({
-            type: "GET",
+            type: "post",
             url: BASE_URL+"kno/addKnowledge.form",
             data:data,
             headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
@@ -151,6 +170,38 @@ $("#back").click(function () {
             $("#myConfirm").modal("hide");
             editor1.$textElem.attr('contenteditable', true);
             location.href="#!/knowledgeRepo/knowledgeList.html";
+
+        });
+    }
+
+
+    function confirm3() {
+        if ($("#myConfirm").length > 0) {
+            $("#myConfirm").remove();
+        }
+
+
+        var html = "<div class='modal fade' id='myConfirm' >"
+            + "<div class='modal-dialog' style='z-index:2700; margin-top:30px; width:400px; '>"
+            + "<div class='modal-content'>"
+            + "<div class='modal-header'  style='font-size:16px; '>"
+            + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+            + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+            + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+            + "您输入的字数超过限制！！(最多不超过100个字符)"
+            + "</div>"
+            + "<div class='modal-footer ' style=''>"
+            + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+
+            + "</div>" + "</div></div></div>";
+        $("body").append(html);
+        editor1.$textElem.attr('contenteditable', false);
+        $("#myConfirm").modal("show");
+
+        $("#confirmOk").on("click", function () {
+            $("#myConfirm").modal("hide");
+            editor1.$textElem.attr('contenteditable', true);
+            location.href="#!/knowledgeRepo/knowledgeAdd.html";
 
         });
     }

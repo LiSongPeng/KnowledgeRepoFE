@@ -131,6 +131,7 @@
             <!--<textarea id="kAnswer" name="kAnswer" placeholder="填写知识解答"></textarea>-->
             <input id="kAnswer"  name="kAnswer" style="display:none"/>
             <div id="div1" class="text">
+
                 <p id="aa"></p>
             </div>
 
@@ -241,7 +242,8 @@
         'undo',  // 撤销
         'redo'  // 重复
     ];
-
+    editor1.customConfig.zIndex = 100;
+    editor1.customConfig.pasteFilterStyle = true;
     editor1.create();
 
     document.getElementById('submit').addEventListener('click', function () {

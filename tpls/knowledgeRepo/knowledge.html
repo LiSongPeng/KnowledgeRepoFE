@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <style type="text/css">
+        .basic-grey {
+            margin-left: auto;
+            margin-right: auto;
+
+            background: #F7F7F7;
+            padding: 25px 15px 25px 10px;
+            font: 12px Georgia, "Times New Roman", Times, serif;
+            color: #888;
+            text-shadow: 1px 1px 1px #FFF;
+            border: 1px solid #E4E4E4;
+        }
+
+        .text {
+            margin-left: auto;
+            margin-right: auto;
+
+            background: #F7F7F7;
+            padding: 40px 15px 25px 10px;
+            font: 12px Georgia, "Times New Roman", Times, serif;
+            color: #888;
+            text-shadow: 1px 1px 1px #FFF;
+
+        }
+
+        .basic-grey h1 {
+            font-size: 25px;
+            padding: 0px 0px 10px 40px;
+            display: block;
+            border-bottom: 1px solid #E4E4E4;
+            margin: -10px -15px 30px -10px;;
+            color: #888;
+        }
+
+        .basic-grey h1 > span {
+            display: block;
+            font-size: 11px;
+        }
+
+        .basic-grey label {
+            display: block;
+            margin: 0px;
+        }
+
+        .basic-grey label > span {
+            float: left;
+            width: 10%;
+            text-align: right;
+            padding-right: 10px;
+            margin-top: 10px;
+            color: #888;
+        }
+
+        .basic-grey input[type="text"], .basic-grey input[type="createUserId"], .basic-grey textarea, .basic-grey select {
+            border: 1px solid #DADADA;
+            color: #888;
+            height: 30px;
+            margin-bottom: 16px;
+            margin-right: 6px;
+            margin-top: 30px;
+            outline: 0 none;
+            padding: 3px 3px 3px 5px;
+            width: 50%;
+            font-size: 12px;
+            line-height: 15px;
+            box-shadow: inset 0px 1px 4px #ECECEC;
+            -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+            -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+        }
+
+        .basic-grey textarea {
+            padding: 5px 3px 3px 5px;
+        }
+
+        .basic-grey select {
+            background: #FFF no-repeat right;
+            background: #FFF no-repeat right;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 0.01px;
+            text-overflow: '';
+            width: 70%;
+            height: 35px;
+            line-height: 25px;
+        }
+
+        .basic-grey textarea {
+            height: 100px;
+        }
+
+        .basic-grey .button {
+            background: #E27575;
+            border: none;
+            padding: 10px 25px 10px 25px;
+            color: #FFF;
+            box-shadow: 1px 1px 5px #B6B6B6;
+            border-radius: 3px;
+            text-shadow: 1px 1px 1px #9E3F3F;
+            cursor: pointer;
+        }
+
+        .basic-grey .button:hover {
+            background: #CF7A7A
+        }
+
+        #message {
+            width: 70%;
+
+        }
+
+        span {
+            font-size: 16px;
+
+        }
+
+        table, td {
+            border: 0px solid black;
+            font-size: 16px;
+            height: 50px;
+            width: auto;
+
+        }
+
+        /*#div2{*/
+        /*high: 50px;*/
+        /*width: 200px;*/
+
+        /*}*/
+    </style>
+
+    <!--<script src="/javascripts/wangEditor.min.js"></script>-->
+    <!--<script src="/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>-->
+    <!--<script src="../../components/javascripts/res_js/knowledgeList.js"></script>-->
+</head>
+<body>
+<div class="basic-grey">
+    <form method="post" class="STYLE-NAME" id="knowledge">
+        <h1>知识详情
+            <!--<span>Please fill all the texts in the fields.</span>-->
+        </h1>
+        <input id="id" name="id" style="display:none"/>
+
+        <div id="message">
+
+            <table>
+                <tr>
+                    <td style="width: 100px">知识标题：</td>
+                    <td><span id="kTitle"></span></td>
+                </tr>
+
+                </tr>
+
+                <td>使用次数：</td>
+                <td><span id="kUseCount"></span></td>
+                </tr>
+
+                <tr>
+                    <td>知识解答：
+                    </td>
+                    <td></td>
+
+                <tr>
+
+
+                <tr>
+                <td></td>
+                    <td>
+                        <p id="aa"></p>
+                    </td>
+
+
+            </table>
+
+
+        </div>
+
+
+        <!--<label>-->
+        <!--<span>最后一次使用时间:</span>-->
+        <!--<span id="kUseTimeLast"></span>-->
+        <!--</label>-->
+
+        <label>
+            <!--<span>审批人 :</span>-->
+            <input id="kApprUserId" type="text" name="kApprUserId" style="display:none" value="{{currUser.id}}"/>
+        </label>
+
+
+        <!--<label>-->
+        <!--<span>创建时间 :</span>-->
+        <!--<input id="createTime" type="datetime-local" name="createTime" placeholder="2015/03/27 10:41" />-->
+        <!--</label>-->
+
+
+        <div class="main-container" id="main">
+
+            <table id="grid-table"></table>
+
+        </div>
+
+
+        <!--<label>-->
+            <!--<span>审批意见 :</span>-->
+            <!--<textarea id="kApprMemo" name="kApprMemo" placeholder="填写审批意见(最多100个字符)"  maxlength="100"></textarea>-->
+            <!--&lt;!&ndash;<input id="kApprMemo" name="kApprMemo" style="display:none"/>&ndash;&gt;-->
+            <!--<input id="button" name="button" style="display:none"/>-->
+            <!--&lt;!&ndash;<div id="div1" class="text">&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+        <!--</label>-->
+
+        <label>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <div class="pull-right" style="margin-right: 50px">
+        <input type="submit" class="button" id="agree" value="显示审批记录"/>
+        <!--<input type="submit" class="button" id="disagree" value="不通过"/>-->
+        <input type="button" class="button" id="back" value="返回"/>
+        </div>
+        </label>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var str = location.href; //取得整个地址栏
+    var num = str.indexOf("?");
+    str = str.substr(num + 1);
+    $(function () {
+
+
+        var url = BASE_URL + "kno/queryKnowledgeById.form?" + str;
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+            success: function (data) {
+
+                document.getElementById("kTitle").innerText = data.kTitle;
+                document.getElementById("aa").innerHTML = data.kAnswer;
+                document.getElementById("kUseCount").innerText = data.kUseCount;
+                var msg = '';
+
+                msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+            }
+        });
+
+
+    });
+
+
+    $(function () {
+
+        var button;
+        $("#agree").click(function () {
+            button = document.getElementById("agree").value
+
+
+        });
+        $("#disagree").click(function () {
+            button = document.getElementById("disagree").value
+
+
+        });
+        $("#knowledge").submit(function () {
+
+            if(button=="不通过"){
+                if(document.getElementById("kApprMemo").value.trim()==""){
+                    confirm();
+                    return false;
+                }
+
+
+            }
+
+
+
+            var str = location.href; //取得整个地址栏
+            var num = str.indexOf("?");
+            str = str.substr(num + 4);
+            document.getElementById("id").value = str;
+            document.getElementById("button").value = button;
+
+
+
+            var data = $(this).serialize(); //序列化表单数据
+
+            $.ajax({
+                type: "GET",
+                url: BASE_URL + "kno/knowledgeApprova.form",
+                data: data,
+                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                success: function (json) {
+                    var msg = '';
+
+                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
+                    confirm1();
+
+
+
+
+                }
+            });
+
+
+        });
+    });
+    $("#back").click(function () {
+            location.href = "#!/knowledgeRepo/knowledgeList.html";
+        }
+    )
+
+
+    function confirm() {
+        if ($("#myConfirm").length > 0) {
+            $("#myConfirm").remove();
+        }
+        var html = "<div class='modal fade' id='myConfirm' >"
+            + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+            + "<div class='modal-content'>"
+            + "<div class='modal-header'  style='font-size:16px; '>"
+            + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+            + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+            + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+            + "不通过时审批意见为必填项！！"
+            + "</div>"
+            + "<div class='modal-footer ' style=''>"
+            + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+
+            + "</div>" + "</div></div></div>";
+        $("body").append(html);
+
+        $("#myConfirm").modal("show");
+
+        $("#confirmOk").on("click", function () {
+            $("#myConfirm").modal("hide");
+
+        });
+    }
+
+
+    function confirm1() {
+        if ($("#myConfirm").length > 0) {
+            $("#myConfirm").remove();
+        }
+        var html = "<div class='modal fade' id='myConfirm' >"
+            + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+            + "<div class='modal-content'>"
+            + "<div class='modal-header'  style='font-size:16px; '>"
+            + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+            + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+            + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+            + "审批成功！"
+            + "</div>"
+            + "<div class='modal-footer ' style=''>"
+            + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+
+            + "</div>" + "</div></div></div>";
+        $("body").append(html);
+
+        $("#myConfirm").modal("show");
+
+        $("#confirmOk").on("click", function () {
+            $("#myConfirm").modal("hide");
+            location.href = "#!/knowledgeRepo/knowledgeList2.html";
+        });
+    }
+
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+

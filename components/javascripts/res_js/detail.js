@@ -31,12 +31,14 @@ var detailController = detail.controller("detailController", ["$scope", "$http",
     }
     $http({
         method: "GET",
-        url: BASE_URL+"repo/getKnowledgeDetail.form?id=" + detailId,
+        url: BASE_URL + "repo/getKnowledgeDetail.form?id=" + detailId,
     }).then(function successCallback(response) {
         if (response.data.flag == 200) {
             $scope.response = response.data.data;
             $scope.response.createTime = new Date($scope.response.createTime).Format("yyyy-MM-dd hh:mm:ss");
-            $scope.response.kApprTime = new Date($scope.response.kApprTime).Format("yyyy-MM-dd hh:mm:ss");
+            if ($scope.response.kApprUserId)
+                $scope.response.kApprTime = new Date($scope.response.kApprTime).Format("yyyy-MM-dd hh:mm:ss");
+            else $scope.response.kApprTime = "";
         } else {
             toastr.info("未查找到结果");
         }

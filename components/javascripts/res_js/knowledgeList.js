@@ -1,5 +1,6 @@
 
 //当 datatype 为"local" 时需填写
+
 var knlgList=angular.module('knlgList',['globalconfig',['jqGrid']]);
 
 knlgList.controller('knlgListCtrl',knlgListCtrl);
@@ -61,7 +62,9 @@ function knlgListCtrl($scope ) {
                         if(cellvalue==undefined){
                             return "";
                         }else{
-                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+
+                            return new Date(cellvalue).Format("yyyy-MM-dd hh:mm:ss");
+                            //return new Date(cellvalue).toLocaleString()
                         }
 
 
@@ -80,7 +83,7 @@ function knlgListCtrl($scope ) {
                         if(cellvalue==undefined){
                             return "";
                         }else{
-                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+                            return new Date(cellvalue).Format("yyyy-MM-dd hh:mm:ss");
                         }
                     }
                 },
@@ -94,7 +97,7 @@ function knlgListCtrl($scope ) {
                     sortable:true,
                     search:false,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+                        return new Date(cellvalue).Format("yyyy-MM-dd hh:mm:ss");
                     }
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
@@ -208,6 +211,23 @@ function knlgListCtrl($scope ) {
     })
             .navButtonAdd(pager_selector, {
                 caption: "",
+                buttonicon: "icon-list blue",
+                onClickButton: function () {
+
+                    var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
+                    if (selid == null || selid === "") {
+                       toastr.warning("请选择要查看的知识！！");
+                    }else {
+                        $("div.tooltip[role='tooltip']").remove();
+                        location.href = "home.html#!/knowledgeRepo/knowledge.html?id=" + selid
+                    }
+
+                },
+                title: "知识详情"
+
+            }, {})
+            .navButtonAdd(pager_selector, {
+                caption: "",
                 buttonicon: "icon-plus-sign purple",
                 onClickButton: function () {
                     $("div.tooltip[role='tooltip']").remove();
@@ -232,9 +252,11 @@ function knlgListCtrl($scope ) {
                     }
 
                 },
-                title: "知识修改",
+                title: "知识修改"
 
-            }, {}).navButtonAdd(pager_selector, {
+            }, {})
+
+            .navButtonAdd(pager_selector, {
             caption: "",
             buttonicon: "icon-trash red",
             onClickButton: function () {
@@ -266,7 +288,7 @@ function knlgListCtrl($scope ) {
                 }, selid)
             },
             title: "删除资源",
-            position: "first"
+            position: "last"
         });
 
 
@@ -286,13 +308,14 @@ function knlgListCtrl($scope ) {
                 name:'kTitle',
                 stype:'text'
             }],
-            searchButton:"搜索",
+            searchButton:"查询",
+            clearButton:"清空",
             formtype: 'horizontal',
             url: BASE_URL + "kno/search.form",
             autosearch: false,
             buttonclass: 'fm-button btn-purple',
             enableSearch: true,
-           // enableClear: true,
+            enableClear: true,
             // Find: "查找",
             // //
             // Clear: "重置"
@@ -481,4 +504,20 @@ function knlgListCtrl($scope ) {
 
 
     });
-};
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+
+}

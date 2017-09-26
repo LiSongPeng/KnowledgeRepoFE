@@ -49,6 +49,17 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
 
         })
 
+        .state("知识详情",{
+            url:"/knowledgeRepo/knowledge.html",
+            templateUrl:"knowledgeRepo/knowledge.html",
+            resolve:{
+                // deps:function ($ocLazyLoad) {
+                //     return $ocLazyLoad.load(["res_knowledgeEdit"]);
+                // }
+            }
+
+        })
+
         .state("知识审批批",{
             url:"/knowledgeRepo/knowledgeApprova.html",
             templateUrl:"knowledgeRepo/knowledgeApprova.html",

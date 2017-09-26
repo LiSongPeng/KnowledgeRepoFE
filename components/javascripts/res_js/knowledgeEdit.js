@@ -97,7 +97,7 @@ function knlgEditCtrl($scope) {
         'undo',  // 撤销
         'redo'  // 重复
     ];
-
+    editor1.customConfig.zIndex = 100;
     editor1.create();
 
     document.getElementById('submit').addEventListener('click', function () {

@@ -58,7 +58,7 @@ function knlgList2Ctrl($scope) {
                         if(cellvalue==undefined){
                             return "";
                         }else{
-                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+                            return new Date(cellvalue).Format("yyyy-MM-dd hh:mm:ss");
 
                         }
                     }
@@ -75,7 +75,7 @@ function knlgList2Ctrl($scope) {
                         if(cellvalue==undefined){
                             return "";
                         }else{
-                            return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+                            return new Date(cellvalue).Format("yyyy-MM-dd hh:mm:ss");
                         }
                     }
                 },
@@ -88,7 +88,7 @@ function knlgList2Ctrl($scope) {
                     sortable:true,
                     editable: true,
                     formatter: function (cellvalue, options, row) {
-                        return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
+                        return new Date(cellvalue).Format("yyyy-MM-dd hh:mm:ss");
                     }
                 }],
             viewrecords: true, //是否在浏览导航栏显示记录总数
@@ -189,7 +189,7 @@ function knlgList2Ctrl($scope) {
             // }, {});
             .navButtonAdd(pager_selector, {
                 caption: "",
-                buttonicon: "icon-pencil gray",
+                buttonicon: "icon-ok gray",
                 onClickButton: function () {
 
                     var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
@@ -246,13 +246,14 @@ function knlgList2Ctrl($scope) {
                 name:'kTitle',
                 stype:'text'
             }],
-            searchButton:"搜索",
+            searchButton:"查询",
+            clearButton:"清空",
             formtype: 'horizontal',
             url: BASE_URL + "kno/search.form",
             autosearch: false,
             buttonclass: 'fm-button btn-purple',
             enableSearch: true,
-            // enableClear: true,
+            enableClear: true,
             // Find: "查找",
             // //
             // Clear: "重置"
@@ -352,4 +353,21 @@ function knlgList2Ctrl($scope) {
 
 
     });
-};
+
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+
+}
