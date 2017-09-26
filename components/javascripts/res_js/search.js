@@ -1,5 +1,8 @@
 var search = angular.module("search", ["globalconfig"]);
 search.controller("searchController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
+    toastr.options = {
+        "positionClass": "toast-top-center",
+    }
     $scope.displayResult = false;
     $scope.response = {
         data: {
