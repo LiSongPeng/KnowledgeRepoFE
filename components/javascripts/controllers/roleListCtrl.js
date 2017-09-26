@@ -54,7 +54,7 @@ function uGridCtrl($scope,$state,$http) {
         var jsonReaderConfig={
             root: "content",   // json中代表实际模型数据的入口
             page: "currentPage",   // json中代表当前页码的数据
-            total: "totalPage", // json中代表页码总数的数据
+            total: "totalPages", // json中代表页码总数的数据
             records: "totalCounts", // json中代表数据行总数的数据
             cell: "cell",
             id: "id",
@@ -77,8 +77,10 @@ function uGridCtrl($scope,$state,$http) {
             height: 500,
             colNames: colNames,
             colModel: colModel,
+            sortname: 'createTime',
+            sortorder: 'desc',
             viewrecords: true,
-            rowNum: 15,
+            rowNum: 10,
             rowList: [10, 20, 30],
             pager: pager_selector,
             multiselect: false,

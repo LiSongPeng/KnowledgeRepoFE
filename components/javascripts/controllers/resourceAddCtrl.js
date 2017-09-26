@@ -75,6 +75,7 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
     });
 
     $scope.resource={};
+    $scope.resource.sIndex=0;
     $scope.editflag=$location.search().edit||false;
     $scope.title="新建资源";
     if ($scope.editflag==="true"||$scope.editflag===true){
@@ -137,7 +138,7 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
     }
 
     $scope.goBack= function () {
-        $state.go('用户管理');
+        $state.go('资源管理');
     };
 
     $scope.submitAdd=function () {
@@ -152,7 +153,10 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
        }
         var sparentid=$('#sParentId').select2('data')[0];
         var sType=$('#sType').select2('data')[0];
-        $scope.currUser=JSON.parse(window.sessionStorage.getItem("currUser"));
+        if ($scope.resource.sIndex===undefined||$scope.resource.sIndex===''||$scope.resource.sIndex===null){
+            toastr.warning("请输入资源排序的值");
+            return;
+        }
         var postdata={
             id:$scope.resource.id,
             sName:$scope.resource.sName,

@@ -45,9 +45,9 @@ function knlgListCtrl($scope ) {
             colModel: [
 
                 {name: "id", index: "id", hidden: true, width: 100, editable: false,search:false},
-                {name: "kTitle", index: "kTitle", sortable:false,width: 100, editable: true},
+                {name: "kTitle", index: "kTitle",width: 100, editable: true},
                 //{name: "kAnswer", index: "kAnswer", width: 170, sorttype: "double", editable: true},
-                {name: "kUseCount", index: "kUseCount",sortable:false, width: 100, editable: true,search:false},
+                {name: "kUseCount", index: "kUseCount",width: 100, editable: true,sortable:true,search:true},
                 {
                     name: "kUserTimeLast",
                     index: "kUserTimeLast",
@@ -91,7 +91,7 @@ function knlgListCtrl($scope ) {
                     index: "createTime",
                     width: 220,
                     editable: true,
-                    sortable:false,
+                    sortable:true,
                     search:false,
                     formatter: function (cellvalue, options, row) {
                         return new Date(cellvalue).toLocaleString('chinese',{hour12:false})
@@ -105,9 +105,11 @@ function knlgListCtrl($scope ) {
             altRows: true, //设置为交替行表格,默认为false
             multiselect: true, //是否多选
             multiboxonly: true, //是否只能点击复选框多选
-            sortable:false,
-            // sortname:'kTitle',//默认的排序列名
-          //  sortorder:'asc',//默认的排序方式（asc升序，desc降序）
+           // multiSort: true,
+
+
+             sortname:'createTime',//默认的排序列名
+            sortorder:'desc',//默认的排序方式（asc升序，desc降序）
             caption: "知识管理", //表名
             autowidth: true, //自动宽
 //
@@ -124,6 +126,8 @@ function knlgListCtrl($scope ) {
                 page: "currentPage",
                 total: "totalPages",
                 records: "totalCounts"
+                // sord:"sord",
+                // sidx:"sidx"
             },
             loadComplete: function () {
                 var table = this;
@@ -206,11 +210,11 @@ function knlgListCtrl($scope ) {
                 caption: "",
                 buttonicon: "icon-plus-sign purple",
                 onClickButton: function () {
-
+                    $("div.tooltip[role='tooltip']").remove();
                     location.href = "home.html#!/knowledgeRepo/knowledgeAdd.html"
                 },
                 title:"知识添加",
-                position: "first"
+
             }, {})
 
             .navButtonAdd(pager_selector, {
@@ -223,19 +227,20 @@ function knlgListCtrl($scope ) {
                         confirm2(function (selid) {
                         }, selid)
                     }else {
+                        $("div.tooltip[role='tooltip']").remove();
                         location.href = "home.html#!/knowledgeRepo/knowledgeEdit.html?id=" + selid
                     }
 
                 },
-                title: "知识审批",
-                position: "first"
+                title: "知识修改",
+
             }, {}).navButtonAdd(pager_selector, {
             caption: "",
             buttonicon: "icon-trash red",
             onClickButton: function () {
                 var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
-                if (selid == null || selid === "") {
-                    // toastr.warning("未选取知识");
+                if (selid == null || selid == "") {
+                    confirm3()
                     return;
                 }
                 confirm(function (selid) {
@@ -348,32 +353,32 @@ function knlgListCtrl($scope ) {
             });
         }
 
-        // function confirm(fun, params) {
-        //     if ($("#myConfirm").length > 0) {
-        //         $("#myConfirm").remove();
-        //     }
-        //     var html = "<div class='modal fade' id='myConfirm' >"
-        //         + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
-        //         + "<div class='modal-content'>"
-        //         + "<div class='modal-header'  style='font-size:16px; '>"
-        //         + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
-        //         + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
-        //         + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
-        //         + "是否确定要删除？"
-        //         + "</div>"
-        //         + "<div class='modal-footer ' style=''>"
-        //         + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
-        //         + "<button class='btn btn-info' data-dismiss='modal'>取消</button>"
-        //         + "</div>" + "</div></div></div>";
-        //     $("body").append(html);
-        //
-        //     $("#myConfirm").modal("show");
-        //
-        //     $("#confirmOk").on("click", function () {
-        //         $("#myConfirm").modal("hide");
-        //         fun(params); // 执行函数
-        //     });
-        // }
+        function confirm3() {
+            if ($("#myConfirm").length > 0) {
+                $("#myConfirm").remove();
+            }
+            var html = "<div class='modal fade' id='myConfirm' >"
+                + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+                + "<div class='modal-content'>"
+                + "<div class='modal-header'  style='font-size:16px; '>"
+                + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+                + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
+                + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
+                + "请选择要删除的信息？"
+                + "</div>"
+                + "<div class='modal-footer ' style=''>"
+                + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
+
+                + "</div>" + "</div></div></div>";
+            $("body").append(html);
+
+            $("#myConfirm").modal("show");
+
+            $("#confirmOk").on("click", function () {
+                $("#myConfirm").modal("hide");
+
+            });
+        }
 
 
 

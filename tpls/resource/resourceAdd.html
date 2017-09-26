@@ -103,7 +103,7 @@
 
     <form class="required-validate form-horizontal" id="resourceAddForm" ng-controller="resourceAddCtrl">
 
-        <h1 ng-model="title"></h1>
+        <h1 >{{title}}</h1>
         <div class="form-group">
             <label>
                 <span>资源名 :</span>
@@ -149,10 +149,9 @@
             </select>
         </div>
 
-        <div style="margin-right: 40px">
-            <input type="button" class="button btn-default" id="back" ng-click="goBack()" value="返回" style="margin-left: 20px;text-shadow: 1px 1px 1px #7f7f7f;"/>
-            <input type="submit" class="button pull-right" id="submit" ng-click="submitAdd()" value="提交" />
-            <input type="reset" class="button pull-right" id="reset" value="重置" style="margin-right: 20px"/>
+        <div class="pull-right" style="margin-right: 50px">
+            <input type="button" class="button " id="back" ng-click="goBack()" value="返回" />
+            <input type="submit" class="button " id="submit" ng-click="submitAdd()" value="提交" />
         </div>
 
     </form>

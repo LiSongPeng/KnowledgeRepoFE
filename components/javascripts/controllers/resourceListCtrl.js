@@ -26,7 +26,7 @@ function sGridCtrl($scope,$state,$http) {
                 }},
             {name:'sUrl',index:'treeData.sUrl',width:80,sortable:false,editable:false,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
             {name:'sIcon',index:'treeData.sIcon',width:50,sortable:false,editable:false},
-            {name:'sIndex',index:'treeData.sIndex',width:40,sortable:false,editable:false},
+            {name:'sIndex',index:'treeData.sIndex',width:40,sortable:true,editable:false},
             // {name:'deleteStatus',index:'treeData.deleteStatus',width:40,edittype:"checkbox",
             //     formatter:function ( cellvalue, options, rowobject ) {
             //         var total="<label class='inline'>" +
@@ -44,7 +44,7 @@ function sGridCtrl($scope,$state,$http) {
                     }
                     return cellvalue.uName;
             }},
-            {name:'createTime',index:'treeData.createTime',width:80,editable:false,sortable:false}
+            {name:'createTime',index:'treeData.createTime',width:80,sortable:false,editable:false}
         ];
         var prmNames={
             page:"currentPage",    // 表示请求页码的参数名称
@@ -99,12 +99,13 @@ function sGridCtrl($scope,$state,$http) {
             treeIcons:{plus:'glyphicon glyphicon-chevron-right',minus:'glyphicon glyphicon-chevron-down',leaf:'glyphicon glyphicon-arrow-right'},
             colNames: colNames,
             colModel: colModel,
+            sortname: 'sIndex',
+            sortorder: 'asc',
             page:false,
             viewrecords: true,
             rowNum: -1,
             pager: pager_selector,
             multiselect: false,
-            multiboxonly: true,
             caption: "资源列表",
             autowidth: true,
             prmNames: prmNames,
