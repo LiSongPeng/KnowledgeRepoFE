@@ -5,7 +5,6 @@ var slistapp=angular.module('slistapp',['globalconfig','ui.router']);
 
 slistapp.controller("sGridCtrl",sGridCtrl);
 function sGridCtrl($scope,$state,$http) {
-
     jQuery(function ($) {
         var resource_query_url='resource/query.form';
         var grid_selector = "#grid-table";
@@ -24,9 +23,12 @@ function sGridCtrl($scope,$state,$http) {
                         return '菜单项';
                     }
                 }},
-            {name:'sUrl',index:'treeData.sUrl',width:80,sortable:false,editable:false,edittype:"textarea", editoptions:{rows:"2",cols:"10"}},
+            {name:'sUrl',index:'treeData.sUrl',width:80,sortable:false,editable:false},
             {name:'sIcon',index:'treeData.sIcon',width:50,sortable:false,editable:false},
-            {name:'sIndex',index:'treeData.sIndex',width:40,sortable:true,editable:false},
+            {name:'sIndex',index:'treeData.sIndex',width:40,sortable:true,editable:false,
+            sorttype:function (a,b) {
+                return b.sIndex;
+            }},
             // {name:'deleteStatus',index:'treeData.deleteStatus',width:40,edittype:"checkbox",
             //     formatter:function ( cellvalue, options, rowobject ) {
             //         var total="<label class='inline'>" +
@@ -36,15 +38,24 @@ function sGridCtrl($scope,$state,$http) {
             //             "</label>";
             //         return total;
             //     }},
-            {name:'createUser',index:'treeData.createUser',width:60,sortable:false,editable:false,
+            {name:'createUser',index:'treeData.createUser',width:60,sortable:true,editable:false,
                 formatter:function (cellvalue,options,rowObject){
                     var crtuser=angular.fromJson(cellvalue);
                     if (crtuser===null){
                         return "无";
                     }
                     return cellvalue.uName;
-            }},
-            {name:'createTime',index:'treeData.createTime',width:80,sortable:false,editable:false}
+                },
+                sorttype:function (a,b) {
+                    console.log(b.createUser.uName);
+                    return b.createUser.uName;
+                }
+            },
+            {name:'createTime',index:'treeData.createTime',width:80,sortable:true,editable:false,
+                sorttype:function (a,b) {
+                    return b.createTime;
+                }
+            }
         ];
         var prmNames={
             page:"currentPage",    // 表示请求页码的参数名称
