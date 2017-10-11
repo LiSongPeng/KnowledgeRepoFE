@@ -25,16 +25,16 @@ editor1.customConfig.menus = [
     'redo'  // 重复
 ];
     editor1.customConfig.zIndex = 100;
-    editor1.customConfig.pasteFilterStyle = true;
+    //editor1.customConfig.pasteFilterStyle = true;
 
     editor1.customConfig.onchange = function (html) {
         if(editor1.txt.text().length>100){
 
             toastr.warning("您输入的字符不应该大于100个！！");
-            toastr.warning("asfdsdrfsdfg");
-            alert(editor1.txt.html());
-            alert(editor1.txt.text());
-            alert(editor1.txt.text().length);
+           // toastr.warning("asfdsdrfsdfg");
+            // alert(editor1.txt.html());
+            // alert(editor1.txt.text());
+            // alert(editor1.txt.text().length);
             //confirm3();
 
         }
@@ -47,7 +47,7 @@ document.getElementById('submit').addEventListener('click', function () {
     document.getElementById("kAnswer").value=editor1.txt.html();       //获取带格式的文本
     //alert(editor1.txt.html());
 
-}, false)
+}, false);
 
 
 
@@ -56,15 +56,19 @@ document.getElementById('submit').addEventListener('click', function () {
 
 
     $("#knowledge").submit(function(){
-        alert(editor1.txt.text().length);
+
 
         if(document.getElementById("kTitle").value.trim()=="") {
             //confirm();
             toastr.warning("知识标题是必填项！！");
             return false;
         }
-        if(editor1.txt.text().length>117){
-            confirm3();
+        if(editor1.txt.text().length>100){
+            toastr.warning("您输入的字符不应该大于100个！！");
+            return false;
+        }
+        if(editor1.txt.text()==""){
+            toastr.warning("知识解答是必填项！！");
             return false;
         }
 
@@ -76,33 +80,23 @@ document.getElementById('submit').addEventListener('click', function () {
             data:data,
             headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
             success: function (data) {
+                //alert(data);
+                if (data=="1"){
+                    toastr.warning("知识标题已存在！！");
+                };
+                if(data=="0"){
+                    toastr.success("添加成功！！");
+                    location.href="#!/knowledgeRepo/knowledgeList.html";
+                }
 
-                // document.getElementById("kTitle").innerText = data.kTitle;
-                // document.getElementById("aa").innerHTML = data.kAnswer;
-                // document.getElementById("kUseCount").innerText = data.kUseCount;
-                // document.getElementById("kUseTimeLast").innerText=data.kUseTimeLast;
+                //confirm2()
 
+            },
+            error:function () {
 
-                var msg = '';
-
-                msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
-
-                confirm2()
-
-
-
-//                $("#myform").after(msg); //将返回信息插入页面对应的元素后
             }
         });
 
-//            $.getJSON(BASE_URL+"addKnowledge.form",data,function(json){
-//                var msg = '';
-//
-//                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
-//
-//
-////                $("#myform").after(msg); //将返回信息插入页面对应的元素后
-//            });
 
     });
 });

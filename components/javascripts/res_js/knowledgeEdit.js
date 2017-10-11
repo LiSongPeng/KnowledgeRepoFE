@@ -98,6 +98,16 @@ function knlgEditCtrl($scope) {
         'redo'  // 重复
     ];
     editor1.customConfig.zIndex = 100;
+    editor1.customConfig.onchange = function (html) {
+        if(editor1.txt.text().length>100){
+
+            toastr.warning("您输入的字符不应该大于100个！！");
+          
+
+        }
+
+    };
+
     editor1.create();
 
     document.getElementById('submit').addEventListener('click', function () {

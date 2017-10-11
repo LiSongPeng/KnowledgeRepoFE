@@ -144,13 +144,13 @@ app.constant('Modules_Config', [
     //         "/javascripts/res_js/knowledgeEdit.js"
     //     ]
     // },
-    // {
-    //     name:'res_knowledgeApprova',
-    //     serie:true,
-    //     files:[
-    //         "/javascripts/res_js/knowledgeApprova.js"
-    //     ]
-    // },
+    {
+        name:'res_knowledgeApprova',
+        serie:true,
+        files:[
+            "/stylesheets/knowledgeApprova.css"
+        ]
+    },
     {
         name:'res_knowledgeList',
         serie:true,
