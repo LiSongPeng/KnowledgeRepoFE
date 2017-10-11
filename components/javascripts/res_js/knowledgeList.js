@@ -1,6 +1,8 @@
 
 //当 datatype 为"local" 时需填写
-
+toastr.options = {
+    "positionClass": "toast-top-center",
+};
 var knlgList=angular.module('knlgList',['globalconfig',['jqGrid']]);
 
 knlgList.controller('knlgListCtrl',knlgListCtrl);
@@ -141,6 +143,7 @@ function knlgListCtrl($scope ) {
                     updatePagerIcons(table);
                     enableTooltips(table);
                     $("#sg_kTitle").attr("placeholder","知识标题");
+                    $("#sg_status").attr("placeholder","审查状态");
                 }, 0);
             },
 
@@ -244,8 +247,9 @@ function knlgListCtrl($scope ) {
 
                     var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
                     if (selid == null || selid === "") {
-                        confirm2(function (selid) {
-                        }, selid)
+                        // confirm2(function (selid) {
+                        // }, selid)
+                        toastr.warning("请选择要编辑的知识！！");
                     }else {
                         $("div.tooltip[role='tooltip']").remove();
                         location.href = "home.html#!/knowledgeRepo/knowledgeEdit.html?id=" + selid
@@ -262,7 +266,8 @@ function knlgListCtrl($scope ) {
             onClickButton: function () {
                 var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
                 if (selid == null || selid == "") {
-                    confirm3()
+                    // confirm3()
+                    toastr.warning("请选择要删除的知识！！");
                     return;
                 }
                 confirm(function (selid) {
@@ -307,6 +312,14 @@ function knlgListCtrl($scope ) {
                 label:'',
                 name:'kTitle',
                 stype:'text'
+            },{
+                label:'',
+                name
+                    :
+                    'status',
+                stype
+                    :
+                    'text'
             }],
             searchButton:"查询",
             clearButton:"清空",
@@ -506,7 +519,7 @@ function knlgListCtrl($scope ) {
     });
     Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
-            "M+": this.getMonth() + 1, //月份
+            "M+": this.getMonth() + 1,//月份
             "d+": this.getDate(), //日
             "h+": this.getHours(), //小时
             "m+": this.getMinutes(), //分

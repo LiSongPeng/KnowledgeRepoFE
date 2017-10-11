@@ -64,9 +64,9 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
             url:"/knowledgeRepo/knowledgeApprova.html",
             templateUrl:"knowledgeRepo/knowledgeApprova.html",
             resolve:{
-                // deps:function ($ocLazyLoad) {
-                //     return $ocLazyLoad.load(["res_knowledgeApprova"]);
-                // }
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["res_knowledgeApprova"]);
+                }
             }
 
         })

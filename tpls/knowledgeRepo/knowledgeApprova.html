@@ -6,7 +6,9 @@
 
 
     <style type="text/css">
-        .basic-grey {
+
+
+        .basic-grey1 {
             margin-left: auto;
             margin-right: auto;
 
@@ -30,7 +32,7 @@
 
         }
 
-        .basic-grey h1 {
+        .basic-grey1 h1 {
             font-size: 25px;
             padding: 0px 0px 10px 40px;
             display: block;
@@ -39,17 +41,17 @@
             color: #888;
         }
 
-        .basic-grey h1 > span {
+        .basic-grey1 h1 > span {
             display: block;
             font-size: 11px;
         }
 
-        .basic-grey label {
+        .basic-grey1 label {
             display: block;
             margin: 0px;
         }
 
-        .basic-grey label > span {
+        .basic-grey1 label > span {
             float: left;
             width: 10%;
             text-align: right;
@@ -58,7 +60,7 @@
             color: #888;
         }
 
-        .basic-grey input[type="text"], .basic-grey input[type="createUserId"], .basic-grey textarea, .basic-grey select {
+        .basic-grey1 input[type="text"], .basic-grey input[type="createUserId"], .basic-grey textarea, .basic-grey select {
             border: 1px solid #DADADA;
             color: #888;
             height: 30px;
@@ -75,11 +77,11 @@
             -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
         }
 
-        .basic-grey textarea {
+        .basic-grey1 textarea {
             padding: 5px 3px 3px 5px;
         }
 
-        .basic-grey select {
+        .basic-grey1 select {
             background: #FFF no-repeat right;
             background: #FFF no-repeat right;
             appearance: none;
@@ -92,11 +94,12 @@
             line-height: 25px;
         }
 
-        .basic-grey textarea {
+        .basic-grey1 textarea {
             height: 100px;
+            width: 650px;
         }
 
-        .basic-grey .button {
+        .basic-grey1 .button {
             background: #E27575;
             border: none;
             padding: 10px 25px 10px 25px;
@@ -107,7 +110,7 @@
             cursor: pointer;
         }
 
-        .basic-grey .button:hover {
+        .basic-grey1 .button:hover {
             background: #CF7A7A
         }
 
@@ -116,12 +119,12 @@
 
         }
 
-        span {
+        .basic-grey1 span {
             font-size: 16px;
 
         }
 
-        table, td {
+        .basic-grey1 table, td {
             border: 0px solid black;
             font-size: 16px;
             height: 50px;
@@ -134,14 +137,18 @@
         /*width: 200px;*/
 
         /*}*/
+
+
+
     </style>
+
 
     <!--<script src="/javascripts/wangEditor.min.js"></script>-->
     <!--<script src="/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>-->
     <!--<script src="../../components/javascripts/res_js/knowledgeList.js"></script>-->
 </head>
 <body>
-<div class="basic-grey">
+<div class="basic-grey1">
     <form method="post" class="STYLE-NAME" id="knowledge">
         <h1>知识审批
             <!--<span>Please fill all the texts in the fields.</span>-->
@@ -274,7 +281,8 @@
 
             if(button=="不通过"){
                 if(document.getElementById("kApprMemo").value.trim()==""){
-                    confirm();
+                    toastr.warning("审批意见不可以为空！！");
+                    //confirm();
                     return false;
                 }
 
@@ -299,10 +307,9 @@
                 data: data,
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                 success: function (json) {
-                    var msg = '';
-
-                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
-                    confirm1();
+                    toastr.success("审批成功！！");
+                    location.href = "#!/knowledgeRepo/knowledgeList2.html";
+                   // confirm1();
 
 
 

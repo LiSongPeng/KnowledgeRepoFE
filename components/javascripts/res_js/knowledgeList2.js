@@ -2,6 +2,9 @@
  * Created by Letg4 on 2017/9/11.
  */
 //当 datatype 为"local" 时需填写
+toastr.options = {
+    "positionClass": "toast-top-center",
+};
 var knlgList2=angular.module('knlgList2',['globalconfig',['jqGrid']]);
 
 knlgList2.controller('knlgList2Ctrl',knlgList2Ctrl);
@@ -101,7 +104,7 @@ function knlgList2Ctrl($scope) {
             multiboxonly: true, //是否只能点击复选框多选
             sortname:'createTime',//默认的排序列名
             sortorder:'desc',//默认的排序方式（asc升序，desc降序）
-            caption: "知识管理", //表名
+            caption: "知识审批", //表名
             autowidth: true, //自动宽
 //
             repeatitems: false,
@@ -121,6 +124,7 @@ function knlgList2Ctrl($scope) {
                     updatePagerIcons(table);
                     enableTooltips(table);
                     $("#sg_kTitle").attr("placeholder","知识标题");
+                    $("#sg_status").attr("placeholder","审查状态");
                 }, 0);
             },
 
@@ -194,8 +198,9 @@ function knlgList2Ctrl($scope) {
 
                     var selid = jQuery('#grid-table').jqGrid('getGridParam', 'selrow');
                     if (selid == null || selid === "") {
-                        confirm(function (selid) {
-                        }, selid)
+                        // confirm(function (selid) {
+                        // }, selid)
+                        toastr.warning("请选择要审批的知识！！");
                     }else {
                         $("div.tooltip[role='tooltip']").remove();
                         location.href = "home.html#!/knowledgeRepo/knowledgeApprova.html?id=" + selid
@@ -245,7 +250,15 @@ function knlgList2Ctrl($scope) {
                 label:'',
                 name:'kTitle',
                 stype:'text'
-            }],
+            },{
+            label:'',
+                name
+        :
+            'status',
+                stype
+        :
+            'text'
+        }],
             searchButton:"查询",
             clearButton:"清空",
             formtype: 'horizontal',

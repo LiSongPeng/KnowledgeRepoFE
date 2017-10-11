@@ -244,6 +244,15 @@
     ];
     editor1.customConfig.zIndex = 100;
     editor1.customConfig.pasteFilterStyle = true;
+    editor1.customConfig.onchange = function (html) {
+        if(editor1.txt.text().length>100){
+
+            toastr.warning("您输入的字符不应该大于100个！！");
+
+
+        }
+
+    };
     editor1.create();
 
     document.getElementById('submit').addEventListener('click', function () {
@@ -258,10 +267,18 @@
 
 
             if(document.getElementById("kTitle").value.trim()=="") {
-                confirm();
+                //confirm();
+                toastr.warning("知识标题是必填项！！");
                 return false;
             }
-
+            if(editor1.txt.text().length>100){
+                toastr.warning("您输入的字符不应该大于100个！！");
+                return false;
+            }
+            if(editor1.txt.text()==""){
+                toastr.warning("知识解答是必填项！！");
+                return false;
+            }
             var data = $(this).serialize(); //序列化表单数据
 
             $.ajax({
@@ -271,7 +288,9 @@
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                 success: function (data) {
                     var msg = '';
-                    confirm2();
+                    //confirm2();
+                    toastr.success("编辑成功！！");
+                    location.href="#!/knowledgeRepo/knowledgeList.html";
                     msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
 
 

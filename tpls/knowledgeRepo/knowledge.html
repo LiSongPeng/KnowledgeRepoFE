@@ -6,7 +6,7 @@
 
 
     <style type="text/css">
-        .basic-grey {
+        .basic-grey1 {
             margin-left: auto;
             margin-right: auto;
 
@@ -30,7 +30,7 @@
 
         }
 
-        .basic-grey h1 {
+        .basic-grey1 h1 {
             font-size: 25px;
             padding: 0px 0px 10px 40px;
             display: block;
@@ -39,17 +39,17 @@
             color: #888;
         }
 
-        .basic-grey h1 > span {
+        .basic-grey1 h1 > span {
             display: block;
             font-size: 11px;
         }
 
-        .basic-grey label {
+        .basic-grey1 label {
             display: block;
             margin: 0px;
         }
 
-        .basic-grey label > span {
+        .basic-grey1 label > span {
             float: left;
             width: 10%;
             text-align: right;
@@ -58,7 +58,7 @@
             color: #888;
         }
 
-        .basic-grey input[type="text"], .basic-grey input[type="createUserId"], .basic-grey textarea, .basic-grey select {
+        .basic-grey1 input[type="text"], .basic-grey input[type="createUserId"], .basic-grey textarea, .basic-grey select {
             border: 1px solid #DADADA;
             color: #888;
             height: 30px;
@@ -75,11 +75,11 @@
             -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
         }
 
-        .basic-grey textarea {
+        .basic-grey1 textarea {
             padding: 5px 3px 3px 5px;
         }
 
-        .basic-grey select {
+        .basic-grey1 select {
             background: #FFF no-repeat right;
             background: #FFF no-repeat right;
             appearance: none;
@@ -92,11 +92,11 @@
             line-height: 25px;
         }
 
-        .basic-grey textarea {
+        .basic-grey1 textarea {
             height: 100px;
         }
 
-        .basic-grey .button {
+        .basic-grey1 .button {
             background: #E27575;
             border: none;
             padding: 10px 25px 10px 25px;
@@ -107,7 +107,7 @@
             cursor: pointer;
         }
 
-        .basic-grey .button:hover {
+        .basic-grey1 .button:hover {
             background: #CF7A7A
         }
 
@@ -116,12 +116,12 @@
 
         }
 
-        span {
+        .basic-grey1 span {
             font-size: 16px;
 
         }
 
-        table, td {
+        .basic-grey1 table, td {
             border: 0px solid black;
             font-size: 16px;
             height: 50px;
@@ -129,19 +129,42 @@
 
         }
 
-        /*#div2{*/
-        /*high: 50px;*/
-        /*width: 200px;*/
 
-        /*}*/
+        #showApp{
+
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #a9c6c9;
+            border-collapse: collapse;
+            margin:0 auto;
+
+
+        }
+        .t1{
+
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9c6c9;
+        }
+
     </style>
+
+
+
+
+
+
+
 
     <!--<script src="/javascripts/wangEditor.min.js"></script>-->
     <!--<script src="/javascripts/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>-->
     <!--<script src="../../components/javascripts/res_js/knowledgeList.js"></script>-->
 </head>
 <body>
-<div class="basic-grey">
+<div class="basic-grey1">
     <form method="post" class="STYLE-NAME" id="knowledge">
         <h1>知识详情
             <!--<span>Please fill all the texts in the fields.</span>-->
@@ -171,7 +194,7 @@
 
 
                 <tr>
-                <td></td>
+                    <td></td>
                     <td>
                         <p id="aa"></p>
                     </td>
@@ -208,23 +231,23 @@
 
 
         <!--<label>-->
-            <!--<span>审批意见 :</span>-->
-            <!--<textarea id="kApprMemo" name="kApprMemo" placeholder="填写审批意见(最多100个字符)"  maxlength="100"></textarea>-->
-            <!--&lt;!&ndash;<input id="kApprMemo" name="kApprMemo" style="display:none"/>&ndash;&gt;-->
-            <!--<input id="button" name="button" style="display:none"/>-->
-            <!--&lt;!&ndash;<div id="div1" class="text">&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<span>审批意见 :</span>-->
+        <!--<textarea id="kApprMemo" name="kApprMemo" placeholder="填写审批意见(最多100个字符)"  maxlength="100"></textarea>-->
+        <!--&lt;!&ndash;<input id="kApprMemo" name="kApprMemo" style="display:none"/>&ndash;&gt;-->
+        <!--<input id="button" name="button" style="display:none"/>-->
+        <!--&lt;!&ndash;<div id="div1" class="text">&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
 
         <!--</label>-->
 
         <label>
-        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <div class="pull-right" style="margin-right: 50px">
-        <input type="submit" class="button" id="agree" value="显示审批记录"/>
-        <!--<input type="submit" class="button" id="disagree" value="不通过"/>-->
-        <input type="button" class="button" id="back" value="返回"/>
-        </div>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <div class="pull-right" style="margin-right: 50px">
+                <input type="button" class="button" id="show" value="显示审批记录"/>
+                <!--<input type="submit" class="button" id="disagree" value="不通过"/>-->
+                <input type="button" class="button" id="back" value="返回"/>
+            </div>
         </label>
     </form>
 </div>
@@ -260,6 +283,26 @@
     $(function () {
 
         var button;
+
+        $("#show").click(function () {
+                var url = BASE_URL + "kno/queryAppar.form?" + str;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "json",
+                    headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                    success: function (data) {
+                        confirm(data);
+
+
+                    }
+                })
+
+
+            }
+        );
+
+
         $("#agree").click(function () {
             button = document.getElementById("agree").value
 
@@ -272,9 +315,10 @@
         });
         $("#knowledge").submit(function () {
 
-            if(button=="不通过"){
-                if(document.getElementById("kApprMemo").value.trim()==""){
-                    confirm();
+            if (button == "不通过") {
+                if (document.getElementById("kApprMemo").value.trim() == "") {
+                    toastr.warning("审批意见不可以为空！！");
+                    //confirm();
                     return false;
                 }
 
@@ -282,13 +326,11 @@
             }
 
 
-
             var str = location.href; //取得整个地址栏
             var num = str.indexOf("?");
             str = str.substr(num + 4);
             document.getElementById("id").value = str;
             document.getElementById("button").value = button;
-
 
 
             var data = $(this).serialize(); //序列化表单数据
@@ -299,12 +341,8 @@
                 data: data,
                 headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                 success: function (json) {
-                    var msg = '';
-
-                    msg = "<div id='result'><strong>提交成功！</strong><br/>姓名："
-                    confirm1();
-
-
+                    toastr.success("审批成功！！");
+                   // confirm1();
 
 
                 }
@@ -319,18 +357,28 @@
     )
 
 
-    function confirm() {
+    function confirm(data) {
         if ($("#myConfirm").length > 0) {
             $("#myConfirm").remove();
         }
         var html = "<div class='modal fade' id='myConfirm' >"
-            + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
+            + "<div class='modal-dialog' style='z-index:999; margin-top:60px; width:600px; '>"
             + "<div class='modal-content'>"
             + "<div class='modal-header'  style='font-size:16px; '>"
-            + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
+            + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>审批信息！<button type='button' class='close' data-dismiss='modal'>"
             + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
             + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
-            + "不通过时审批意见为必填项！！"
+            +"<table id='showApp'><tr class='tr1'><td class='t1'>审批时间</td><td class='t1'>审批前状态</td><td class='t1'>审批后状态</td></tr>";
+              for(var i = 0; i < data.length; i++){
+
+
+                  html=html+ "<tr class='tr1'> <td class='t1'>"+new Date(data[i].aTime).Format("yyyy-MM-dd hh:mm:ss")+"</td> <td class='t1'>"+data[i].bStatus+"</td> <td class='t1'>"+data[i].aStatus+"</td> </tr>"
+
+
+
+             };
+             html=html
+            +"</table>"
             + "</div>"
             + "<div class='modal-footer ' style=''>"
             + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
@@ -344,38 +392,27 @@
             $("#myConfirm").modal("hide");
 
         });
+
+
+
+
+
     }
-
-
-    function confirm1() {
-        if ($("#myConfirm").length > 0) {
-            $("#myConfirm").remove();
-        }
-        var html = "<div class='modal fade' id='myConfirm' >"
-            + "<div class='modal-dialog' style='z-index:2901; margin-top:60px; width:400px; '>"
-            + "<div class='modal-content'>"
-            + "<div class='modal-header'  style='font-size:16px; '>"
-            + "<span class='glyphicon glyphicon-envelope'>&nbsp;</span>信息！<button type='button' class='close' data-dismiss='modal'>"
-            + "<span style='font-size:20px;  ' class='glyphicon glyphicon-remove'></span></button></div>"
-            + "<div class='modal-body text-center' id='myConfirmContent' style='font-size:18px; '>"
-            + "审批成功！"
-            + "</div>"
-            + "<div class='modal-footer ' style=''>"
-            + "<button class='btn btn-danger' id='confirmOk'>确定</button>"
-
-            + "</div>" + "</div></div></div>";
-        $("body").append(html);
-
-        $("#myConfirm").modal("show");
-
-        $("#confirmOk").on("click", function () {
-            $("#myConfirm").modal("hide");
-            location.href = "#!/knowledgeRepo/knowledgeList2.html";
-        });
-    }
-
-
-
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1,//月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
 
 </script>
 
