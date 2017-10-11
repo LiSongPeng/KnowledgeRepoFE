@@ -105,10 +105,11 @@ function knlgListCtrl($scope ) {
             viewrecords: true, //是否在浏览导航栏显示记录总数
             //scroll: 1,
             rowNum: 10, //每页显示记录数
+            rownumbers:true,
             rowList: [10, 20, 30], //用于改变显示行数的下拉列表框的元素数组。
             pager: pager_selector, //分页、按钮所在的浏览导航栏
             altRows: true, //设置为交替行表格,默认为false
-            multiselect: true, //是否多选
+            multiselect: false, //是否多选
             multiboxonly: true, //是否只能点击复选框多选
            // multiSort: true,
 
@@ -148,25 +149,25 @@ function knlgListCtrl($scope ) {
             },
 
 
-            gridComplete: function () {
-                //单选处理
-                if (true) {
-                    var gridId = grid_selector.substring(1);
-                    $("#cb_" + gridId).hide();//隐藏全选按钮
-                    $(grid_selector).find("td[aria-describedby='" + gridId + "_cb']").find("input[type='checkbox']").prop("type", "radio");//将checkbox替换为radio
-                    $(grid_selector).find("td[aria-describedby='" + gridId + "_cb']").find("input[type='radio']").prop("name", gridId);//radio设为同一名字
-                }
-
-            },
-
-            beforeSelectRow: function () {
-                //单选处理
-                if (true) {
-                    // $(grid_selector).jqGrid('clearSelect'); //执行自定义的函数（下面会讲）
-                    $(grid_selector).find(".ui-state-highlight").removeClass("ui-state-highlight").removeAttr("aria-selected"); //样式控制
-                    return true;
-                }
-            }
+            // gridComplete: function () {
+            //     //单选处理
+            //     if (true) {
+            //         var gridId = grid_selector.substring(1);
+            //         $("#cb_" + gridId).hide();//隐藏全选按钮
+            //         $(grid_selector).find("td[aria-describedby='" + gridId + "_cb']").find("input[type='checkbox']").prop("type", "radio");//将checkbox替换为radio
+            //         $(grid_selector).find("td[aria-describedby='" + gridId + "_cb']").find("input[type='radio']").prop("name", gridId);//radio设为同一名字
+            //     }
+            //
+            // },
+            //
+            // beforeSelectRow: function () {
+            //     //单选处理
+            //     if (true) {
+            //         // $(grid_selector).jqGrid('clearSelect'); //执行自定义的函数（下面会讲）
+            //         $(grid_selector).find(".ui-state-highlight").removeClass("ui-state-highlight").removeAttr("aria-selected"); //样式控制
+            //         return true;
+            //     }
+            // }
 
 
         });
