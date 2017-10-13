@@ -7,8 +7,12 @@ var indexapp = angular.module('indexapp', ['mainRouter', 'globalconfig']);
 //     console.log(currUid);
 //     $httpProvider.defaults.headers.common = { 'Current-UserId' : currUid.id }
 // });
-indexapp.controller('navController', ['$scope', function ($scope) {
+indexapp.controller('navController', ['$scope','$location', function ($scope,$location) {
     $scope.currUser = JSON.parse(window.sessionStorage.getItem('currUser'));
+    if($scope.currUser===null||""===$scope.currUser){
+        toastr.warning("未登录，跳转至登录页面");
+        window.location.href="index.html";
+    }
     $scope.quit = function () {
         window.sessionStorage.removeItem("currUser");
         window.location.href = "index.html";

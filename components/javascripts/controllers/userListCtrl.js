@@ -211,6 +211,43 @@ function uGridCtrl($scope,$state,$http) {
                 }
             })
             .navButtonAdd(pager_selector,{
+                title:"重置用户密码",
+                position:"last",
+                caption:"",
+                buttonicon:"icon-repeat orange",
+                onClickButton:function () {
+                    var selid=jQuery('#grid-table').jqGrid('getGridParam','selrow');
+                    if (selid==null||selid===""){
+                        toastr.warning("未选取用户");
+                        return;
+                    }
+                    $("div.tooltip[role='tooltip']").remove();
+                    confirm(function (selid) {
+                        $http({
+                            method: "POST",
+                            url: BASE_URL+"user/resetUserPass.form",
+                            headers : {
+                                'Content-Type' : "application/x-www-form-urlencoded"  //angularjs设置文件上传的content-type修改方式
+                            },
+                            data:$.param({
+                                uid:selid
+                            })
+                        }).then(function (response) {
+                            if(response.data.result==="success"){
+                                toastr.success("重置成功！");
+                            }else {
+                                toastr.warning("重置失败！");
+                            }
+                        },function (response) {
+                            if (response.status===403){
+                                toastr.warning("重置失败！您所在的用户组没有此权限");
+                            }
+                            toastr.error("删除失败！错误代码及信息:"+response.status);
+                        })
+                    },"是否确定要重置用户密码？",selid);
+                }
+            })
+            .navButtonAdd(pager_selector,{
                 title:"删除用户",
                 position:"last",
                 caption:"",

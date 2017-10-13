@@ -107,6 +107,27 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
+        .state("密码修改",{
+            url:"/user/passValidate.html",
+            templateUrl:"user/passValidate.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["select2","toastr","res_passValidate"])
+                }
+            }
+        })
+        .state("密码修改修改",{
+            url:"/user/passModify.html",
+            templateUrl:"user/passModify.html",
+            params:{
+                "originPassword":null,
+            },
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["select2","toastr","res_passModify"])
+                }
+            }
+        })
         .state("资源管理",{
             url:"/resource/resourceList.html",
             templateUrl:"resource/resourceList.html",
