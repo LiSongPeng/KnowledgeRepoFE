@@ -136,7 +136,7 @@ function knlgList2Ctrl($scope) {
                     updatePagerIcons(table);
                     enableTooltips(table);
                     $("#sg_kTitle").attr("placeholder","知识标题");
-                    $("#sg_status").attr("placeholder","审查状态");
+                    $("#sg_status").attr("placeholder","审批状态");
                 }, 0);
             },
 
