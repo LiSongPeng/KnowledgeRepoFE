@@ -103,6 +103,22 @@ app.constant('Modules_Config', [
             "/javascripts/controllers/userAddCtrl.js"
         ]
     },{
+        name:'res_passModify',
+        serie:true,
+        files:[
+            "/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            "/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
+            "/javascripts/controllers/passModifyCtrl.js"
+        ]
+    },{
+        name:'res_passValidate',
+        serie:true,
+        files:[
+            "/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
+            "/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
+            "/javascripts/controllers/passValidateCtrl.js"
+        ]
+    },{
         name:'res_roleAdd',
         serie:true,
         files:[

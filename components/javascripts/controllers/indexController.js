@@ -38,7 +38,7 @@ function breadcrumbCtrl($scope) {
         $scope.urlPath=path.reverse();
     });
 }
-function navController($scope,$rootScope) {
+function navController($scope,$rootScope,$location) {
     $scope.resTree=[];
     $scope.resList=[];
     $scope.transData=function (a, idStr, pidStr, chindrenStr){
