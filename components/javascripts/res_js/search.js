@@ -61,13 +61,18 @@ search.controller("searchController", ["$scope", "$http", "$sce", function ($sco
             /*jQuery.getJSON(BASE_URL+'repo/getInputHint.form', , function (response) {
                 process(response.data);
             });*/
+            var wsCache=new WebStorageCache({
+                storage:'sessionStorage',
+                exp:900
+            });
             $.ajax({
                 type: "GET",
                 url: BASE_URL + "repo/getInputHint.form",
                 data: {"keyWord": keyWord},
                 dataType: "json",
-                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
                 success: function (response) {
+                    wsCache.touch("currUser",900);
                     process(response.data);
                 }
             });
