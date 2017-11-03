@@ -256,6 +256,10 @@
     var str = location.href; //取得整个地址栏
     var num = str.indexOf("?");
     str = str.substr(num + 1);
+    var wsCache=new WebStorageCache({
+        storage:'sessionStorage',
+        exp:900
+    });
     $(function () {
 
 
@@ -264,9 +268,9 @@
             type: "GET",
             url: url,
             dataType: "json",
-            headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+            headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
             success: function (data) {
-
+                wsCache.touch("currUser",900);
                 document.getElementById("kTitle").innerText = data.kTitle;
                 document.getElementById("aa").innerHTML = data.kAnswer;
                 document.getElementById("kUseCount").innerText = data.kUseCount;
@@ -290,8 +294,9 @@
                     type: "GET",
                     url: url,
                     dataType: "json",
-                    headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                    headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
                     success: function (data) {
+                        wsCache.touch("currUser",900);
                         confirm(data);
 
 
@@ -339,8 +344,9 @@
                 type: "GET",
                 url: BASE_URL + "kno/knowledgeApprova.form",
                 data: data,
-                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
                 success: function (json) {
+                    wsCache.touch("currUser",900);
                     toastr.success("审批成功！！");
                    // confirm1();
 

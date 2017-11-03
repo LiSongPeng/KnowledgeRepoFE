@@ -9,6 +9,10 @@ knlgAdd.controller('knlgAddCtrl',knlgAddCtrl);
 function knlgAddCtrl($scope) {
     var E = window.wangEditor;
     var editor1 = new E('#div1');  // 两个参数也可以传入 elem 对象，class 选择器
+    var wsCache=new WebStorageCache({
+        storage:'sessionStorage',
+        exp:900
+    });
 editor1.customConfig.menus = [
     'head',  // 标题
     'bold',  // 粗体
@@ -78,8 +82,9 @@ document.getElementById('submit').addEventListener('click', function () {
             type: "post",
             url: BASE_URL+"kno/addKnowledge.form",
             data:data,
-            headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+            headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
             success: function (data) {
+                wsCache.touch("currUser",900);
                 //alert(data);
                 if (data=="1"){
                     toastr.warning("知识标题已存在！！");

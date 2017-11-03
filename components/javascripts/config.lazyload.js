@@ -98,6 +98,7 @@ app.constant('Modules_Config', [
         name:'res_userAdd',
         serie:true,
         files:[
+            "/stylesheets/editCss.css",
             "/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
             "/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
             "/javascripts/controllers/userAddCtrl.js"
@@ -124,12 +125,14 @@ app.constant('Modules_Config', [
         files:[
             // "/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
             // "/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
+            "/stylesheets/editCss.css",
             "/javascripts/controllers/roleAddCtrl.js"
         ]
     },{
         name:'res_resourceAdd',
         serie:true,
         files:[
+            "/stylesheets/editCss.css",
             "/plugins/bootstrap-validator/css/bootstrapValidator.min.css",
             "/plugins/bootstrap-validator/js/bootstrapValidator.min.js",
             "/javascripts/controllers/resourceAddCtrl.js"
@@ -150,6 +153,7 @@ app.constant('Modules_Config', [
         name: 'res_knowledgeAdd',
         serie: true,
         files: [
+
             "/javascripts/res_js/knowledgeAdd.js"
         ]
     },

@@ -1,8 +1,8 @@
-function mainController($scope,$http,$rootScope) {
+function mainController($scope,$http,$rootScope,wscacheService) {
     $scope.resList=[];
 //				从服务器获取json权限数据
 
-    $scope.currUser=window.sessionStorage.getItem("currUser");
+    $scope.currUser=wscacheService.get("currUser");
     $scope.$on('getUserRes',function () {
         $http({
             method: "POST",

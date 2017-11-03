@@ -76,15 +76,27 @@ function uGridCtrl($scope,$state,$http) {
         jQuery(grid_selector).jqGrid({
             ajaxGridOptions:{
                 beforeSend:function(jqXHR, settings) {
-                    var currUid=window.sessionStorage.getItem("currUser");
-                    var currUser=JSON.parse(currUid);
-                    jqXHR.setRequestHeader("Current-UserId",currUser.id);
+                    var wsCache=new WebStorageCache({
+                        storage:'sessionStorage',
+                        exp:900
+                    });
+                    if(window.sessionStorage.getItem("currUser")!=null){
+                        var currUid=wsCache.get("currUser");
+                        if(currUid===null){
+                            alert("登录超时,请重新登录");
+                            window.location.href="index.html";
+                        }else {
+                            var currUser=JSON.parse(currUid);
+                            wsCache.touch("currUser",900);
+                            jqXHR.setRequestHeader("Current-UserId",currUser.id);
+                        }
+                    }
                 }
             },
             url: BASE_URL+user_query_url,
             mtype:"POST",
             datatype: "json",
-            height: 500,
+            height: 'auto',
             colNames: colNames,
             colModel: colModel,
             sortname: 'createTime',

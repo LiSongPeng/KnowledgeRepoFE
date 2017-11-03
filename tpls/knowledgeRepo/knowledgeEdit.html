@@ -139,7 +139,7 @@
 
         </label>
 
-        <label>
+        <label style="height: 36px">
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <div class="pull-right" style="margin-right: 50px">
             <input type="button" class="button" id="back" value="返回" />
@@ -151,6 +151,10 @@
 <script type="text/javascript">
     var E = window.wangEditor;
     var editor1 = new E('#div1');  // 两个参数也可以传入 elem 对象，class 选择器
+    var wsCache=new WebStorageCache({
+        storage:'sessionStorage',
+        exp:900
+    });
 
     $(function() {
         var str=location.href; //取得整个地址栏
@@ -163,8 +167,9 @@
                 type: "GET",
                 url: url,
                 dataType: "json",
-                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
                 success: function (data) {
+                    wsCache.touch("currUser",900);
                     document.getElementById("kTitle").value=data.kTitle;
                     document.getElementById("id").value=data.id;
                     document.getElementById("createUserId").value=data.createUserId;
@@ -285,8 +290,9 @@
                 type: "GET",
                 url: BASE_URL+"kno/updateKnowledge.form",
                 data: data,
-                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
                 success: function (data) {
+                    wsCache.touch("currUser",900);
                     var msg = '';
                     //confirm2();
                     toastr.success("编辑成功！！");

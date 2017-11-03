@@ -70,7 +70,8 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
             e.preventDefault();
         });
         $('#sType').select2({
-            minimumResultsForSearch: -1
+            minimumResultsForSearch: -1,
+            width:'50%'
         });
     });
 
@@ -127,7 +128,9 @@ function resourceAddCtrl ($scope,$http,$state,$location) {
             resOptions.splice(0,0,{id:"-1",text:"设置父资源为空"});
             console.log(resOptions);
             $('#sParentId').select2({
-                data: resOptions
+                minimumResultsForSearch: -1,
+                data: resOptions,
+                width:'50%'
             });
             if ($scope.resource.sParentId!=null&&""!=$scope.resource.sParentId){
                 $('#sParentId').val($scope.resource.sParentId).trigger('change');

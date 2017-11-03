@@ -14,12 +14,10 @@
     <link rel="stylesheet" href="/stylesheets/ace/ace-rtl.min.css"/>
     <link rel="stylesheet" href="/stylesheets/ace/ace-ie.min.css"/>
     <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
-    <script src="/javascripts/globalset/jsconst.js"></script>
     <script src="/stylesheets/ace/html5shiv.js"></script>
     <script src="/stylesheets/ace/respond.js"></script>
     <script src="/javascripts/jquery-2.0.3.min.js"></script>
-    <script src="/plugins/toastr/toastr.min.js"></script>
-    <script src="/plugins/toastr/toastrSetting.js"></script>
+
 </head>
 
 <body class="login-layout" style="background-color:#F5F6F7">
@@ -93,8 +91,16 @@
         </div>
     </div>
 </div>
+<script src="/javascripts/globalset/jsconst.js"></script>
+<script src="/javascripts/web-storage-cache.min.js"></script>
+<script src="/plugins/toastr/toastr.min.js"></script>
+<script src="/plugins/toastr/toastrSetting.js"></script>
 <script type="text/javascript">
     $(function () {
+        var wsCache= new WebStorageCache({
+            storage: 'sessionStorage',
+            exp:300
+        });
         $("#submit").click(function () {
             var username = $("input[name='username']").val();
             var password = $("input[name='password']").val();
@@ -114,9 +120,11 @@
                 var id;
                 if (response) {
                     response=JSON.stringify(response);
-                    console.log("response"+response)
-                    window.sessionStorage.setItem("currUser", response);
+                    console.log(response);
+                    window.sessionStorage.setItem("currUser",response);
+                    wsCache.set('currUser',response);
 //                    response = $.parseJSON(response);
+                    console.log(wsCache.get('currUser'));
                     toastr.remove();
                     toastr.success("登录成功,正在跳转到首页");
                     id = window.setTimeout(function () {
