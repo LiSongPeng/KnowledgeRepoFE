@@ -167,9 +167,9 @@
                 type: "GET",
                 url: url,
                 dataType: "json",
-                headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
+//                headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
                 success: function (data) {
-                    wsCache.touch("currUser",900);
+//                    wsCache.touch("currUser",900);
                     document.getElementById("kTitle").value=data.kTitle;
                     document.getElementById("id").value=data.id;
                     document.getElementById("createUserId").value=data.createUserId;
@@ -290,9 +290,9 @@
                 type: "GET",
                 url: BASE_URL+"kno/updateKnowledge.form",
                 data: data,
-                headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
+//                headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
                 success: function (data) {
-                    wsCache.touch("currUser",900);
+//                    wsCache.touch("currUser",900);
                     var msg = '';
                     //confirm2();
                     toastr.success("编辑成功！！");

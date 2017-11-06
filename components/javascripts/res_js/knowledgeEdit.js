@@ -13,6 +13,7 @@ function knlgEditCtrl($scope) {
 
             var url=BASE_URL+"kno/queryKnowledgeById.form?"+str;
 
+
             $.ajax({
                 type: "GET",
                 url: url,
@@ -126,7 +127,7 @@ function knlgEditCtrl($scope) {
                 url: BASE_URL+"kno/updateKnowledge.form",
                 dataType: "json",
                 data: data,
-                headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
+                // headers: {"Current-UserId": JSON.parse(window.sessionStorage.getItem("currUser")).id},
                 success: function (data) {
                     var msg = '';
 

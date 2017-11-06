@@ -181,5 +181,14 @@ app.config(function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,Modul
                 }
             }
         })
+        .state("系统设置",{
+            url:"/systemConfig.html",
+            templateUrl:"systemConfig.html",
+            resolve:{
+                deps:function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(["toastr","res_systemConfig"])
+                }
+            }
+        })
 
 });

@@ -1,8 +1,8 @@
-function mainController($scope,$http,$rootScope,wscacheService) {
+function mainController($scope,$http,$rootScope) {
     $scope.resList=[];
 //				从服务器获取json权限数据
 
-    $scope.currUser=wscacheService.get("currUser");
+    // $scope.currUser=wscacheService.get("currUser");
     $scope.$on('getUserRes',function () {
         $http({
             method: "POST",
@@ -58,11 +58,7 @@ function navController($scope,$rootScope,$location) {
         return r;
     };
     $rootScope.$on('$stateChangeSuccess',function (evt, toState, toParams, fromState, fromParams) {
-        console.log("123123");
-        alert(123);
-        console.log(evt);
-        console.log(toState);
-        console.log(toParams);
+
     });
     $scope.$on('refreshResTree',function (event,resList) {
         $scope.resList=resList;

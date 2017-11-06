@@ -183,5 +183,12 @@ app.constant('Modules_Config', [
         files:[
             "/javascripts/res_js/knowledgeList2.js"
         ]
+    },{
+        name:'res_systemConfig',
+        serie:true,
+        files:[
+            "/stylesheets/editCSS.css",
+            "/javascripts/controllers/configCtrl.js"
+        ]
     }
 ]);

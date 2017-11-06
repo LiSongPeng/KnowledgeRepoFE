@@ -1,6 +1,6 @@
 .basic-grey{
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: 0;
+    margin-right: 0;
     background: #F7F7F7;
     padding: 25px 15px 25px 10px;
     font: 12px Georgia, "Times New Roman", Times, serif;
@@ -8,6 +8,7 @@
     text-shadow: 1px 1px 1px #FFF;
     border:1px solid #E4E4E4;
 }
+
 .basic-grey h1 {
     font-size: 25px;
     padding: 0px 0px 10px 40px;
@@ -44,7 +45,8 @@
     margin-top: 2px;
     outline: 0 none;
     padding: 3px 3px 3px 5px;
-    width: 50%;
+    width: 70%;
+    max-width: 300px;
     font-size: 12px;
     line-height:15px;
     box-shadow: inset 0px 1px 4px #ECECEC;

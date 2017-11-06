@@ -70,7 +70,7 @@
 					</a><!-- /.brand -->
 				</div><!-- /.navbar-header -->
 
-				<div class="navbar-header pull-right" role="navigation" ng-controller="navController">
+				<div class="navbar-header pull-right" role="navigation" ng-controller="navtopController">
 					
 					<ul class="nav ace-nav">
 
@@ -162,6 +162,12 @@
 									<a href="#" ui-sref="密码修改">
 										<i class="icon-user"></i>
 										修改密码
+									</a>
+								</li>
+								<li>
+									<a href="#" ui-sref="系统设置">
+										<i class="icon-gear"></i>
+										系统设置
 									</a>
 								</li>
 
@@ -271,6 +277,7 @@
 
 		<script src="/javascripts/angular.min.js"></script>
 		<script src="/javascripts/angular-ui-router.min.js"></script>
+		<script src="/javascripts/angular-cookies.min.js"></script>
 		<script src="/javascripts/ocLazyLoad.min.js"></script>
 
 		<!--全局常量-->

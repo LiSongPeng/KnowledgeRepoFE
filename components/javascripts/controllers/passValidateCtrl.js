@@ -39,7 +39,7 @@ function passValidateCtrl ($scope,$http,$state) {
 
 
     $scope.goBack= function () {
-        $state.go('用户管理');
+        history.back();
     };
 
     $scope.submitAdd=function () {

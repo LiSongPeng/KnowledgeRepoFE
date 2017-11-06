@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统设置</title>
+</head>
+<body>
+<div class="container basic-grey" ng-app="systemConfig">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <form class="required-validate form-horizontal" id="configForm" ng-controller="configCtrl">
+
+                <h1 >系统设置</h1>
+                <div class="form-group">
+                    <label for="logOutTime">
+                        <span>登录超时时间 :</span>
+                    </label>
+                    <select class="form-control" id="logOutTime" name="logOutTime">
+                        <option value="300">5分钟</option>
+                        <option value="900">15分钟</option>
+                        <option value="1800">30分钟</option>
+                    </select>
+                </div>
+
+
+                <div class="pull-right" style="margin-right: 50px">
+                    <input type="button" class="button " id="back" ng-click="goBack()" value="返回" />
+                    <input type="submit" class="button " id="submit" ng-click="submitAdd()" value="保存" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

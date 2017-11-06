@@ -252,9 +252,9 @@
             type: "GET",
             url: url,
             dataType: "json",
-            headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
+//            headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
             success: function (data) {
-                wsCache.touch("currUser",900);
+//                wsCache.touch("currUser",900);
                 document.getElementById("kTitle").innerText = data.kTitle;
                 document.getElementById("aa").innerHTML = data.kAnswer;
                 document.getElementById("kUseCount").innerText = data.kUseCount;

@@ -82,9 +82,9 @@ document.getElementById('submit').addEventListener('click', function () {
             type: "post",
             url: BASE_URL+"kno/addKnowledge.form",
             data:data,
-            headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
+            // headers: {"Current-UserId": JSON.parse(wsCache.get("currUser")).id},
             success: function (data) {
-                wsCache.touch("currUser",900);
+                // wsCache.touch("currUser",900);
                 //alert(data);
                 if (data=="1"){
                     toastr.warning("知识标题已存在！！");
